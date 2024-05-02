@@ -1,0 +1,16 @@
+{
+  "name": "@nqminds/documentation-toolchain",
+  "version": "1.0.0",
+  "description": "A documentation toolchain which enables you to collaboratively edit documents and schemas through the use of hedgedoc",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "workspaces": [
+    "./packages/*"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nqminds/verifiable-schemas-toolchain": "^1.0.7"
+  }
+}
