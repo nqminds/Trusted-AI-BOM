@@ -4,48 +4,48 @@
 
 
 :root {
-  --ifm-color-primary: #000000;
+  --ifm-color-primary: #607d8b;
   --ifm-color-secondary: #d3dddf;
-  --ifm-color-text-header: #0ea8ea;
+  --ifm-color-text-header: #011c40;
   --ifm-color-text: #353535;
-  --ifm-color-accent: #0ea8ea;
+  --ifm-color-accent: #011c40;
   --ifm-color-011c40: #011c40;
   --ifm-color-f898f31: #fffefe;
   --ifm-color-table-row: hsla(0, 0%, 0%, 0.1);
 
-  --ifm-typography-primary-font-family: "Varela Round";
+  --ifm-typography-primary-font-family: "Lato";
   --ifm-typography-primary-font-size: 45px;
   --ifm-typography-primary-font-weight: 300;
   --ifm-typography-primary-text-transform: capitalize;
   --ifm-typography-primary-line-height: 1.2em;
 
-  --ifm-typography-text-font-family: "Montserrat";
+  --ifm-typography-text-font-family: "Lato";
   --ifm-typography-text-font-size: 16px;
   --ifm-typography-text-font-weight: 300;
   --ifm-typography-text-line-height: 1.4em;
 
-  --ifm-typography-accent-font-family: "Montserrat";
+  --ifm-typography-accent-font-family: "Lato";
   --ifm-typography-accent-font-size: 16px;
   --ifm-typography-accent-font-weight: 500;
   --ifm-typography-accent-text-transform: capitalize;
   --ifm-typography-accent-line-height: 1.2em;
 
-  --ifm-typography-6ed476c-font-family: "Varela Round";
+  --ifm-typography-6ed476c-font-family: "Lato";
   --ifm-typography-6ed476c-font-size: 20px;
   --ifm-typography-6ed476c-font-weight: 400;
   --ifm-typography-6ed476c-text-transform: capitalize;
 
-  --ifm-typography-ef2c50b-font-family: "Varela Round";
+  --ifm-typography-ef2c50b-font-family: "Lato";
   --ifm-typography-ef2c50b-font-size: 15px;
   --ifm-typography-ef2c50b-font-weight: 300;
 
-  --ifm-typography-f8a9e51-font-family: "Varela Round";
+  --ifm-typography-f8a9e51-font-family: "Lato";
   --ifm-typography-f8a9e51-font-size: 35px;
   --ifm-typography-f8a9e51-font-weight: 300;
   --ifm-typography-f8a9e51-text-transform: capitalize;
   --ifm-typography-f8a9e51-line-height: 1.2em;
 
-  --ifm-typography-2c11d45-font-family: "Varela Round";
+  --ifm-typography-2c11d45-font-family: "Lato";
   --ifm-typography-2c11d45-font-size: 50px;
   --ifm-typography-2c11d45-font-weight: 500;
   --ifm-typography-2c11d45-text-transform: capitalize;
