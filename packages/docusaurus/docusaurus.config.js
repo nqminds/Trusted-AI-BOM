@@ -82,8 +82,8 @@ const config = {
       navbar: {
         logo: {
           alt: 'NquiringMinds',
-          src: 'img/nqminds (10).svg',
-          width: "100px !important"
+          src: 'img/logo.png',
+          width: "500px !important"
         },
         items: [{
           type: 'doc',
