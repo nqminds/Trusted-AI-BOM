@@ -82,8 +82,8 @@ const config = {
       navbar: {
         logo: {
           alt: 'NquiringMinds',
-          src: 'img/nquiringminds.svg',
-          width: "100px !important"
+          src: 'img/logo.png',
+          width: "500px !important"
         },
         items: [{
           type: 'doc',
@@ -132,7 +132,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} ${TITLE}. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} NquiringMinds LTD. Built with Docusaurus.`,
       },
       colorMode: {
         defaultMode: 'light', // or 'dark' if you prefer
