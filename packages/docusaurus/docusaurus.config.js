@@ -132,7 +132,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} ${TITLE}. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} NquiringMinds LTD. Built with Docusaurus.`,
       },
       colorMode: {
         defaultMode: 'light', // or 'dark' if you prefer
