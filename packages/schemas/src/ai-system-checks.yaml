@@ -1,6 +1,6 @@
 $id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/ai-system-checks.yaml
 $schema: https://json-schema.org/draft/2019-09/schema
-title: Taibom AI system checks
+title: TAIBOM AI system checks
 description: Declaration a snapshot of the trained system has been checked.
 type: object
 properties:
