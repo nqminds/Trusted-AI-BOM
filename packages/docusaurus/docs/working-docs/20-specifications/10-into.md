@@ -4,9 +4,10 @@ title: TAIBOM Project
 
 # Trusted AI Bill of Materials
 
-TAIBOM (Trusted AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI s:stems.
-- Ver -ioning: How do we refer to an AI system in a stable way? How do we produce an AI inventitspendent components? How can weseinventory rences to make statementstheabout a system’s trustworthiness or its legal standing; and
-- Atte -tations: How do we make attestations of trustworthiness abo systemut an AI. Whe attestationse claims arthe system'sut bias,  oreg legal con constraits on its application, rtions: how do attestations  claims in an interoperable way? How can we aattestations about the whole system from attestations about its partsonality)? How do we reason about or vattestations whilst considering theoring in conthe system's text of our own subjective require
+TAIBOM (Trusted AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI s:s
+- Versioning - How do we refer to an AI system in a stable way? How do we produce an AI inventory of an AI system's components? How do we relate the versioning of an AI system to the versioning of its components? and
+- Attestations - How do we make attestations about the properties and characteristics of an AI system? How do we make attestations about its performance, legal constraits on its application, etc. How do the attestations for the system relate to attestations for its components? How do we make attestations in a flexible and interoperable way? How do we reason about attestations in the context of its intended use and out own subective preferences?
+ require
 
 TAIBOM is motivated by the recent increase in the composability within and between AI systems, particularly in the form or open source models, open adaptors, open datasets and open weights. This trend of increasing composability mirrors what has already happened in traditional software development, where open source allowed for the creation of software that was built from components from a multitude of sources that were outside of the direct control of the software system developer.
 
@@ -36,4 +37,4 @@ TAIBOM creates a standardised ecosystem for describing the nuanced composition o
 
 Our approach is dual strand:
 - Develop the commercial tools for managing AI system lifecycle
-- Develop/refine the interoperable, international, standard
+- Develop/refine the intero
