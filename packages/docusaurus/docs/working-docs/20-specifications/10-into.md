@@ -1,6 +1,7 @@
 ---
 title: TAIBOM Project
--
+
+
 
 --# Trusted AI Bill of Materials
 
@@ -16,10 +17,11 @@ Since each such component is itself typically created from a multitude of other 
 
 Most early AI systems, and many modern application-specific AI systems, are produced by a single organization using their own data, their own models and a limited set of well-specified tools. Some modern AI systems, however, are more like modern software systems, being composed of a multitude of AI components from a multitude of sources that are not under the system developer's direct control. This motivates the introduction of TAIBOM. TAIBOM allows the developer of a complex AI system to easily identify its components and hence for both the developer of the system and its users to more fully understand its properties and characteristics.
 
-For TAIBOM to be succeed, it must provide means for attestations to be made by identified parties about identified AI systems. Each of these considerations are discussed in the following sectionl.
+For TAIBOM to be succeed, it must provide means for attestations to be made by identified parties about identified AI systems. Each of these considerations are discussed in the following sectinl.
 
-# Ve
-rsioning
+ Ve
+rsio
+ning
 AI systems are highly volatile; a change of a single training parameter, a poisoned training data set or an insecure training or deployment machine can change the behaviour of an AI system enormously. A trustworthy system becomes untrustworthy in an almost imperceptible manner.
 The versioning problem is one of compositionality and dependency: how to describe a complex system in terms of its component parts and how to track the inherent dependencies. 
 
@@ -39,5 +41,4 @@ AI Adoption: this innovation will provide the tools for AI stakeholders, from th
 
 TAIBOM creates a standardised ecosystem for describing the nuanced composition of AI systems (versioning) and making contextualised but precise claims about the trustworthiness (attestations) of the system, and its components.
 
-Our approach is dual strand:
-- Develo
+Our approach 
