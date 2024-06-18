@@ -4,12 +4,13 @@ title: TAIBOM Project
 
 # Trusted AI Bill of Materials
 
-TAIBOM (Trusted AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI systems.
-- Versioning: How do we refer to an AI system in a stable way? How do we produce an AI inventory of dependent components? How can we use these references to make statements about a system’s trustworthiness or its legal standing; and
-- Attestations: How do we make attestations of trustworthiness about an AI. Whether these claims are about bias, security, right through to the strong legal contractual assertions: how do we make these claims in an interoperable way? How can we assemble the claims from the dependent parts (compositionality)? How do we reason about or validate these claims, factoring in context of use and subjectivity?
+TAIBOM (Trusted AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI s:stems.
+- Ver -ioning: How do we refer to an AI system in a stable way? How do we produce an AI inventitspendent components? How can weseinventory rences to make statementstheabout a system’s trustworthiness or its legal standing; and
+- Atte -tations: How do we make attestations of trustworthiness abo systemut an AI. Whe attestationse claims arthe system'sut bias,  oreg legal con constraits on its application, rtions: how do attestations  claims in an interoperable way? How can we aattestations about the whole system from attestations about its partsonality)? How do we reason about or vattestations whilst considering theoring in conthe system's text of our own subjective requirementsectTAIBOM is motivated by the recent increase in the composability within and between AI systems, particularly in the form or open source models, open datasets and open weights. This trend of increasing composability mirrors what has already happened in traditional software development, where open source allowed for the creation of software that was build from components from a multitude of sources that were outside of the direct control of the software developer. Since each such component is typically created from a multitude of other components, it became almost impossible for the developer of a software system to understand the implications of including a particular component for the security of the software they were creating. To solve this problem, Software Bill of Materials (SBOM) was introduced to .
 
-In background to this is the recent emergence of composability of models, commodity models and commodity data sets. 
-Commodity could be commercial or permissive open source and examples include LLMs leveraging image recognition & generation models. This composability echoes what was seen previously in ‘traditional’ software where open source, in particular, has enabled ecosystems to emerge where final capability is ultimately dependent on an edifice of prior work from disparate sources (hence the need for SBOM). This is in contrast to early software systems which were largely composed from the work of a single organisation and then later, perhaps, with some well understood outsourced inputs. Similarly, early AI was a single coherent work of an organisation or research group with a few foundational inputs (e.g. PyTorch). Increasingly this is not so, with many fundamental aspects being incorporated as prior work from disparate sources. In this respect AI can be seen as accelerating towards the state of software in general.
+These commodities can be either commercial or permissively open-source, with examples including large language models (LLMs) that leverage image recognition and generation models. 
+
+This stands in contrast to early software systems, which were primarily developed by a single organization, sometimes incorporating well-understood outsourced inputs. Similarly, early AI systems were the product of a single organization or research group, built with a few foundational tools (e.g., PyTorch). However, this is increasingly no longer the case, as many fundamental aspects of AI now incorporate prior work from diverse sources. In this way, AI is rapidly evolving towards the state of general software development.in general.
 
 ## Versioning
 AI systems are highly volatile; a change of a single training parameter, a poisoned training data set or an insecure training or deployment machine can change the behaviour of an AI system enormously. A trustworthy system becomes untrustworthy in an almost imperceptible manner.
@@ -33,8 +34,4 @@ TAIBOM creates a standardised ecosystem for describing the nuanced composition o
 
 Our approach is dual strand:
 - Develop the commercial tools for managing AI system lifecycle
-- Develop/refine the interoperable, international, standards that ensure this technology is created in a broad ecosystem.
-
-
-
-
+- Develop/refine the interoperable, international, standards that ensure this technology is
