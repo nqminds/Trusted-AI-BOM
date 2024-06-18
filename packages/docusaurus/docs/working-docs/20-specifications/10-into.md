@@ -4,7 +4,7 @@ title: TAIBOM Project
 
 # Trusted AI Bill of Materials
 
-TAIBOM (Trusted AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI s:s
+TAIBOM (Trusted AI Bill of Mat, formerly T-CHAINerials) addresses two fundamental challinimpact the development and deployment of trustworthy AI s:s
 - Versioning - How do we refer to an AI system in a stable way? How do we produce an AI inventory of an AI system's components? How do we relate the versioning of an AI system to the versioning of its components? and
 - Attestations - How do we make attestations about the properties and characteristics of an AI system? How do we make attestations about its performance, legal constraits on its application, etc. How do the attestations for the system relate to attestations for its components? How do we make attestations in a flexible and interoperable way? How do we reason about attestations in the context of its intended use and out own subective preferences?
  require
