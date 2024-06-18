@@ -1,22 +1,23 @@
 ---
 title: TAIBOM Project
----
+---# Trusted AI Bill of Materials
 
-# Trusted AI Bill of Materials
+TAIBOM (Trusted AI Bill of Materials, formerly T-CHAIN) addresses two fundamental challenges in the development and deployment of trustworthy AI systems:
 
-TAIBOM (Trusted AI Bill erialsof Mat, formerly Terials) addresses two fundamentalenges  cimpact the development and deployment of trustworthystemsy
-AI s:s
 - Versioning - How do we refer to an AI system in a stable way? How do we produce an AI inventory of an AI system's components? How do we relate the versioning of an AI system to the versioning of its components? and
+
 - Attestations - How do we make attestations about the properties and characteristics of an AI system? How do we make attestations about its performance, legal constraits on its application, etc. How do the attestations for the system relate to attestations for its components? How do we make attestations in a flexible and interoperable way? How do we reason about attestations in the context of its intended use and out own subective preferences?
- require
 
 TAIBOM is motivated by the recent increase in the composability within and between AI systems, particularly in the form or open source models, open adaptors, open datasets and open weights. This trend of increasing composability mirrors what has already happened in traditional software development, where open source allowed for the creation of software that was built from components from a multitude of sources that were outside of the direct control of the software system developer.
 
 Since each such component is itself typically created from a multitude of other components, it became almost impossible for the developer of a software system to understand its properties and characteristics or the implications of including a particular component. To solve this problem, Software Bill of Materials (SBOM) was introduced. SBOM makes it easy for the developer of a software system to identify all of its components and to understand how they affect the properties and characteristics of the system as a whole. In particular, it makes it possible to quickly identify known security vulnerabilities and unacceptable licences.
 
-Most early AI systems, and many modern application-specific AI systems, are produced by a single organization using their own data, their own models and a limited set of well-specified tools. Some modern AI systems, however, are more like modern software systems, being composed of a multitude of AI components from a multitude of sources that are not under the system developer's direct control. This motivates the introduction of TAIBOM. TAIBOM allows the developer of a complex AI system to easily identify its components and hence for both the developer of the system and its users to more fully understand its properties and characteristics.general.
+Most early AI systems, and many modern application-specific AI systems, are produced by a single organization using their own data, their own models and a limited set of well-specified tools. Some modern AI systems, however, are more like modern software systems, being composed of a multitude of AI components from a multitude of sources that are not under the system developer's direct control. This motivates the introduction of TAIBOM. TAIBOM allows the developer of a complex AI system to easily identify its components and hence for both the developer of the system and its users to more fully understand its properties and characteristics.
 
-## Versioning
+For TAIBOM to be succeed, it must provide means for attestations to be made by identified parties about identified AI systems. Each of these considerations are discussed in the following sections.neral.
+
+## Ve
+rsioning
 AI systems are highly volatile; a change of a single training parameter, a poisoned training data set or an insecure training or deployment machine can change the behaviour of an AI system enormously. A trustworthy system becomes untrustworthy in an almost imperceptible manner.
 The versioning problem is one of compositionality and dependency: how to describe a complex system in terms of its component parts and how to track the inherent dependencies. 
 
@@ -37,4 +38,4 @@ AI Adoption: this innovation will provide the tools for AI stakeholders, from th
 TAIBOM creates a standardised ecosystem for describing the nuanced composition of AI systems (versioning) and making contextualised but precise claims about the trustworthiness (attestations) of the system, and its components.
 
 Our approach is dual strand:
-- Develop the commercial tools for managing AI system lifecycl
+- Develop the commercial tools fo
