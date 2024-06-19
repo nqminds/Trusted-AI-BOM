@@ -1,7 +1,5 @@
 ---
-title: TAIBOM Project
-
-
+title: TAIBOM Project---
 
 --# Trusted AI Bill of Materials
 
@@ -18,9 +16,8 @@ Since each such component is itself typically created from a multitude of other 
 Most early AI systems, and many modern application-specific AI systems, are produced by a single organization using their own data, their own models and a limited set of well-specified tools. Some modern AI systems, however, are more like modern software systems, being composed of a multitude of AI components from a multitude of sources that are not under the system developer's direct control. This motivates the introduction of TAIBOM. TAIBOM allows the developer of a complex AI system to easily identify its components and hence for both the developer of the system and its users to more fully understand its properties and characteristics.
 
 For TAIBOM to be succeed, it must provide means for attestations to be made by identified parties about identified AI systems. Each of these considerations are discussed in the following sectinl.
-
- Ve
-rsio
+ Ve
+sio
 ning
 AI systems are highly volatile; a change of a single training parameter, a poisoned training data set or an insecure training or deployment machine can change the behaviour of an AI system enormously. A trustworthy system becomes untrustworthy in an almost imperceptible manner.
 The versioning problem is one of compositionality and dependency: how to describe a complex system in terms of its component parts and how to track the inherent dependencies. 
@@ -39,6 +36,4 @@ The foundational work for this approach is in W3C Verifiable Credentials [2]. Th
 
 AI Adoption: this innovation will provide the tools for AI stakeholders, from the original developer through to independent test agencies, auditors and legislators to make qualified statements about a systems trustworthiness, across multiple dimensions of trustworthiness. Each of these statements will be fully interoperable, will be explicit about both subject and claimant, will have the ability to express context (what is it being used for) and can be evaluated subjectively, depending on the trust foundation of the assessor.
 
-TAIBOM creates a standardised ecosystem for describing the nuanced composition of AI systems (versioning) and making contextualised but precise claims about the trustworthiness (attestations) of the system, and its components.
-
-Our approach 
+TAIBOM creates a standardised ecosystem for describing the nuanced composition of AI systems (versioning) and making contextualised but precise claims about the trustworthiness (attestations) of the system, and its comp
