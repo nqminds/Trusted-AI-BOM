@@ -1,5 +1,4 @@
-
-# TAIBOM stakeholders and use cases
+# Stakeholders
 
 There are a large number of parties that may be affected by, or involved in, the development, deployment and use of AI systems and systems containing AI components and hence who would benefit from TAIBOM. They include the following potential beneficiaries:
 
@@ -32,7 +31,7 @@ The stakeholders also include the following interested parties:
 * AI system and component repository providers. Providers of AI system or component stores or repositories should make TAIBOMs available for each AI system or component that they provide. Ideally, they should also allow user to search for AI systems and components based on the contents of their TAIBOMs.
 
 
-# TAIBOM use cases
+# Use Cases
 
 A number of use cases for TAIBOM have been outlined in brief above where they relate to specific stakeholders. In the following sections, we will describe three use cases in more detail: downloading an AI model from a repository; using inferences performed by a third party AI system; and generating an inventory of an AI system.
 
@@ -63,9 +62,7 @@ A business acquires a competitor and inherits AI-related software assets. The ma
 
 ======================================================
 
-
 Some general text talking about taibom use cases
-
 
 
 
@@ -98,8 +95,4 @@ Some general text talking about taibom use cases
 
 
 
-## Content publishers
-
-
-
-## Inference system ho
+## Content p
