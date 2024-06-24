@@ -38,7 +38,7 @@ A number of use cases for TAIBOM have been outlined in brief above where they re
 
 ## Downloading an AI Model from a Repository
 
-A business is developing software that integrates a pretrained AI model for recognising road signs. Domain-specific regulations require third party assessments of the robustness of the model to adversarial modification of road signs in the wild. Internal cybersecurity teams require information about known vulnerabilities in the model and software assets associated with performing inference using the model.
+A business is developing software that integrates a pretrained AI model for recognising road signs. Domain-specific regulations require third party assessments of the robustness of the model to adversarial modification of road signs in the wild and internal cybersecurity teams require information about known vulnerabilities in the model and software assets associated with performing inference using the model.
 
 The download of the model from the provider includes a TAIBOM with a hash of the model weights, a hash of the inference code and information about the training data, which is composed of multiple datasets.
 
@@ -83,4 +83,4 @@ Some general text talking about taibom use cases
 
 
 
-## AI (core model) system publishers
+## AI (core mo
