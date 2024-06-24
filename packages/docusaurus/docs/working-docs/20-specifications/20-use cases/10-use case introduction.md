@@ -24,7 +24,7 @@ The stakeholders also include the following interested parties:
 
 * Hardware developers and vendors. TAIBOM should be able to represent information about training and inference hardware and firmware.
 
-* Software developers, and system and model builders developers and vendors. TAIBOM should include information about the software components of an AI system, its training data and its training environment.
+* Software developers, and system and model builders, developers and vendors. TAIBOM should include information about the software components of an AI system, its training data and its training environment.
 
 * Service providers. TAIBOM should include information about inference software, inference data and the inference environment.
 
@@ -84,7 +84,3 @@ Some general text talking about taibom use cases
 
 
 ## AI (core model) system publishers
-
-
-
-## AI system integ
