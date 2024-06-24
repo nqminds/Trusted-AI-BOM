@@ -28,7 +28,7 @@ The stakeholders also include the following interested parties:
 
 * Service providers. TAIBOM should include information about inference software, inference data and the inference environment.
 
-* AI system and component repository providers. Providers of AI system or component stores or repositories should make TAIBOMs available for each AI system or component that they provide. Ideally, they should also allow user to search for AI systems and components based on the contents of their TAIBOMs.
+* Providers of AI component repositories and AI component hosts and distributors. Providers of AI system or component stores or repositories should make TAIBOMs available for each AI system or component that they provide. Ideally, they should also allow user to search for AI systems and components based on the contents of their TAIBOMs.
 
 
 # Use Cases
@@ -87,8 +87,4 @@ Some general text talking about taibom use cases
 
 
 
-## AI system integrators (developers)
-
-
-
-## 
+## AI system integ
