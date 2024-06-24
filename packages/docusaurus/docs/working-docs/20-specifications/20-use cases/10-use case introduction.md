@@ -18,7 +18,7 @@ There are a large number of parties that may be affected by, or involved in, the
 
 * AI ethics teams, academics and political actors. By improving transparency around the properties of high profile AI systems, TAIBOM can support the work of ethics teams, academics and political actors.
 
-* Insurance providers. Businesses that provide insurance against risks associated with the use of AI systems, such as copyright infringement, regulatory breaches, etc.
+* Insurance providers. Businesses that provide insurance against AI-related risks, such as copyright infringement, regulatory breaches, etc. will benefit from the trsanparency that TAIBOM provides about the properties of the systems being insured.
 
 The stakeholders also include the following interested parties:
 
@@ -91,4 +91,4 @@ Some general text talking about taibom use cases
 
 
 
-## Providers of training data ( c
+## 
