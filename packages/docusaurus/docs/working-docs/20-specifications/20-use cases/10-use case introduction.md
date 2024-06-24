@@ -1,6 +1,6 @@
 # Stakeholders
 
-There are a large number of parties that may be affected by, or involved in, the development, deployment and use of AI systems and systems containing AI components and hence who would benefit from TAIBOM. They include the following potential beneficiaries:
+There are a large number of parties that may be affected by, or involved in, the development, deployment and use of AI systems or AI system components and hence who might benefit from TAIBOM. They include the following:
 
 * Users of AI systems. These can be members of the public, governments or businesses that use products and services that involve AI. The presence of TAIBOM attestations for products and services can provide information relating to terms of use, security, privacy and performance.
 
@@ -91,8 +91,4 @@ Some general text talking about taibom use cases
 
 
 
-## Providers of training data ( content owners)
-
-
-
-## Content p
+## Providers of training data ( c
