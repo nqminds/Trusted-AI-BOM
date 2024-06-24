@@ -1,8 +1,9 @@
-Requirements Overview
+# Requirements Overview
 
 The core elements of TAIBOM are identification and attestation. In this section, we consider each of these in more detail and identify a wide range of requirements. We finish by describing a specific subset of those requirements that are particularly useful and that we intend to focus on during the course of this project.
 
-Identification
+
+## Identification
 
 TAIBOM attestations communicate claims about the properties of an identifiable entity or set of entities. As was previously discussed, TAIBOM needs to be flexible with regards to what is identified and the means by which it is identified. This is because different parties will be interested in making, or searching for, claims about the properties of different sets of entities.
 
@@ -25,12 +26,23 @@ For example, a TAIBOM claim might assert that:
 
 Each claim should, ideally, identify the largest set of entities to which it applies. If, for example, a particular dataset contains poisoned data, we can reason broadly about the impact of the poisoning if we have a claim relating to the poisoning of the dataset, claims informing us what other datasets incorporate the dataset and claims telling us which model weights were produced by training on which datasets. If we only have a vey narrow claim that a particular set of weights were trained on poisoned data, we are unable to generalise.
 
-Similarly, when users search for TAIBOMs, they should be able to specify complex queries. For example, someone might want to find weights trained on data excluding a particular dataset, that achieves a specified minimum level of performance on a benchmark, as attested to by a party other than the one that trained the model; or they might want to find the best performing such model that has terms of use that permit commercial use; etc.
+Similarly, when users search for TAIBOMs, they should be able to specify complex queries - that is, they should be able to specify sets of entities of interest in complex ways. For example, someone might want to find weights trained on data excluding a particular dataset, that achieves a specified minimum level of performance on a benchmark, as attested to by a party other than the one that trained the model; or they might want to find the best performing such model that has terms of use that permit commercial use; etc.
 
-Composition is common in the AI space. For example, datasets are frequently remixed into different combinations, or built upon; and model weights are combined with adaptors; etc. TAIBOM needs to be able to approximate the effects of forming such combinations so that we can efficiently infer the likely properties of the composite entity from its components. We use the word "approximate" here because the effects of composition may be complex and depend on what is being composed.
 
-For example, composing a base model and an adaptor does not necessarily preserve the properties of either the base model or the adaptor. Similarly, adding a dataset
+## Combining Attestations
 
+Combining entities is common in the AI space. For example, datasets are frequently remixed into different combinations, or built upon; and model weights are combined with adaptors; etc. TAIBOM needs to be able to approximate the effects of forming such combinations so that we can efficiently infer the likely properties of the combined entity from its components. We use the word "approximate" here because the effects of combination may be complex and depend on what are being combined.
+
+For example, combining a base model with an adaptor does not necessarily preserve the properties of either the base model or the adaptor. Similarly, combining datasets is compositional in terms of some properties, such as whether the combined dataset is poisoned, but not necessarily in terms of others, such as whether the combined dataset is statistically biased in some particular way. We therefore need to be clear as to which combinations produce composition and which produce modulation with respect to which properties. 
+
+In other words:
+
+* Properties of components are modulatory with respect to other properties of the combined entity if the latter depend on a specific combination of the former and hence it is not possible to generalise the latter from one combination to another.
+* Properties of components are compositional if the combined entity directly inherits the properties of its components.
+
+So, for example, applying an adaptor or combining training datasets is modulatory with respect to model inference behaviour and hence any property that is a function of inference behaviour cannot be generalized across adaptors or differently composed training datasets. On the other hand, whether a training dataset contains poisoned data, contains copyrighted material, or has terms of use that prohibit the commercial use of trained models are compositional and hence can be generalized across datasets based on their components.
+
+TAIBOM should recognize the distinction between modulatory and compositional properties.
 
 
 
@@ -88,4 +100,4 @@ A complex AI system has dependencies that need describing to fully understand pr
 
 Any actor (author or third party) can provide descriptors for each component of the system as a whole. (e.g. a training content review, as SBOM validation, a system integrity check, a fairness assessment). 
 
-TAIBOM provides both a mechanism of making these attestations, but also a framework for the dynamic and subjective evaluation, of combinations
+TAIBOM provides both a mechanism of making these attestations, but also a framework for the dynamic and subjective evaluation, of 
