@@ -1,4 +1,4 @@
---# Trusted AI Bill of Materials
+# Trusted AI Bill of Materials
 
 TAIBOM (Trusted AI Bill of Materials, formerly T-CHAIN) addresses two fundamental challenges in the development and deployment of trustworthy AI systems:
 
