@@ -56,7 +56,7 @@ A search for attestations relating to the model reveals that it is vulnerable to
 
 ## Generating an Inventory of an AI System
 
-A business acquires a competitor and inherits AI-related software assets. The management team of teh acquiring business wants to understand the state of the assets, what their dependencies are, whether they have known vulnerabilities and what licences are involved. The businesses uses a TAIBOM client to scan the software assets to identify their component parts and then to search for relevant attestations.
+A business acquires a competitor and inherits AI-related software assets. The management team of teh acquiring business wants to understand the state of the assets, what their dependencies are, whether they have known vulnerabilities and what licences are involved. The business uses a TAIBOM client to scan the AI-related software assets to identify their component parts and then to search for relevant attestations.
 
 ======================================================
 
@@ -73,4 +73,4 @@ Some general text talking about taibom use cases
 
 
 
-## AI (core model) system tra
+## AI (core mod
