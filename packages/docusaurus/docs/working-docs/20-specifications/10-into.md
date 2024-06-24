@@ -2,9 +2,9 @@
 
 TAIBOM (Trusted AI Bill of Materials, formerly T-CHAIN) addresses two fundamental challenges in the development and deployment of trustworthy AI systems:
 
-- Versioning - How do we refer to an AI system in a stable and repeatable way? How do we produce an inventory of an AI system's dependencies? How do we relate the versioning of an AI system to the versioning of its dependencies? and
+- System dentification - How do we refer to an AI system in a stable and repeatable way? How do we produce an inventory of an AI system's dependencies? How do we relate the versioning of an AI system to the versioning of its dependencies? and
 
-- Attestations - How do we make attestations about the properties of an AI system? How do we make attestations about its behaviour or legal status? How do attestations for the system relate to attestations for its dependencies? How do we make attestations in a flexible and interoperable way? How do we reason about attestations in the context of a system's intended use and our own preferences?
+- Attestation - How do we make attestations about the properties of an AI system? How do we make attestations about its behaviour or legal status? How do attestations for the system relate to attestations for its dependencies? How do we make attestations in a flexible and interoperable way? How do we reason about attestations in the context of a system's intended use and our own preferences?
 
 TAIBOM is motivated by the recent increase in the composability within and between AI systems, particularly in the form of open source models, open adaptors, open datasets and open weights. This trend of increasing composability mirrors what has already happened in traditional software development, where open source code allowed for the creation of software that was built from dependencies from a multitude of sources that were outside of the direct control of the software system developer.
 
