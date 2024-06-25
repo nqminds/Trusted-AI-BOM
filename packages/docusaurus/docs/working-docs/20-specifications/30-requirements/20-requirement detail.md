@@ -3,7 +3,7 @@
 The core elements of TAIBOM are identification and attestation. In this section, we consider each of these in more detail and identify a wide range of requirements. We finish by describing a specific subset of those requirements that are particularly useful and that we intend to focus on during the course of this project.
 
 
-## Identification
+## System and Component Identification
 
 TAIBOM attestations communicate claims about the properties of an identifiable entity or set of entities. As was previously discussed, TAIBOM needs to be flexible with regards to what is identified and the means by which it is identified. This is because different parties will be interested in making, or searching for, claims about the properties of different sets of entities.
 
@@ -28,6 +28,54 @@ Each claim should, ideally, identify the largest set of entities to which it app
 
 Similarly, when users search for TAIBOMs, they should be able to specify complex queries - that is, they should be able to specify sets of entities of interest in complex ways. For example, someone might want to find weights trained on data excluding a particular dataset, that achieves a specified minimum level of performance on a benchmark, as attested to by a party other than the one that trained the model; or they might want to find the best performing such model that has terms of use that permit commercial use; etc.
 
+Many of TAIBOM's use cases relate either to the inference behaviour of a system or its legal status and it is therefore essential that TAIBOM is able to distinguish between systems with different inference behaviours and legal statuses.
+
+## Factors Affecting Inference Behaviour
+
+Depending on the type of the AI system, it's inference behaviour is potentially influenced by a wide range of factors, such as it's training data; the training algorithm; the code used for training; the inference algorithm; the code used for inference; the weights used for inference; its training and inference configurations; adaptors used during inference; data used during inference; etc.
+
+Some of these factors have a hierarchical structure. For example, in terms of inference behaviour, the code used for inference is likely to form a behavioural cluster beneath the inference algorithm, where different implementations of the same algorithm might be provided within different frameworks or on different platforms, with small variations in behaviour. In some cases, attestations might relate to the use of a particular algorithm irrespective of the detail of how it is implemented, but, in other cases, attestations might relate to a specific implementation of a specific algorithm within a specific framework.
+
+Similarly, we might expect to see the inference behaviour of a system conditionally independent of some factors in the presence of others. For example, the combination of weights and code used for inference might be sufficient to completely determine the behaviour of the system during inference, in which case, in terms of behavioural attestations, the training data, training code and training algorithm become irrelevant in the sense that two systems with identical weights and inference code will exhibit the same inference behaviour regardless of differences in how they were trained and hence all attestations that relate to inference behaviour that apply to one will also apply to the other.
+
+It should be noted, however, that having information about how a model is trained might still be useful. It is possible, for example, that systems trained using a particular approach tend to have specific properties, such as adversarial robustness. Providing information about how a model was trained will, in some cases, therefore make it possible to infer certain properties of its inference behaviour even when there are no attestations that are explicitly about the inference behaviour.
+
+The inference behaviour of an AI system might also be affected by data that are retrieved during inference. For example, a system might use a private corpus to answer questions from a user. How such a system is represented in TAIBOM depends on where the boundary of the system is drawn: if the boundary is drawn around the AI system that does the inference and all the data that it has access to, then the system can be assigned attestations that are static in the sense that they are the same for each inference.
+
+In practice, however, such a boundary might be so large as to be almost useless. Consider, for example, a system that uses the internet to answer questions. Including the entire internet within the boundary of the system is likely to allow for only very limited attestations in many cases, particularly when it comes to properties like the system's security and the factuality of its outputs.
+
+In such cases, it might be useful to draw a more specific boundary around the AI system that includes only the specific data that were accessed during a specific inference. This creates a dynamic inference-level TAIBOM that supplements the static system-level TAIBOM and reflects the fact that the effective structure and content of the system changes with each inference.
+
+TAIBOMs could be associated with webpages that are known to contain content that adversely affects certain types of AI systems, which is conceptually similar to maintaining a reputation list or blacklist. For example, webpages have been created that attempt to modify the behaviour of Bing Chat. By providing a TAIBOM for such pages, it would be possible to provide a dynamic supplemental TAIBOM for Bing Chat that reflects the fact that some of its properties, such as its trustworthiness and the factual accuracy of its outputs, vary on a per inference basis. 
+
+Similarly, we are starting to see the emergence of models that dynamically apply different mixtures of adaptors or invoke different mixtures of experts or external tools at inference time. Again, static TAIBOM attestations for such systems can account for their static or gross properties, while dynamic supplemental TAIBOMs can be issued per inference to account for the dynamic structure of the system and its inference specific properties.
+
+An additional consideration is that some AI systems are stateful in the sense that their behaviours are determined by their histories. Consider, for example, a chatbot that can access the internet and also automatically creates and maintains a list of useful facts and uses them during a conversation. The behaviour of the chatbot will be a function of the deep history of the conversation and not just its recent history or the currently retrieved webpage. 
+
+Such a system could be described by the static and dynamic TAIBOMs that have already been discussed, but with the difference that the properties attested to in the per inference TAIBOM might be affected by the entire history of the system rather than just the current inference.
+
+A final consideration relating to inference behaviour is that the primary input to an AI system (in contrast to retrieved content) might also affects its behaviour in a way that might have implications for inference behaviour-related attestations. For example, some attestations might apply only when the input is, in some sense, "in distribution" or consistent with the system's intended use. Again, this implies a that TAIBOM should be able to support dynamic attestations that vary on each inference.
+
+This section has discussed factors affecting the inference behaviour of an AI system. The following section discusses the legal statuses of AI systems.
+
+
+## Factors Affecting a System's Legal Status
+
+The legal status of an AI system is intended to cover anything relating to the law, including licences, terms of use and regulations, as well a legal risks that might arise from the use of AI models, such as those relating to copyright. The legal status of a model might restrict its use, typically preventing commercial or military use, but might also offer indemnifications against loses arising from claims of copyright infringement.
+
+The legal status of a system is typically affected by the datasets on which its components were trained, the creators of components, the suppliers of components, service providers, hosts, and the laws and regulations local to where the various components were developed, are hosted, are used and, potentially, where data originate. TAIBOM needs to be able to express the legal status of a system, making good use of compositionality to maximize its ability to generalise attestations.
+
+For example, rather than a particular system hosted with a particular provider having the provider's terms associated with it individually, it is better to have the provider as a property of the system and the provider's terms be a property of the provider. This allows the terms for all systems with the same host to be updated automatically when the host's terms are updated and avoids the need to iterate of all system TAIBOMs and update them individually.
+
+Composing legal constraints is typically easier than composing other types of properties because it is generally the case that the constraints on the system are the tightest of the constraints of its components. For example, if all components in a system have permissive licences, but one prohibits commercial use, then commercial use the system as a whole will also be prohibited.
+
+The legal constrains on a system might also be relatively arbitrary in the sense that a particular buyer might obtain specific legal terms that do not apply to identical copies of the same system that are used by others. TAIBOM therefore needs to be able to represent such special cases and avoid overgeneralization.
+
+
+## Other factors
+
+We have so far focused on the inference behaviour and legal status of a system as they account for a large proportion of what stakeholders of TAIBOM are likely to care about. When it comes to trust more generally, however, there are other factors that might be relevant, such as the country where a system is hosted.
+
 
 ## Combining Attestations
 
@@ -38,12 +86,12 @@ For example, combining a base model with an adaptor does not necessarily preserv
 In other words:
 
 * Properties of components are modulatory with respect to other properties of the combined entity if the latter depend on a specific combination of the former and hence it is not possible to generalise the latter from one combination to another.
+
 * Properties of components are compositional if the combined entity directly inherits the properties of its components.
 
 So, for example, applying an adaptor or combining training datasets is modulatory with respect to model inference behaviour and hence any property that is a function of inference behaviour cannot be generalized across adaptors or differently composed training datasets. On the other hand, whether a training dataset contains poisoned data, contains copyrighted material, or has terms of use that prohibit the commercial use of trained models are compositional and hence can be generalized across datasets based on their components.
 
 TAIBOM should recognize the distinction between modulatory and compositional properties.
-
 
 
 
@@ -100,4 +148,4 @@ A complex AI system has dependencies that need describing to fully understand pr
 
 Any actor (author or third party) can provide descriptors for each component of the system as a whole. (e.g. a training content review, as SBOM validation, a system integrity check, a fairness assessment). 
 
-TAIBOM provides both a mechanism of making these attestations, but also a framework for the dynamic and subjective evaluation, of 
+TAIBOM provides both a mechanism of making these attestations, but also a framework for the dynamic and subjective eva
