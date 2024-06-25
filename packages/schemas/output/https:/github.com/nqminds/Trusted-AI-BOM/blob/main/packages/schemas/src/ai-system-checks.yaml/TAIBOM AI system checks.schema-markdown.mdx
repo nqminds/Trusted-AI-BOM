@@ -1,0 +1,118 @@
+---
+title: TAIBOM AI system checks
+---
+
+
+
+# TAIBOM AI system checks
+
+Declaration a snapshot of the trained system has been checked.
+
+The schema defines the following properties:
+
+## `systemId` (string, required)
+
+ID of the AI system snapshot
+
+## `systemName` (string, required)
+
+Name of the AI system snapshot
+
+## `systemVersion` (string, required)
+
+AI system version
+
+## `systemCheck` (string, required)
+
+System check which was performed
+
+## `dateTime` (string, required)
+
+Date & time of check
+
+
+# Schemas
+```yaml 
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/ai-system-checks.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: TAIBOM AI system checks
+description: Declaration a snapshot of the trained system has been checked.
+type: object
+properties:
+  systemId:
+    type: string
+    description: ID of the AI system snapshot
+  systemName:
+    type: string
+    description: Name of the AI system snapshot
+  systemVersion:
+    type: string
+    description: AI system version
+  systemCheck:
+    type: string
+    description: System check which was performed
+  dateTime:
+    type: string
+    format: datetime
+    description: Date & time of check
+required:
+  - systemId
+  - systemName
+  - systemVersion
+  - systemCheck
+  - dateTime
+
+```
+
+```json
+{
+  "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/ai-system-checks.yaml",
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "TAIBOM AI system checks",
+  "description": "Declaration a snapshot of the trained system has been checked.",
+  "type": "object",
+  "properties": {
+    "systemId": {
+      "type": "string",
+      "description": "ID of the AI system snapshot"
+    },
+    "systemName": {
+      "type": "string",
+      "description": "Name of the AI system snapshot"
+    },
+    "systemVersion": {
+      "type": "string",
+      "description": "AI system version"
+    },
+    "systemCheck": {
+      "type": "string",
+      "description": "System check which was performed"
+    },
+    "dateTime": {
+      "type": "string",
+      "format": "datetime",
+      "description": "Date & time of check"
+    }
+  },
+  "required": [
+    "systemId",
+    "systemName",
+    "systemVersion",
+    "systemCheck",
+    "dateTime"
+  ]
+}
+```
+
+# Examples
+```json
+[
+  {
+    "systemId": "SYSTEM_ID_1",
+    "systemName": "System 1",
+    "systemVersion": "1.0.0",
+    "systemCheck": "Data poisioning",
+    "dateTime": "2023-12-15T08:30:00.000Z"
+  }
+]
+```

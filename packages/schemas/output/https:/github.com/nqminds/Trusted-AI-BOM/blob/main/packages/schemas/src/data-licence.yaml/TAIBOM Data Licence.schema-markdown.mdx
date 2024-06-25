@@ -1,0 +1,143 @@
+---
+title: TAIBOM Data Licence
+---
+
+
+
+# TAIBOM Data Licence
+
+Declaration that a particular piece of data has a license. There are two variants  - for external references and hashed license.
+This captures constraints that the data provider/owner/contributor places on the use of the data (e.g. may not be used in the creation of weapons systems)
+
+
+The schema defines the following properties:
+
+## `name` (string, required)
+
+Human readable name of TAIBOM data licencing
+
+## `data` (string, required)
+
+Hash of the data used in training an AI system.
+
+## `licence` (string, required)
+
+The hash value representing the license associated with the data.
+
+
+# Schemas
+```yaml 
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/data-licence.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: TAIBOM Data Licence
+description: |
+  Declaration that a particular piece of data has a license. There are two variants  - for external references and hashed license.
+  This captures constraints that the data provider/owner/contributor places on the use of the data (e.g. may not be used in the creation of weapons systems)
+type: object
+properties:
+  name:
+    type: string
+    description: Human readable name of TAIBOM data licencing
+  data:
+    description: Hash of the data used in training an AI system.
+    type: string
+    anyOf:
+      - format: url
+        description: URI to hashed data
+      - not:
+          format: url
+          description: Hash of data
+  licence:
+    description: The hash value representing the license associated with the data.
+    type: string
+    anyOf:
+      - format: url
+        description: URI to licence
+      - not:
+          format: url
+          description: Hash of Licence
+required:
+  - name
+  - data
+  - licence
+
+```
+
+```json
+{
+  "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/data-licence.yaml",
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "TAIBOM Data Licence",
+  "description": "Declaration that a particular piece of data has a license. There are two variants  - for external references and hashed license.\nThis captures constraints that the data provider/owner/contributor places on the use of the data (e.g. may not be used in the creation of weapons systems)\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Human readable name of TAIBOM data licencing"
+    },
+    "data": {
+      "description": "Hash of the data used in training an AI system.",
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "url",
+          "description": "URI to hashed data"
+        },
+        {
+          "not": {
+            "format": "url",
+            "description": "Hash of data"
+          }
+        }
+      ]
+    },
+    "licence": {
+      "description": "The hash value representing the license associated with the data.",
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "url",
+          "description": "URI to licence"
+        },
+        {
+          "not": {
+            "format": "url",
+            "description": "Hash of Licence"
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "data",
+    "licence"
+  ]
+}
+```
+
+# Examples
+```json
+[
+  {
+    "data": "https://example.com/data/hash",
+    "licence": "https://example.com/licence/hash",
+    "name": "Data version 1"
+  },
+  {
+    "data": "https://example.com/data/hash",
+    "licence": "ddd9043214b13facc71bd82093bf561698c5bd257de1adf12398080f6202f8b0",
+    "name": "Using licence 2"
+  },
+  {
+    "data": "a5a67b39faf14d8dac7bab43ca1322ffa7f37551045d05393192f2f37e5be254",
+    "licence": "https://example.com/licence/hash",
+    "name": "Data x Licence"
+  },
+  {
+    "data": "a5a67b39faf14d8dac7bab43ca1322ffa7f37551045d05393192f2f37e5be254",
+    "licence": "ddd9043214b13facc71bd82093bf561698c5bd257de1adf12398080f6202f8b0",
+    "name": "Data licence version 1"
+  }
+]
+```

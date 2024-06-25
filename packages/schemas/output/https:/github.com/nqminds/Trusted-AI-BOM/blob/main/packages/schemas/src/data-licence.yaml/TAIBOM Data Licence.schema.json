@@ -1,0 +1,50 @@
+{
+  "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/data-licence.yaml",
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "TAIBOM Data Licence",
+  "description": "Declaration that a particular piece of data has a license. There are two variants  - for external references and hashed license.\nThis captures constraints that the data provider/owner/contributor places on the use of the data (e.g. may not be used in the creation of weapons systems)\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Human readable name of TAIBOM data licencing"
+    },
+    "data": {
+      "description": "Hash of the data used in training an AI system.",
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "url",
+          "description": "URI to hashed data"
+        },
+        {
+          "not": {
+            "format": "url",
+            "description": "Hash of data"
+          }
+        }
+      ]
+    },
+    "licence": {
+      "description": "The hash value representing the license associated with the data.",
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "url",
+          "description": "URI to licence"
+        },
+        {
+          "not": {
+            "format": "url",
+            "description": "Hash of Licence"
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "data",
+    "licence"
+  ]
+}
