@@ -72,9 +72,9 @@ Composing legal constraints is typically easier than composing other types of pr
 The legal constrains on a system might also be relatively arbitrary in the sense that a particular buyer might obtain specific legal terms that do not apply to identical copies of the same system that are used by others. TAIBOM therefore needs to be able to represent such special cases and avoid overgeneralization.
 
 
-## Other factors
+## Other Considerations
 
-We have so far focused on the inference behaviour and legal status of a system as they account for a large proportion of what stakeholders of TAIBOM are likely to care about. When it comes to trust more generally, however, there are other factors that might be relevant, such as the country where a system is hosted.
+We have so far focused on the inference behaviour and legal status of a system as they account for a large proportion of what stakeholders of TAIBOM are likely to care about. When it comes to trust more generally, however, there are other factors that might be relevant, such as the country where a system is hosted. Similarly, some cybersecurity issues are not related to inference behaviour specifically, but they still relate to the behaviour of the AI system. TAIBOM needs to be able to represent the factors relating to the presence or absence of such issues, which are typically related to the inference software, the host environment, etc. and relate to traditional SBOM.
 
 
 ## Combining Attestations
@@ -92,9 +92,6 @@ In other words:
 So, for example, applying an adaptor or combining training datasets is modulatory with respect to model inference behaviour and hence any property that is a function of inference behaviour cannot be generalized across adaptors or differently composed training datasets. On the other hand, whether a training dataset contains poisoned data, contains copyrighted material, or has terms of use that prohibit the commercial use of trained models are compositional and hence can be generalized across datasets based on their components.
 
 TAIBOM should recognize the distinction between modulatory and compositional properties.
-
-
-
 
 
 
@@ -148,4 +145,4 @@ A complex AI system has dependencies that need describing to fully understand pr
 
 Any actor (author or third party) can provide descriptors for each component of the system as a whole. (e.g. a training content review, as SBOM validation, a system integrity check, a fairness assessment). 
 
-TAIBOM provides both a mechanism of making these attestations, but also a framework for the dynamic and subjective eva
+TAIBOM provides both a mechanism of making these attestations, but also a framework for the dynamic and su
