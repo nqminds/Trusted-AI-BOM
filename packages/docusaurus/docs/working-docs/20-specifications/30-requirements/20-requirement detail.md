@@ -94,12 +94,30 @@ So, for example, applying an adaptor or combining training datasets is modulator
 TAIBOM should recognize the distinction between modulatory and compositional properties.
 
 
+# TAIBOM Scope
 
+The preceding discussion provided an overview of some of the wide range of capabilities that are required from a comprehensive AI bill of materials. It is intended that a flexible schema be developed as part of the TAIBOM project, along with a reasoning framework that allows users to make inferences about AI systems according to their own subjective preferences.
 
+To demonstrate the core concepts of TAIBOM, it is proposed to focus on the use case of downloading a single AI model from a provider such as Hugging Face. This will involve representing some or all of the following information in static TAIBOMs and reasoning about the properties of the model:
 
+* a list of datasets that form the training data for the model
+* a list of the terms and conditions associated with the training datasets
+* claims relating to problems with the training data, such as whether they are poisoned
+* the architecture of the model
+* the organization that trained the model
+* the licence(s) under which the model is released
+* claims relating to known problems with the model
+* a hash of the trained model weights
+* a hash of the model inference code
+* claims relating to the benchmark performance of the model
+
+Some or all of this information will be simulated to make it easy to demonstrate various effects, such as how different TAIBOM consumers with different trust in different providers of attestations have different views of the model.
+
+A TAIBOM client will hash the model weights and code after download and retrieve relevant attestations according to preferences set by the user.
 
 ==========================================================
 
+[DELETE BELOW THIS LINE]
 
 # Identification and Attestation
 
@@ -145,4 +163,4 @@ A complex AI system has dependencies that need describing to fully understand pr
 
 Any actor (author or third party) can provide descriptors for each component of the system as a whole. (e.g. a training content review, as SBOM validation, a system integrity check, a fairness assessment). 
 
-TAIBOM provides both a mechanism of making these attestations, but also a framework for the dynamic and su
+TAIBOM provides both a mechanism of making these attestations, but also a framework for the dy
