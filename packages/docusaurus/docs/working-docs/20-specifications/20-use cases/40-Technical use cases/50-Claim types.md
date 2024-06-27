@@ -154,4 +154,4 @@ Some examples are listed below:
 * Training data check: training data sets can be analysed by human or computer and validated against. Examples of training data checks:
   * Poisoning check
   * Bias check 
-* Performance checks: the operational performance of a trained inference system can be validated against an external t
+* Performance checks: the operational performance of a trained inference system can be validated against an external tests suite (which may include a validation data set for example)
