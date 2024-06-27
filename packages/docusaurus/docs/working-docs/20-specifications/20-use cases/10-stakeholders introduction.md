@@ -14,11 +14,13 @@ There are a large number of parties that may be affected by, or involved in, the
 
 * **AI system developers**. Teams developing solutions using AI systems should more easily be able to understand the strengths and weaknesses of different AI systems, including independent benchmarks and known vulnerabilities.
 
+* **Deployment teams**. Teams deploying systems need to make sure that the inference system that is deployed into the production environment is the correct one and that the production environment is setup correctly.
+
 * **Investors and venture capitalists**. TAIBOM can support due diligence prior to an investment decision being made, making it easier to identify legal, technical, intellectual property and security risks arising from a business's AI assets.
 
 * **AI ethics teams**, academics and political actors. By improving transparency around the properties of high profile AI systems, TAIBOM can support the work of ethics teams, academics and political actors.
 
-* Insurance providers. Businesses that provide insurance against AI-related risks, such as copyright infringement, regulatory breaches, etc. will benefit from the trsanparency that TAIBOM provides about the properties of the systems being insured.
+* **Insurance providers**. Businesses that provide insurance against AI-related risks, such as copyright infringement, regulatory breaches, etc. will benefit from the trsanparency that TAIBOM provides about the properties of the systems being insured.
 
 The stakeholders also include the following interested parties:
 
