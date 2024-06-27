@@ -42,7 +42,8 @@ Key properties
 * Version (optional): the owner can self declare a stable version. However this is not verifiable by the client 
 * Hash (optional): the hash is optional, it can be created by the data author, and is verifiable on complete download, if we have strong spidering semantics 
 * Description (optional)
-* Owner (optional): base ownership implied by domain ownership
+* Owner (optional)
+* DateTime: When the data was accessed for training (as this data may change / be removed / etc): base ownership implied by domain ownership
 
 Crawling and manifest semantics need to be defined for multi part remote hosted content 
 
@@ -157,5 +158,4 @@ Some examples are listed below
 * Training data check: training data sets can be analysed by human or computer and validated against . Examples of training data checks
   * Poisoning check
   * Bias check 
-* Performance checks: the operational performance of an trained inference system can be validated against an external test process or validation data sets. The performance metrics and source of check can be encapsulated in a VC
-* Best practice assertions: the developer or train
+* Performance checks: the operational performance of an trained inference system can be validated against an external t
