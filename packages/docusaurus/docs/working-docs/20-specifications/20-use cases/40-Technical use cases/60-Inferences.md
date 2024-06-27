@@ -70,8 +70,8 @@ The licensing validity of the training data
 
 The performance of the current system can be validated on a continuous assurance basis by
 
-1.  Make AI inference system accessible to external (or internal) test suite
-2. Run tests using inbuild benchmarks and or validation data sets
-3. Produce quantities performance report and encapsulate with VC
-4. Retrieve and validate performance VC  and implement local policy 
+1. Make AI inference system accessible to external (or internal) test suite
+2. Run tests using inbuilt benchmarks and or validation data sets
+3. Produce quantitative performance report and encapsulate with VC
+4. Retrieve and validate performance VC and implement local policy 
 
