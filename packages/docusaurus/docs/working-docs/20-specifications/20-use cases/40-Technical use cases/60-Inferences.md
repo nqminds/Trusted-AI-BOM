@@ -40,7 +40,7 @@ The vulnerability test can be extended to the training system as follows
 
 
 1. Iterating all training systems dependencies from the current inference system 
-2. Requesting either SBOM descriptor or CVE analysis from each remove training system
+2. Requesting either SBOM descriptor or CVE analysis from each remote training system
 3. Implementing the local policy 
 
 
