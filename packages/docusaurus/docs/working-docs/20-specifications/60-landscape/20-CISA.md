@@ -9,9 +9,9 @@ The Cybersecurity and Infrastructure Security Agency (CISA) is actively involved
 
 2. **AI Cybersecurity Roadmap**:
 
-   - Five Lines of Effort
-
-     : CISA's AI cybersecurity roadmap outlines five key areas of focus:
+   - Five Lines of Effort:
+     
+   CISA's AI cybersecurity roadmap outlines five key areas of focus:
 
      1. **Responsible AI Use**: Ensuring AI tools used by CISA are deployed responsibly and ethically.
      2. **Assurance of AI Systems**: Providing best practices for secure AI development and implementation across diverse sectors.
