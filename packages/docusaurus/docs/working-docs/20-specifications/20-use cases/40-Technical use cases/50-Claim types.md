@@ -158,11 +158,4 @@ Some examples are listed below
   * Poisoning check
   * Bias check 
 * Performance checks: the operational performance of an trained inference system can be validated against an external test process or validation data sets. The performance metrics and source of check can be encapsulated in a VC
-* Best practice assertions: the developer or trainer of the AI system can make a self certified statement of conformance to external standards or listed best practice 
-
-
-
-
-
-These will evolve over the project 
-
+* Best practice assertions: the developer or train
