@@ -4,15 +4,11 @@
 
 An AI system is described and versioned by the component and aggregation claims. 
 
-Individual component or the entire system can be future annotated by attestation claims.
+Individual components, or the entire system, can in future be annotated by attestation claims.
 
+At an operational level, complex queries can be run, which essentially dynamically implements policy at the AI system level.
 
-
-At an operational level complex queries can be run, which essential dynamically implement policy at the AI system
-
-We list out some examples below
-
-
+We list out some examples below:
 
 
 
