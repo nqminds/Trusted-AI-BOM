@@ -151,7 +151,4 @@ Behavioural attestations can come in many forms
 Some examples are listed below:
 
 * Software vulnerability check: the SBOM of the inferencing of training software can be analysed for potential vulnerabilities and these can be reported in an encapsulated VC
-* Training data check: training data sets can be analysed by human or computer and validated against. Examples of training data checks:
-  * Poisoning check
-  * Bias check 
-* Performance checks: the o
+* Training data check: training data sets canresults of the validation check in a VC. 
