@@ -27,7 +27,7 @@ const config = {
   baseUrl: '/',
   organizationName: 'nqminds',
   projectName: PROJECT_NAME,
-  trailingSlash: false,
+  trailingSlash: true,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
