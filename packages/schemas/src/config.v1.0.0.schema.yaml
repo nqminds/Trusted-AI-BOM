@@ -1,0 +1,36 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/config.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Configuration
+description: |
+  This claim will define the version of configuration parameters used for the inferencing system.
+  Each config package could come in different forms: from a small set of training parameters to a full set of trained weights.
+type: object
+properties:
+  id:
+    type: string
+    description: Unique ID of claim
+  hash:
+    description: The hash of the file or folder which constitutes the running system.
+    type: string
+    anyOf:
+      - format: url
+        description: URI to hashed package
+      - not:
+          format: url
+          description: Hash of package
+  fileRef: 
+    type: string
+    description: Local file name of the accompanying package
+  description:
+    type: string
+    description: Description of config file
+required: 
+  - id
+  - hash
+examples:
+  - id: 00000000-0000-0000-0000-000000000000
+    hash: ddd9043214b13facc71bd82093bf561698c5bd257de1adf12398080f6202f8b0
+  - id: 00000000-0000-0000-0000-000000000001
+    hash: ddd9043214b13facc71bd82093bf561698c5bd257de1adf12398080f6202f8b0
+    fileRef: system/config/
+    description: Example weights

@@ -1,0 +1,13 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/system.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: System Claim
+description: |
+  This claim will define the version of the underlying operating system and any ancillary system level dependencies required.
+type: object
+properties:
+  id:
+    type: string
+    description: Unique ID of claim
+  # TODO: implement
+required: 
+  - id
