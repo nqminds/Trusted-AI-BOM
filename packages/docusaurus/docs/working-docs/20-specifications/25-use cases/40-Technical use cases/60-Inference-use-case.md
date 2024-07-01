@@ -1,5 +1,4 @@
-## Inference use cases
-
+# Inference use cases
 
 
 An AI system is described and versioned by the component and aggregation claims. 
@@ -72,6 +71,4 @@ The performance of the current system can be validated on a continuous assurance
 
 1. Make AI inference system accessible to external (or internal) test suite
 2. Run tests using inbuilt benchmarks and or validation data sets
-3. Produce quantitative performance report and encapsulate with VC
-4. Retrieve and validate performance VC and implement local policy 
-
+3. Produce quantitative performance report and encapsulate wit
