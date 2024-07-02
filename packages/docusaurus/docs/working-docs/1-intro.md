@@ -39,6 +39,3 @@ Our approach is dual strand:
 - Develop the commercial tools for managing AI system lifecycle
 - Develop/refine the interoperable, international, standards that ensure this technology is created in a broad ecosystem.
 
-
-
-
