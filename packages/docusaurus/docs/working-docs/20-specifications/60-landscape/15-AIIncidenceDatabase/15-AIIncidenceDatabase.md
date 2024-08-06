@@ -1,3 +1,5 @@
-AI Incident database
+---
+Title: AI Incident database
+--- 
 
 https://incidentdatabase.ai/
