@@ -1,4 +1,4 @@
-name: HedgeDoc x Docusaurus Deploy
+name: Public site deploy 
 
 on:
   workflow_dispatch:
