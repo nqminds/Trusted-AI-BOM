@@ -59,6 +59,15 @@ const config = {
     [
       "@docusaurus/plugin-content-docs",
       {
+        id: "project-management",
+        path: "./docs/project-management",
+        routeBasePath: "project-management",
+        editUrl,
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
         id: "docs",
         path: "./docs/working-docs",
         routeBasePath: "docs",
@@ -86,7 +95,15 @@ const config = {
           src: 'img/logo.png',
           width: "500px !important"
         },
-        items: [{
+        items: [
+        {
+          type: 'doc',
+          docId: 'project-management',
+          docsPluginId: "project-management",
+          position: 'left',
+          label: 'Project Management',
+        },
+        {
           type: 'doc',
           docId: 'intro',
           docsPluginId: "docs",
@@ -109,6 +126,10 @@ const config = {
           {
             title: 'Docs',
             items: [
+              {
+                label: 'Project Management',
+                to: '/project-management',
+              },
               {
                 label: 'Working Docs',
                 to: '/docs',
