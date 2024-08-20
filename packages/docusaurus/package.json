@@ -16,12 +16,12 @@
     "generate-proto-docs": "bash ./scripts/compile-protos.sh && docusaurus generate-proto-docs",
     "prepare": "node ./scripts/import-schemas.js",
     "start:public": "NODE_ENV=public npm start",
-    "build:public": "NODE_ENV=public npm run build"
-  },
+    "build:public": "docusaurus build --config docusaurus.public.config.js"
+    },
   "dependencies": {
-    "@docusaurus/core": "^3.3.2",
-    "@docusaurus/preset-classic": "^3.3.2",
-    "@docusaurus/theme-mermaid": "^3.4.0",
+    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/preset-classic": "^3.5.2",
+    "@docusaurus/theme-mermaid": "^3.5.2",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -39,7 +39,7 @@
     "url": "^0.11.3"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.3.2",
+    "@docusaurus/module-type-aliases": "^3.5.2",
     "@docusaurus/types": "3.0.1",
     "docs-to-pdf": "^0.6.2",
     "dotenv": "^16.4.5"

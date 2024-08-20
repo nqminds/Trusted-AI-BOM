@@ -27,7 +27,6 @@ const config = {
   trailingSlash: true,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  outDir: "public-build/",
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
