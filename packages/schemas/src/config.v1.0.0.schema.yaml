@@ -18,19 +18,42 @@ properties:
       - not:
           format: url
           description: Hash of package
-  fileRef: 
+  fileRef:
     type: string
     description: Local file name of the accompanying package
   description:
     type: string
     description: Description of config file
-required: 
+  dependencies:
+    type: object
+    description: Entities this config is dependant on
+    properties:
+      data:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID of data claim
+            relation:
+              type: string
+              description: How this data relates to the configuration parameters. e.g. training data, validation data
+        description: IDs of data used to train and validate configuration parameters
+        required:
+          - data
+required:
   - id
   - hash
+  - dependencies
 examples:
   - id: 00000000-0000-0000-0000-000000000000
     hash: ddd9043214b13facc71bd82093bf561698c5bd257de1adf12398080f6202f8b0
+    dependencies:
+      data: [{id: a27b7ac0-e2aa-453f-9ed8-e215678b43ed, relation: training data}]
   - id: 00000000-0000-0000-0000-000000000001
     hash: ddd9043214b13facc71bd82093bf561698c5bd257de1adf12398080f6202f8b0
     fileRef: system/config/
     description: Example weights
+    dependencies:
+      data: [{id: 86c85e35-af14-493b-b2b2-c41bdefcdea2, relation: training data}, {id: e261e6da-8644-4cb1-b6f7-452bdd6a79c1, relation: validation data}]
