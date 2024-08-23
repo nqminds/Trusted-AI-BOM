@@ -1,0 +1,20 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/security.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Security Claim
+description: |
+  This claim will define the security of a software component, the CVE manifest produced from a vulnerability analysis
+type: object
+properties:
+  id:
+    type: string
+    description: Unique ID of claim
+  subject:
+    type: string
+    description: ID of the subject software component
+  cveManifest:
+    type: object
+    description: The CVE manifest produced from a vulnerability analysis
+required:
+  - id
+  - subject
+  - cveManifest
