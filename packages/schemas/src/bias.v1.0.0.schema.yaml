@@ -1,0 +1,20 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/bias.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Bias Claim
+description: |
+  This claim will define a disclosure of bias in data
+type: object
+properties:
+  id:
+    type: string
+    description: Unique ID of claim
+  subject:
+    type: string
+    description: ID of the subject data claim
+  bias:
+    type: object
+    description: A data structure defining the bias in the data
+required:
+  - id
+  - subject
+  - bias

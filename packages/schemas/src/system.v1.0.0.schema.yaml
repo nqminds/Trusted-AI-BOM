@@ -8,6 +8,31 @@ properties:
   id:
     type: string
     description: Unique ID of claim
-  # TODO: implement
-required: 
+  dependencies:
+    type: object
+    description: Dependencies this system has
+    properties:
+      config:
+        type: string
+        description: Configuration parameters used for the inferencing system.configuration parameters used for the inferencing system.
+      systems:
+        type: array
+        description: systems this system is dependant on, e.g. for an inference system, it may be dependant on a training system
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID of data claim
+            relation:
+              type: string
+              description: How this data relates to the configuration parameters. e.g. training data, validation data
+required:
   - id
+  - dependencies
+examples:
+  - id: 00000000-0000-0000-0000-000000000000
+    dependencies:
+      config: 43f179b6-bace-47bb-9ab9-ab908dabfbf5
+      systems:
+        {id: 5e7c9691-a11c-4877-9c92-f74db746c2ec, relation: training system used to generate weights}
