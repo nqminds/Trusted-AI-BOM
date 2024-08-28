@@ -1,0 +1,21 @@
+{
+  "name": "@nqminds/compose-taibom-claim",
+  "version": "1.0.0",
+  "description": "CLI tool to compose VC claims for TAIBOM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compose-taibom-claim": "node ./compose-taibom-claim.js"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.5",
+    "inquirer": "^10.1.8",
+    "uuid": "^10.0.0",
+    "vc_signing": "file:../../../../Verifiable-Credential-Tools/vc_signing/node",
+    "yaml": "^2.5.0",
+    "yargs": "^17.7.2"
+  }
+}

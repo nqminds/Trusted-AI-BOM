@@ -41,6 +41,7 @@ properties:
 required:
   - id
   - hash
+  - sbom
 examples:
   - id: 00000000-0000-0000-0000-000000000000
     hash: ddd9043214b13facc71bd82093bf561698c5bd257de1adf12398080f6202f8b0

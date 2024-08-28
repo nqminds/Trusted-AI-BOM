@@ -12,7 +12,6 @@ properties:
   name:
     type: string
     description: Human readable filename of TAIBOM data
-
   hash:
     description: Hash of the data used in training an AI system.
     type: string
