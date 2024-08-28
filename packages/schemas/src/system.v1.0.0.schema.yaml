@@ -15,6 +15,18 @@ properties:
       config:
         type: string
         description: Configuration parameters used for the inferencing system.configuration parameters used for the inferencing system.
+      software:
+        type: array
+        description: software this system is dependant on, e.g. an inference system will depend on some software to implement the inferencing
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID of software claim
+            relation:
+              type: string
+              description: How this software relates to the system being described
       systems:
         type: array
         description: systems this system is dependant on, e.g. for an inference system, it may be dependant on a training system
@@ -23,10 +35,10 @@ properties:
           properties:
             id:
               type: string
-              description: ID of data claim
+              description: ID of system claim
             relation:
               type: string
-              description: How this data relates to the configuration parameters. e.g. training data, validation data
+              description: How this dependency system relates to the system being described
 required:
   - id
   - dependencies
@@ -34,5 +46,7 @@ examples:
   - id: 00000000-0000-0000-0000-000000000000
     dependencies:
       config: 43f179b6-bace-47bb-9ab9-ab908dabfbf5
+      software:
+        {id: 2a54a633-8c62-44c7-8173-f1bbcc72852a, relation: software implementing inferencing}
       systems:
         {id: 5e7c9691-a11c-4877-9c92-f74db746c2ec, relation: training system used to generate weights}
