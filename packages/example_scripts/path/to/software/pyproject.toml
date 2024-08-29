@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "training-animal-bite-model"
+version = "0.1.0"
+description = ""
+authors = ["Ash Setter <ash@nquiringminds.com>"]
+readme = "README.md"
+packages = [{include = "training_animal_bite_model"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+scikit-learn = "^1.5.1"
+pandas = "^2.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -30,6 +30,7 @@ properties:
     properties:
       data:
         type: array
+        description: IDs of data used to train and validate configuration parameters
         items:
           type: object
           properties:
@@ -39,9 +40,8 @@ properties:
             relation:
               type: string
               description: How this data relates to the configuration parameters. e.g. training data, validation data
-        description: IDs of data used to train and validate configuration parameters
-        required:
-          - data
+      required:
+        - data
 required:
   - id
   - hash

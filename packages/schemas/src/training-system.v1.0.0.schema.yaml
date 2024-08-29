@@ -1,0 +1,62 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/inference-system.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Training system Claim
+description: |
+  This claim will define the version of the underlying operating training system and any ancillary system level dependencies required.
+type: object
+properties:
+  id:
+    type: string
+    description: Unique ID of claim
+  dependencies:
+    type: object
+    description: Dependencies this system has
+    properties:
+      software:
+        type: array
+        description: software this system is dependant on, e.g. an training system will depend on some software to implement the code for training
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID of software claim
+            relation:
+              type: string
+              description: How this software relates to the system being described
+      systems:
+        type: array
+        description: systems this system is dependant on
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID of system claim
+            relation:
+              type: string
+              description: How this dependency system relates to the system being described
+      data:
+        description: IDs of data used to train and validate configuration parameters
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID of data claim
+            relation:
+              type: string
+              description: How this data relates to the configuration parameters. e.g. training data, validation data
+required:
+  - id
+  - dependencies
+examples:
+  - id: 00000000-0000-0000-0000-000000000000
+    dependencies:
+      software:
+        {id: 2a54a633-8c62-44c7-8173-f1bbcc72852a, relation: python training software using sklearn}
+      systems:
+        {id: 5e7c9691-a11c-4877-9c92-f74db746c2ec, relation: system used to gather training data}
+      data:
+        {id: 1797be19-04f1-4880-9ea2-44d22230a0f7, relation: training data}
