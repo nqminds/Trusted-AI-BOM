@@ -1,8 +1,8 @@
-$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/system.v1.0.0.schema.yaml
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/inference-system.v1.0.0.schema.yaml
 $schema: https://json-schema.org/draft/2019-09/schema
-title: System Claim
+title: Inference System Claim
 description: |
-  This claim will define the version of the underlying operating system and any ancillary system level dependencies required.
+  This claim will define the version of the underlying operating inference system and any ancillary system level dependencies required.
 type: object
 properties:
   id:
