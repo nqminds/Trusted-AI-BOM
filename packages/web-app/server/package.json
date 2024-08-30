@@ -1,0 +1,18 @@
+{
+  "name": "taibom-web-app-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app.js"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.7.5",
+    "cors": "^2.8.5",
+    "vc_signing": "file:/home/ash/Documents/Verifiable-Credential-Tools/vc_signing/node"
+  }
+}
