@@ -1,4 +1,4 @@
-$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/bias.v1.0.0.schema.yaml
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/transparency.v1.0.0.schema.yaml
 $schema: https://json-schema.org/draft/2019-09/schema
 title: Transparency Claim
 description: |
