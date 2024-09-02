@@ -1,4 +1,4 @@
-$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/inference-system.v1.0.0.schema.yaml
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/training-system.v1.0.0.schema.yaml
 $schema: https://json-schema.org/draft/2019-09/schema
 title: Training system Claim
 description: |
@@ -55,8 +55,8 @@ examples:
   - id: 00000000-0000-0000-0000-000000000000
     dependencies:
       software:
-        {id: 2a54a633-8c62-44c7-8173-f1bbcc72852a, relation: python training software using sklearn}
+        [{id: 2a54a633-8c62-44c7-8173-f1bbcc72852a, relation: python training software using sklearn}]
       systems:
-        {id: 5e7c9691-a11c-4877-9c92-f74db746c2ec, relation: system used to gather training data}
+        [{id: 5e7c9691-a11c-4877-9c92-f74db746c2ec, relation: system used to gather training data}]
       data:
-        {id: 1797be19-04f1-4880-9ea2-44d22230a0f7, relation: training data}
+        [{id: 1797be19-04f1-4880-9ea2-44d22230a0f7, relation: training data}]
