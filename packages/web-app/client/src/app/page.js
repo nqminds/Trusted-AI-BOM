@@ -135,6 +135,8 @@ export default function Home() {
   const handleSchemaSelect = async (e) => {
     try {
       setSelectedSchema(e.target.value);
+      setFormData({});
+      setResult("");
       const res = await fetch(`http://localhost:3001/schema/${e.target.value}`);
 
       if (!res.ok) {
