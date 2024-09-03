@@ -277,7 +277,7 @@ export default function Home() {
             type="submit"
             variant="contained"
             color="primary"
-            sx={{ mt: 4, display: "block", mx: "auto" }}
+            sx={{ my: 4, display: "block", mx: "auto" }}
           >
             Submit Claim
           </Button>
