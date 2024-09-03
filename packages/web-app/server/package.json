@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./app.js"
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js"
   },
   "type": "module",
   "author": "",
@@ -13,6 +14,12 @@
   "dependencies": {
     "axios": "^1.7.5",
     "cors": "^2.8.5",
-    "vc_signing": "file:/home/ash/Documents/Verifiable-Credential-Tools/vc_signing/node"
+    "express": "^4.19.2",
+    "uuid": "^10.0.0",
+    "vc_signing": "file:/home/henry/Programming/Trusted-AI-BOM/packages/web-app/server/vc_signing/node",
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }

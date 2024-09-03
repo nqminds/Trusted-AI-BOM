@@ -1,0 +1,11 @@
+{
+  "name": "vc_signing",
+  "version": "0.1.0",
+  "files": [
+    "vc_signing_bg.wasm",
+    "vc_signing.js",
+    "vc_signing.d.ts"
+  ],
+  "main": "vc_signing.js",
+  "types": "vc_signing.d.ts"
+}
