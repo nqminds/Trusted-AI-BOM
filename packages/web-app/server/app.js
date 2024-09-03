@@ -3,7 +3,7 @@ import cors from 'cors';
 import { fetchSchema, processClaimData } from './claimProcessor.js';
 import fs from 'fs/promises';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import url, { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,7 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = 3001;
+const PORT = 3002;
 
 
 app.get('/schemas', async (req, res) => {
@@ -42,7 +42,12 @@ app.get('/schema/:schemaName', async (req, res) => {
 app.post('/submit-claim', async (req, res) => {
   try {
     const { schemaName, claimData } = req.body;
-    const schema = await fetchSchema(`${schemasDirectory}/${schemaName}.schema.yaml`);
+    console.log(schemasDirectory, schemaName);
+    // Parse the URL to get the path part
+    const parsedSchema = url.parse(schemaName);
+    // Use the path module to get the base name (filename) from the path
+    const fileName = path.basename(parsedSchema.pathname);
+    const schema = await fetchSchema(`${schemasDirectory}/${fileName}`);
     const result = await processClaimData(schema, claimData);
     res.json(result);
   } catch (error) {
