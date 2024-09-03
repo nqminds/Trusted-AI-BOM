@@ -5,11 +5,8 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest-m
-    strategy:
-      matrix:
-        node-version: [20]
-        
+    runs-on: ubuntu-latest
+
     outputs:
       result: ${{ steps.check-workflow-status.outputs.result }}
 
@@ -17,22 +14,55 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-  
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: npm
+          node-version: 20
 
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Check commit message for keyword
+        run: |
+          KEYWORD="Move file"
+          if git log --format=%B -n 1 HEAD | grep -q "$KEYWORD"; then
+            echo "Commit contains the keyword."
+            exit 1 # Exit without failure
+          else
+            echo "Commit does not contain the keyword."
+          fi
 
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - name: Cache node modules in root
+        id: cache-root
+        uses: actions/cache@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          path: |
+            node_modules
+            */node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies in root
+        if: steps.cache-root.outputs.cache-hit != 'true'
         run: npm install
+
+      - name: Cache node modules in /packages/docusaurus
+        id: cache-docusaurus
+        uses: actions/cache@v3
+        with:
+          path: packages/docusaurus/node_modules
+          key: ${{ runner.os }}-docusaurus-${{ hashFiles('packages/docusaurus/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-docusaurus
+
+      - name: Install dependencies in /packages/docusaurus
+        if: steps.cache-docusaurus.outputs.cache-hit != 'true'
+        run: |
+          cd packages/docusaurus
+          npm install
+
+      - name: Run prepare scripts
+        run: |
+          cd packages/docusaurus
+          node ./scripts/import-schemas.js
 
       - name: Validate schemas
         run: |
@@ -47,10 +77,9 @@ jobs:
         id: check-workflow-status
         run: echo "::set-output name=result::success"
 
-      - name: Install dependencies in /packages/docusaurus
+      - name: Set up environment variables
         run: |
-          cd packages/docusaurus
-          npm install
+          echo "OCTOKIT_TOKEN=${{ secrets.OCTOKIT_TOKEN }}" >> $GITHUB_ENV
 
       - name: Build in /packages/docusaurus
         run: |
@@ -62,6 +91,6 @@ jobs:
           mkdir -p $HOME/.ssh
           echo "${{ secrets.DEPLOY_KEY }}" > $HOME/.ssh/deploy_key
           chmod 600 $HOME/.ssh/deploy_key
-          rsync -avz --exclude='.git' -e "ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/deploy_key -p ${{ secrets.REMOTE_SERVER_PORT }}" packages/docusaurus/build/ ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.REMOTE_SERVER_HOST }}:/var/www/${{ secrets.REMOTE_SERVER_PUBLIC_FOLDER }}/
+          rsync -avz --exclude='.git' -e "ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/deploy_key -p ${{ secrets.REMOTE_SERVER_PORT }}" packages/docusaurus/build/ ${{ secrets.REMOTE_SERVER_USERNAME }}@${{ secrets.REMOTE_SERVER_HOST }}:/var/www/${{ secrets.REMOTE_SERVER_FOLDER }}/
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
