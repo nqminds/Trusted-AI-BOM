@@ -24,7 +24,6 @@ const JSONDisplay = ({ data, handleOpenSnackbarWithMessageAndSeverity }) => {
   };
 
   const formattedJSON = formatJSON(data);
-  console.log("formattedJSON :>> ", formattedJSON);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(formattedJSON).then(() => {

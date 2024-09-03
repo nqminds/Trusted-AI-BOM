@@ -213,8 +213,8 @@ export default function Home() {
                     <Paper key={type} sx={{ p: 2, mt: 2 }} elevation={3}>
                       <Typography variant="h6">{type}</Typography>
                       {(formData.dependencies?.[type] || []).map((item, i) => (
-                        <Box sx={{ mt: 1 }}>
-                          <Stack key={i} spacing={2} direction={"row"}>
+                        <Box sx={{ mt: 1 }} key={i}>
+                          <Stack spacing={2} direction={"row"}>
                             {Object.entries(
                               prop.properties[type].items.properties
                             ).map(([subField, subProp]) => (
