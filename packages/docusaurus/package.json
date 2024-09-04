@@ -14,7 +14,6 @@
     "write-heading-ids": "docusaurus write-heading-ids",
     "pdf": "docusaurus build && node ./scripts/pdf.js",
     "generate-proto-docs": "bash ./scripts/compile-protos.sh && docusaurus generate-proto-docs",
-    "prepare": "node ./scripts/import-schemas.js",
     "start:public": "NODE_ENV=public npm start",
     "build:public": "docusaurus build --config docusaurus.public.config.js"
     },
