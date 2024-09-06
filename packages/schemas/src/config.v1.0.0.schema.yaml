@@ -40,8 +40,6 @@ properties:
             relation:
               type: string
               description: How this data relates to the configuration parameters. e.g. training data, validation data
-      required:
-        - data
 required:
   - id
   - hash
