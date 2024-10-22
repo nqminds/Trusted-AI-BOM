@@ -53,6 +53,7 @@ classDiagram
     class InferenceSystem{
     }
 
+    Licence --> system
     Licence --> Data
     Data  -->  DataPack: Many
     CVE --> SBOM
@@ -68,8 +69,6 @@ classDiagram
     system <|-- TrainingSystem
     system <|-- TestingSystem
     system <|-- InferenceSystem
-
-
 ```
 
 
