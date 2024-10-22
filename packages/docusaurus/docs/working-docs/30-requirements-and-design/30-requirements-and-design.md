@@ -26,10 +26,13 @@ classDiagram
 
     class Licence{
     }
+
     class CVE{
     }
+
     class SBOM {
     }
+
     class system {
         id
         name
@@ -41,10 +44,32 @@ classDiagram
         sbom
     }
 
+    class TrainingSystem{
+    }
+
+    class TestingSystem{
+    }
+
+    class InferenceSystem{
+    }
+
     Licence --> Data
     Data  -->  DataPack: Many
     CVE --> SBOM
     SBOM --> system
     DataPack --> system
     Data --> system
+
+    %% Inheritance to represent types of Data
+    Data <|-- Weights
+    Data <|-- TrainingData
+
+    %% Inheritance to represent types of system
+    system <|-- TrainingSystem
+    system <|-- TestingSystem
+    system <|-- InferenceSystem
+
+
 ```
+
+
