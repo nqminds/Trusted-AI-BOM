@@ -14,7 +14,7 @@ classDiagram
         datasets
     }
 
-    class Data{
+    class TrainingData{
         id
         name
         location
@@ -52,22 +52,28 @@ classDiagram
 
     class InferenceSystem{
     }
+    
+    class Weights{
+        id
+        data
+        system
+    }
 
     CVE --> SBOM
     SBOM --> system
     Licence --> system
-    Licence --> Data
-    Data  -->  DataPack: Many
+    Licence --> TrainingData
+    TrainingData  -->  DataPack: Many
     DataPack --> system
-    Data --> system
+    TrainingData --> system
 
-    %% Inheritance to represent types of Data
-    Data <|-- Weights
-    Data <|-- TrainingData
 
     %% Inheritance to represent types of system
     system <|-- TrainingSystem
     system <|-- InferenceSystem
 ```
 
+## Relationships
+
+Data + System => Weights
 
