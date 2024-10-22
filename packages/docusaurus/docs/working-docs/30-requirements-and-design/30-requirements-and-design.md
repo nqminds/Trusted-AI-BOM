@@ -53,11 +53,11 @@ classDiagram
     class InferenceSystem{
     }
 
+    CVE --> SBOM
+    SBOM --> system
     Licence --> system
     Licence --> Data
     Data  -->  DataPack: Many
-    CVE --> SBOM
-    SBOM --> system
     DataPack --> system
     Data --> system
 
@@ -67,7 +67,6 @@ classDiagram
 
     %% Inheritance to represent types of system
     system <|-- TrainingSystem
-    system <|-- TestingSystem
     system <|-- InferenceSystem
 ```
 
