@@ -44,11 +44,6 @@ classDiagram
         sbom
     }
 
-    class TrainingSystem{
-    }
-
-    class TestingSystem{
-    }
 
     class InferenceSystem{
     }
@@ -59,18 +54,16 @@ classDiagram
         system
     }
 
-    CVE --> SBOM
-    SBOM --> system
-    Licence --> system
-    Licence --> TrainingData
     TrainingData  -->  DataPack: Many
     DataPack --> system
-    TrainingData --> system
-
-
-    %% Inheritance to represent types of system
-    system <|-- TrainingSystem
-    system <|-- InferenceSystem
+    DataPack --> Weights
+    Weights --> InferenceSystem
+    system --> Weights
+    system --> InferenceSystem
+    Licence --> system
+    Licence --> TrainingData
+    CVE --> SBOM
+    SBOM --> system
 ```
 
 ## Relationships
