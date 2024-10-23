@@ -78,6 +78,6 @@ Weights + Syatem => Inferencing system
 
 Data + Licence => Licenced Data
 
-SBOM + system => [Security analysed System]
-CVE + 
+SBOM + system => System component breakdown
+CVE + System component breakdown => Security-Audited System 
 
