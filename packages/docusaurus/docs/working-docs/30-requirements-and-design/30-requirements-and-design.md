@@ -55,6 +55,7 @@ classDiagram
     }
 
     TrainingData  -->  DataPack: Many
+    TrainingData --> DataPack
     DataPack --> system
     DataPack --> Weights
     Weights --> InferenceSystem
