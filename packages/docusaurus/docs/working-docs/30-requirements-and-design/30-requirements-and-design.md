@@ -69,5 +69,15 @@ classDiagram
 
 ## Relationships
 
-Data + System => Weights
+{ Data } => Data Pack
+Data Pack + System => Weights
+Weights + Syatem => Inferencing system
+
+
+## Additional attributes
+
+Data + Licence => Licenced Data
+
+SBOM + system => [Security analysed System]
+CVE + 
 
