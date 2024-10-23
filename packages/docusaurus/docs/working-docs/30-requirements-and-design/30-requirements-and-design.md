@@ -5,6 +5,7 @@ title: Requirements & Design
 ## Class Diagram
 
 ```mermaid
+
 classDiagram 
     direction LR
 
@@ -65,11 +66,12 @@ classDiagram
     Licence --> TrainingData
     CVE --> SBOM
     SBOM --> system
+
 ```
 
 ## Relationships
 
-{ Data } => Data Pack
+`{Data}`  => Data Pack
 Data Pack + System => Weights
 Weights + Syatem => Inferencing system
 
