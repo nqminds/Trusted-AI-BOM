@@ -75,7 +75,7 @@ classDiagram
 
 Data Pack + System => Weights
 
-Weights + Syatem => Inferencing system
+Weights + System => Inferencing system
 
 
 ## Additional attributes
@@ -85,4 +85,19 @@ Data + Licence => Licenced Data
 SBOM + system => System component breakdown
 
 CVE + System component breakdown => Security-Audited System 
+
+## Claims & Attestations
+
+### Inherit Risks
+
+#### Data
+
+- Unwanted Bias
+- Hallucinations 
+- Errors in generated data
+- Poisioning 
+- 
+- etc.
+- 
+
 
