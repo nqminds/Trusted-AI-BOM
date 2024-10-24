@@ -1,4 +1,4 @@
-$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/3-sbom.v1.0.0.schema.yaml
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/30-sbom.v1.0.0.schema.yaml
 $schema: https://json-schema.org/draft/2019-09/schema
 title: SBOM
 description: A software bill of materials (SBOM) generated for the project.

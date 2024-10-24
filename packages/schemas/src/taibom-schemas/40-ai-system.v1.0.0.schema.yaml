@@ -1,4 +1,4 @@
-$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/4-ai-system.v1.0.0.schema.yaml
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-ai-system.v1.0.0.schema.yaml
 $schema: https://json-schema.org/draft/2019-09/schema
 title: AI System
 description: |
