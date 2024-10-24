@@ -10,6 +10,13 @@ properties:
     type: string
     description: "The name of the dataset."
   
+  label:
+    type: string
+    description: Label of data
+    enum:
+      - Training
+      - Weights
+
   location:
     type: object
     description: "Details about where the dataset is stored, whether on a local filesystem or a remote URL."
@@ -42,6 +49,7 @@ required:
   - name
   - location
   - last-accessed
+  - label
 
 anyOf:
   - required: [ hash ]
@@ -49,6 +57,7 @@ anyOf:
 
 examples:
   - name: "image_classification_v1"
+    label: Training
     location:
       type: "local"
       path: "/data/ai_training/image_classification_v1.zip"
@@ -57,6 +66,7 @@ examples:
     last-accessed: "2024-08-25T14:00:00Z"
 
   - name: "text_sentiment_analysis_corpus"
+    label: Training
     location:
       type: "remote"
       path: "https://ai-datasets.com/sentiment/text_sentiment_analysis_corpus_2024.tar.gz"
@@ -64,6 +74,7 @@ examples:
     last-accessed: "2024-09-15T09:00:00Z"
 
   - name: "object_detection_images_v2"
+    label: Training
     location:
       type: "local"
       path: "/data/ai_training/object_detection_images_v2.tar.gz"

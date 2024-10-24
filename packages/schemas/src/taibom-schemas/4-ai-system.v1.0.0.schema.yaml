@@ -8,6 +8,13 @@ properties:
   name:
     description: Name of the software system.
     type: string
+  
+  label:
+    type: string
+    description: Label of data
+    enum:
+      - Training
+      - Inferencing
 
   location:
     type: object
@@ -43,7 +50,43 @@ properties:
 required:
   - name
   - location
+  - label
 
 anyOf:
   - required: [ hash ]
   - required: [ hash_location ]
+
+examples:
+  - name: "AI Model Training System"
+    label: "Training"
+    location:
+      type: "local"
+      path: "/usr/local/ai-system"
+    hash: "d2d2d2d2c3c3c3b4b4b4a5a5a5a5a5a5a5b5b5b5b5b5b5"
+    data: "datapack-1234"
+    sbom: "sbom-5678"
+  - name: "AI Inferencing System"
+    label: "Inferencing"
+    location:
+      type: "remote"
+      path: "https://remote-ai-system.example.com/inference"
+    hash_location: "https://hash-storage.example.com/ai-system/hash"
+    data: "datapack-9876"
+    sbom: "sbom-4321"
+  - name: "Advanced Training System"
+    label: "Training"
+    location:
+      type: "local"
+      path: "/opt/ai-systems/training"
+    hash_location: "https://hash-storage.example.com/advanced-training/hash"
+    data: "datapack-5678"
+    sbom: "sbom-8765"
+  - name: "Real-Time Inferencing System"
+    label: "Inferencing"
+    location:
+      type: "remote"
+      path: "https://cloud-inferencing.example.com/system"
+    hash: "a1a1b2b2c3c3d4d4e5e5f6f6g7g7h8h8i9i9j0j0"
+    data: "datapack-5432"
+    sbom: "sbom-9087"
+
