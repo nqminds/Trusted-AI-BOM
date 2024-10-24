@@ -1,0 +1,137 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/3-sbom.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: SBOM
+description: A software bill of materials (SBOM) generated for the project.
+type: object
+properties:
+  bomFormat:
+    type: string
+    description: Format of the SBOM.
+  specVersion:
+    type: string
+    description: Version of the SBOM specification.
+  serialNumber:
+    type: string
+    description: Unique serial number for the SBOM.
+  version:
+    type: integer
+    description: Version number of the SBOM.
+  metadata:
+    type: object
+    description: Metadata related to the SBOM generation.
+    properties:
+      timestamp:
+        type: string
+        format: date-time
+        description: Timestamp when the SBOM was generated.
+      tools:
+        type: object
+        description: Tools used to generate the SBOM.
+        properties:
+          components:
+            type: array
+            description: List of tools and their metadata.
+            items:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Type of tool (e.g., application).
+                author:
+                  type: string
+                  description: Author of the tool.
+                name:
+                  type: string
+                  description: Name of the tool.
+                version:
+                  type: string
+                  description: Version of the tool.
+      component:
+        type: object
+        description: Component information of the project.
+        properties:
+          bom-ref:
+            type: string
+            description: Unique reference for the component.
+          type:
+            type: string
+            description: Type of the component (e.g., file, library).
+          name:
+            type: string
+            description: Name of the component.
+  components:
+    type: array
+    description: List of components in the SBOM.
+    items:
+      type: object
+      properties:
+        bom-ref:
+          type: string
+          description: Unique reference for the component.
+        type:
+          type: string
+          description: Type of the component (e.g., library).
+        name:
+          type: string
+          description: Name of the component.
+        version:
+          type: string
+          description: Version of the component.
+        cpe:
+          type: string
+          description: Common Platform Enumeration (CPE) for the component.
+        purl:
+          type: string
+          description: Package URL (PURL) for the component.
+        properties:
+          type: array
+          description: Additional metadata for the component.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Property name.
+              value:
+                type: string
+                description: Property value.
+required:
+  - bomFormat
+  - specVersion
+  - serialNumber
+  - version
+  - metadata
+  - components
+examples:
+  - bomFormat: "CycloneDX"
+    specVersion: "1.6"
+    serialNumber: "urn:uuid:e865fb76-fb02-4554-bad7-7a92344317fe"
+    version: 1
+    metadata:
+      timestamp: "2024-10-18T15:15:51Z"
+      tools:
+        components:
+          - type: "application"
+            author: "anchore"
+            name: "syft"
+            version: "1.14.1"
+      component:
+        bom-ref: "51f6561dc978bfb7"
+        type: "file"
+        name: "/project"
+    components:
+      - bom-ref: "pkg:pypi/absl-py@1.4.0?package-id=3ca3d32070abe037"
+        type: "library"
+        name: "absl-py"
+        version: "1.4.0"
+        cpe: "cpe:2.3:a:python-absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*"
+        purl: "pkg:pypi/absl-py@1.4.0"
+        properties:
+          - name: "syft:package:foundBy"
+            value: "python-package-cataloger"
+          - name: "syft:package:language"
+            value: "python"
+          - name: "syft:package:type"
+            value: "python"
+          - name: "syft:cpe23"
+            value: "cpe:2.3:a:absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*"

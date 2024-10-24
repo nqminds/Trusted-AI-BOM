@@ -1,0 +1,38 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/2-data-pack.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: TAIBOM Datapack
+description: >
+  A datapack schema that describes a collection of datasets used for raw data, training data, and testing data. 
+  Each collection has a hash and a hash location for verifying data integrity.
+type: object
+properties:
+  name:
+    type: string
+    description: "The name of the datapack."
+  datasets:
+    type: array
+    items:
+      type: string
+    description: "A list of data IDs from a VC claim"
+    minItems: 1
+    uniqueItems: true
+  collection_hash:
+    type: string
+    description: "The cryptographic hash (e.g., SHA256) of the entire raw dataset collection."
+  collection_hash_location:
+    type: string
+    description: "The location where the hash of the raw dataset collection is stored."
+required:
+  - name
+  - datasets
+anyOf:
+  - required: [ collection_hash ]
+  - required: [ collection_hash_location ]
+
+examples:
+  - name: Raw collection
+    datasets:
+      - urn:uuid:data-vc-1234
+      - urn:uuid:data-vc-4567
+    collection_hash: "hashrawcollection"
+    collection_hash_location: "/data/raw_collection_hash.txt"

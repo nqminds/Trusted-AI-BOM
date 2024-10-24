@@ -1,0 +1,49 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/4-ai-system.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: AI System
+description: |
+  This schema defines an AI system which may be used for Training AI models or an inferencing system
+type: object
+properties:
+  name:
+    description: Name of the software system.
+    type: string
+
+  location:
+    type: object
+    description: "Details about where the system is, whether on a local filesystem or a remote URL."
+    properties:
+      type:
+        type: string
+        enum: [ "local", "remote" ]
+        description: "Indicates whether the system is stored locally or remotely."
+      path:
+        type: string
+        description: "The path or URL to the system location."
+    required:
+      - type
+      - path
+  
+  hash:
+    type: string
+    description: "The cryptographic hash (e.g., SHA256) of the system used for data integrity verification."
+  
+  hash_location:
+    type: string
+    description: "The location where the system hash is stored, can be either local or a remote URL."
+
+  data: 
+    type: string
+    descrption: ID of the datapack / data / weights which have been used on the system
+
+  sbom:
+    type: string
+    description: ID of the Sbom claim
+
+required:
+  - name
+  - location
+
+anyOf:
+  - required: [ hash ]
+  - required: [ hash_location ]
