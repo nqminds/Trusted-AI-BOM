@@ -72,7 +72,9 @@ classDiagram
 ## Relationships
 
 `{Data}`  => Data Pack
+
 Data Pack + System => Weights
+
 Weights + Syatem => Inferencing system
 
 
@@ -81,5 +83,6 @@ Weights + Syatem => Inferencing system
 Data + Licence => Licenced Data
 
 SBOM + system => System component breakdown
+
 CVE + System component breakdown => Security-Audited System 
 
