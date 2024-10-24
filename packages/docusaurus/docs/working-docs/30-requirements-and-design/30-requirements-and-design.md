@@ -88,16 +88,18 @@ CVE + System component breakdown => Security-Audited System
 
 ## Claims & Attestations
 
-### Inherit Risks
-
-#### Data
+### Data
 
 - Unwanted Bias
 - Hallucinations 
 - Errors in generated data
-- Poisioning 
-- 
+- Poisoning 
+- Pollution
 - etc.
-- 
+
+### Systems 
+- Cybersecurity Flaws
+- Implementation flaws
+- etc
 
 
