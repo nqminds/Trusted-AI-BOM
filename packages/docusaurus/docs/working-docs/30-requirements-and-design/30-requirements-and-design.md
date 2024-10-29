@@ -32,17 +32,10 @@ classDiagram
     }
 
     class TrainedSystem {
-        name
-        location
-        hash
-        hashLocation
+
     }
 
     class InferenceSystem{
-        name
-        location
-        hash
-        hashLocation
     }
     
     class Weights{
@@ -60,11 +53,10 @@ classDiagram
     }
 
     TrainingData "*" --o "1" DataPack : Aggregation
-    DataPack --> TrainedSystem
-    DataPack --> Weights
-    Weights --> InferenceSystem
-    TrainedSystem --> Weights
-    TrainedSystem --> InferenceSystem
+    DataPack --* TrainedSystem : Composition
+    Weights --* InferenceSystem : Composition
+    TrainedSystem --> Weights : Creates
+    TrainedSystem --* InferenceSystem : Composition
 
     %% Licence --> TrainingData
     %% Licence --> Code
@@ -73,7 +65,7 @@ classDiagram
 
     CVE --> SBOM
     SBOM --> Code  
-    Code --> TrainedSystem  
+    Code --* TrainedSystem : Composition
 
 ```
 
