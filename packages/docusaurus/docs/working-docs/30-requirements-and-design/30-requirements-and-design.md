@@ -83,8 +83,17 @@ classDiagram
 - **TrainedSystem to Weights**:  
   Represents the creation of `Weights` by the `TrainedSystem`, indicating that the system generates or updates the weights based on its training process.
 
-- **TrainedSystem to InferenceSystem**:  
-  Indicates that a `TrainedSystem` is composed of an `InferenceSystem`, showing a close relationship where the inference system is part of the overall trained system architecture.
+- **SBOM to TrainingCode**:  
+  Indicates that the Software Bill of Materials (SBOM) includes components and dependencies related to the `TrainingCode`.
+
+- **TrainingCode to TrainedSystem**:  
+  Represents the composition relationship where `TrainingCode` is an integral part of the `TrainedSystem`.
+
+- **SBOM to InferencingCode**:  
+  Indicates that the SBOM includes components and dependencies related to the `InferencingCode`.
+
+- **InferencingCode to InferenceSystem**:  
+  Represents the composition relationship where `InferencingCode` is an integral part of the `InferenceSystem`.
 
 ## Additional Attributes
 
@@ -126,6 +135,3 @@ classDiagram
 
 - **Compliance Gaps**:  
   Potential areas where the system may not meet regulatory or industry standards, impacting trust and legal standing.
-
-
-
