@@ -10,19 +10,16 @@ classDiagram
     direction LR
 
     class DataPack {
-        id
         name
         datasets
     }
 
     class TrainingData{
-        id
         name
         location
         hash
         hashLocation
         lastUpdated
-        licence
     }
 
     class Licence{
@@ -34,38 +31,49 @@ classDiagram
     class SBOM {
     }
 
-    class system {
-        id
+    class TrainedSystem {
         name
         location
         hash
         hashLocation
-        data
-        licence
-        sbom
     }
 
-
     class InferenceSystem{
+        name
+        location
+        hash
+        hashLocation
     }
     
     class Weights{
-        id
-        data
-        system
+        name
+        location
+        hash
+        hashLocation
     }
 
-    TrainingData  -->  DataPack: Many
-    DataPack --> system
-    TrainingData --> system
+    class Code { 
+        name
+        location
+        hash
+        hashLocation
+    }
+
+    TrainingData "*" --o "1" DataPack : Aggregation
+    DataPack --> TrainedSystem
     DataPack --> Weights
     Weights --> InferenceSystem
-    system --> Weights
-    system --> InferenceSystem
-    Licence --> system
-    Licence --> TrainingData
+    TrainedSystem --> Weights
+    TrainedSystem --> InferenceSystem
+
+    %% Licence --> TrainingData
+    %% Licence --> Code
+    %% Licence --> TrainedSystem
+    %% Licence --> InferenceSystem
+
     CVE --> SBOM
-    SBOM --> system
+    SBOM --> Code  
+    Code --> TrainedSystem  
 
 ```
 
