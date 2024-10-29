@@ -83,95 +83,58 @@ classDiagram
 
 ### Data Relationships
 - **Data to DataPack**:  
-  Represents the collection of datasets within a single data package.  
-  `TrainingData "*" --o "1" DataPack : Aggregation`
-
-### System Composition
+  Represents the collection of datasets within a single data package.
+  
+### TrainedSystem Composition
 - **DataPack to TrainedSystem**:  
-  Indicates that a `TrainedSystem` is composed of a `DataPack`, suggesting that the system is built from the data provided in the pack.  
-  `DataPack --* TrainedSystem : Compose`
-
-- **Weights to InferenceSystem**:  
-  Indicates that an `InferenceSystem` is composed of `Weights`, suggesting that the system relies on these weights for its inference operations.  
-  `Weights --* InferenceSystem : Compose`
+  A `TrainedSystem` is composed of a:
+  - DataPack
+  - TrainingCode
 
 - **TrainedSystem creates Weights**:  
-  Indicates that the `TrainedSystem` generates or produces weights necessary for the inference process.  
-  `TrainedSystem --> Weights : Creates`
+  The `TrainedSystem` generates or produces weights necessary for the inference process.
+
+### InferenceSystem Composition
+- **Weights to TrainedSystem**:  
+  An `InferenceSystem` is composed of:
+  - Weights
+  - InferencingCode
+
 
 ### Code Relationships
 - **CVE to SBOM**:  
-  Indicates that an SBOM aggregates multiple `CVE`s, representing known vulnerabilities associated with the components listed in the SBOM.  
-  `CVE "*" o-- "1" SBOM : Aggregation`
+  Indicates that an SBOM aggregates multiple `CVE`s, representing known vulnerabilities associated with the components listed in the SBOM.
 
-- **SBOM to TrainingCode**:  
-  Indicates that the SBOM is composed of `TrainingCode`, detailing the software components used during training.  
-  `SBOM *-- TrainingCode : Compose`
+- **SBOM to Code**:  
+  Indicates that the SBOM is composed from `Code`, detailing the software components used. 
 
-- **TrainingCode to TrainedSystem**:  
-  Indicates that a `TrainedSystem` is composed of `TrainingCode`, showing that the code is integral to the training process.  
-  `TrainingCode --* TrainedSystem : Compose`
 
-- **SBOM to InferencingCode**:  
-  Indicates that the SBOM is composed of `InferencingCode`, detailing the software components used during inference.  
-  `SBOM *-- InferencingCode : Compose`
+## Claims & Attestations
 
-- **InferencingCode to InferenceSystem**:  
-  Indicates that an `InferenceSystem` is composed of `InferencingCode`, showing that this code is essential for the functioning of the inference process.  
-  `InferencingCode --* InferenceSystem : Compose`
+### Data
 
-## Class Descriptions
+- **Unwanted Bias**:  
+  The presence of biases in the training data that can lead to skewed results or unfair outcomes.
 
-### DataPack
-- **Attributes**:
-  - `name`: The name of the data pack.
-  - `datasets`: A collection of datasets included in the pack.
+- **Hallucinations**:  
+  Instances where the system generates outputs that are factually incorrect or misleading due to inaccuracies in the data.
 
-### TrainingData
-- **Attributes**:
-  - `name`: The name of the training data.
-  - `location`: The storage location of the training data.
-  - `hash`: The hash of the training data for integrity verification.
-  - `hashLocation`: The location of the hash for the training data.
-  - `lastUpdated`: The timestamp of the last update to the training data.
+- **Errors in Generated Data**:  
+  Refers to inaccuracies or mistakes in the data produced by the system during its operation or training.
 
-### Licence
-- **Attributes**:  
-  (No specific attributes defined)
+- **Data Poisoning**:  
+  The risk that adversarial inputs can corrupt the training dataset, potentially leading to malicious outcomes.
 
-### CVE
-- **Attributes**:  
-  (No specific attributes defined)
+- **Data Pollution**:  
+  The introduction of unwanted or low-quality data that degrades the quality and performance of the trained model.
 
-### SBOM
-- **Attributes**:  
-  (No specific attributes defined)
+### Systems
 
-### TrainedSystem
-- **Attributes**:  
-  (No specific attributes defined)
+- **Cybersecurity Flaws**:  
+  Vulnerabilities in the system architecture that could be exploited by malicious actors to compromise security.
 
-### InferenceSystem
-- **Attributes**:  
-  (No specific attributes defined)
+- **Implementation Flaws**:  
+  Issues arising from incorrect implementation of the system, which can lead to performance problems or security vulnerabilities.
 
-### Weights
-- **Attributes**:
-  - `name`: The name of the weights.
-  - `location`: The storage location of the weights.
-  - `hash`: The hash of the weights for integrity verification.
-  - `hashLocation`: The location of the hash for the weights.
-
-### TrainingCode
-- **Attributes**:
-  - `name`: The name of the training code.
-  - `location`: The storage location of the training code.
-  - `hash`: The hash of the training code for integrity verification.
-  - `hashLocation`: The location of the hash for the training code.
-
-### InferencingCode
-- **Attributes**:
-  - `name`: The name of the inferencing code.
-  - `location`: The storage location of the inferencing code.
-  - `hash`: The hash of the inferencing code for integrity verification.
-  - `hashLocation`: The location of the hash for the inferencing code.
+- **Compliance Gaps**:  
+  Potential areas where the system may not meet regulatory or industry standards, impacting trust and legal standing.
