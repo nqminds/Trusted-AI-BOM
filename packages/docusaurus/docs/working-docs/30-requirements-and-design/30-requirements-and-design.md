@@ -45,93 +45,133 @@ classDiagram
         hashLocation
     }
 
-    class Code { 
+    class TrainingCode { 
         name
         location
         hash
         hashLocation
     }
 
+    class InferencingCode { 
+    name
+    location
+    hash
+    hashLocation
+    }
+
     TrainingData "*" --o "1" DataPack : Aggregation
-    DataPack --* TrainedSystem : Composition
-    Weights --* InferenceSystem : Composition
+    DataPack --* TrainedSystem : Compose
+    Weights --* InferenceSystem : Compose
     TrainedSystem --> Weights : Creates
-    TrainedSystem --* InferenceSystem : Composition
 
     %% Licence --> TrainingData
     %% Licence --> Code
     %% Licence --> TrainedSystem
     %% Licence --> InferenceSystem
 
-    CVE --> SBOM
-    SBOM --> Code  
-    Code --* TrainedSystem : Composition
+    CVE "*" o-- "1" SBOM : Aggregation
+    SBOM *-- TrainingCode : Compose  
+    TrainingCode --* TrainedSystem : Compose
+
+    SBOM *-- InferencingCode : Compose  
+    InferencingCode --* InferenceSystem : Compose
+
 
 ```
 
 ## Relationships
 
+### Data Relationships
 - **Data to DataPack**:  
-  Represents the collection of datasets within a single data package.
-  
+  Represents the collection of datasets within a single data package.  
+  `TrainingData "*" --o "1" DataPack : Aggregation`
+
+### System Composition
 - **DataPack to TrainedSystem**:  
-  Indicates that a `DataPack` is composed of a `TrainedSystem`, suggesting a strong ownership relationship where the system is built from the data pack.
+  Indicates that a `TrainedSystem` is composed of a `DataPack`, suggesting that the system is built from the data provided in the pack.  
+  `DataPack --* TrainedSystem : Compose`
 
 - **Weights to InferenceSystem**:  
-  Indicates that `Weights` are composed within an `InferenceSystem`, suggesting that the inference system relies on the specified weights for its operation.
+  Indicates that an `InferenceSystem` is composed of `Weights`, suggesting that the system relies on these weights for its inference operations.  
+  `Weights --* InferenceSystem : Compose`
 
-- **TrainedSystem to Weights**:  
-  Represents the creation of `Weights` by the `TrainedSystem`, indicating that the system generates or updates the weights based on its training process.
+- **TrainedSystem creates Weights**:  
+  Indicates that the `TrainedSystem` generates or produces weights necessary for the inference process.  
+  `TrainedSystem --> Weights : Creates`
+
+### Code Relationships
+- **CVE to SBOM**:  
+  Indicates that an SBOM aggregates multiple `CVE`s, representing known vulnerabilities associated with the components listed in the SBOM.  
+  `CVE "*" o-- "1" SBOM : Aggregation`
 
 - **SBOM to TrainingCode**:  
-  Indicates that the Software Bill of Materials (SBOM) includes components and dependencies related to the `TrainingCode`.
+  Indicates that the SBOM is composed of `TrainingCode`, detailing the software components used during training.  
+  `SBOM *-- TrainingCode : Compose`
 
 - **TrainingCode to TrainedSystem**:  
-  Represents the composition relationship where `TrainingCode` is an integral part of the `TrainedSystem`.
+  Indicates that a `TrainedSystem` is composed of `TrainingCode`, showing that the code is integral to the training process.  
+  `TrainingCode --* TrainedSystem : Compose`
 
 - **SBOM to InferencingCode**:  
-  Indicates that the SBOM includes components and dependencies related to the `InferencingCode`.
+  Indicates that the SBOM is composed of `InferencingCode`, detailing the software components used during inference.  
+  `SBOM *-- InferencingCode : Compose`
 
 - **InferencingCode to InferenceSystem**:  
-  Represents the composition relationship where `InferencingCode` is an integral part of the `InferenceSystem`.
+  Indicates that an `InferenceSystem` is composed of `InferencingCode`, showing that this code is essential for the functioning of the inference process.  
+  `InferencingCode --* InferenceSystem : Compose`
 
-## Additional Attributes
+## Class Descriptions
 
-- **Data and Licence**:  
-  Represents the licensing status of the data, indicating that the data is legally protected and compliant with specified licensing terms.
+### DataPack
+- **Attributes**:
+  - `name`: The name of the data pack.
+  - `datasets`: A collection of datasets included in the pack.
 
-- **SBOM and TrainedSystem**:  
-  Represents the breakdown of components within a trained system, detailing the software materials and dependencies that make up the system.
+### TrainingData
+- **Attributes**:
+  - `name`: The name of the training data.
+  - `location`: The storage location of the training data.
+  - `hash`: The hash of the training data for integrity verification.
+  - `hashLocation`: The location of the hash for the training data.
+  - `lastUpdated`: The timestamp of the last update to the training data.
 
-- **CVE and SBOM**:  
-  Indicates the identification of vulnerabilities associated with the components listed in the SBOM, highlighting security concerns in the system’s architecture.
+### Licence
+- **Attributes**:  
+  (No specific attributes defined)
 
-## Claims & Attestations
+### CVE
+- **Attributes**:  
+  (No specific attributes defined)
 
-### Data
+### SBOM
+- **Attributes**:  
+  (No specific attributes defined)
 
-- **Unwanted Bias**:  
-  The presence of biases in the training data that can lead to skewed results or unfair outcomes.
+### TrainedSystem
+- **Attributes**:  
+  (No specific attributes defined)
 
-- **Hallucinations**:  
-  Instances where the system generates outputs that are factually incorrect or misleading due to inaccuracies in the data.
+### InferenceSystem
+- **Attributes**:  
+  (No specific attributes defined)
 
-- **Errors in Generated Data**:  
-  Refers to inaccuracies or mistakes in the data produced by the system during its operation or training.
+### Weights
+- **Attributes**:
+  - `name`: The name of the weights.
+  - `location`: The storage location of the weights.
+  - `hash`: The hash of the weights for integrity verification.
+  - `hashLocation`: The location of the hash for the weights.
 
-- **Data Poisoning**:  
-  The risk that adversarial inputs can corrupt the training dataset, potentially leading to malicious outcomes.
+### TrainingCode
+- **Attributes**:
+  - `name`: The name of the training code.
+  - `location`: The storage location of the training code.
+  - `hash`: The hash of the training code for integrity verification.
+  - `hashLocation`: The location of the hash for the training code.
 
-- **Data Pollution**:  
-  The introduction of unwanted or low-quality data that degrades the quality and performance of the trained model.
-
-### Systems
-
-- **Cybersecurity Flaws**:  
-  Vulnerabilities in the system architecture that could be exploited by malicious actors to compromise security.
-
-- **Implementation Flaws**:  
-  Issues arising from incorrect implementation of the system, which can lead to performance problems or security vulnerabilities.
-
-- **Compliance Gaps**:  
-  Potential areas where the system may not meet regulatory or industry standards, impacting trust and legal standing.
+### InferencingCode
+- **Attributes**:
+  - `name`: The name of the inferencing code.
+  - `location`: The storage location of the inferencing code.
+  - `hash`: The hash of the inferencing code for integrity verification.
+  - `hashLocation`: The location of the hash for the inferencing code.
