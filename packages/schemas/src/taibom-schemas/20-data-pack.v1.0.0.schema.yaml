@@ -16,23 +16,12 @@ properties:
     description: "A list of data IDs from a VC claim"
     minItems: 1
     uniqueItems: true
-  collection_hash:
-    type: string
-    description: "The cryptographic hash (e.g., SHA256) of the entire raw dataset collection."
-  collection_hash_location:
-    type: string
-    description: "The location where the hash of the raw dataset collection is stored."
 required:
   - name
   - datasets
-anyOf:
-  - required: [ collection_hash ]
-  - required: [ collection_hash_location ]
 
 examples:
   - name: Raw collection
     datasets:
       - urn:uuid:data-vc-1234
       - urn:uuid:data-vc-4567
-    collection_hash: "hashrawcollection"
-    collection_hash_location: "/data/raw_collection_hash.txt"

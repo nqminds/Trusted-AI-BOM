@@ -1,0 +1,55 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: AI System
+description: |
+  This schema defines an AI system which may be used for Training AI models or an inferencing system
+type: object
+properties:
+  name:
+    description: Name of the software system.
+    type: string
+
+  label:
+    type: string
+    description: Label of data
+    enum:
+      - Training
+      - Inferencing
+
+  code:
+    type: string
+    description: ID of the code used in the system
+
+  data:
+    type: string
+    description: ID of the datapack / data / weights which have been used on the system
+
+required:
+  - name
+  - label
+  - code
+  - data
+
+if:
+  properties:
+    label:
+      const: Training
+then:
+  properties:
+    producedWeights:
+      description: Unique identifier for the produced weights in URN:UUID format.
+      type: string
+  required:
+    - producedWeights
+
+examples:
+  - name: "AI Model Training System"
+    label: "Training"
+    data: "urn:uuid:1cdf9f5c-b62c-4493-868a-datapack-123"
+    code: "urn:uuid:1cdf9f5c-b62c-4493-868a-code-abcdefg"
+    producedWeights: "urn:uuid:1cdf9f5c-b62c-4493-868a-weights-789"
+
+  - name: "AI Inferencing System"
+    label: "Inferencing"
+    data: "urn:uuid:1cdf9f5c-b62c-4493-868a-datapack-123"
+    code: "urn:uuid:1cdf9f5c-b62c-4493-868a-code-abcdefg"

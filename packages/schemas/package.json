@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prepare": "schemaTools parse-yaml-files ./src"
+    "prepare": "schemaTools parse-yaml-files ./src/taibom-schemas"
   },
   "keywords": [],
   "author": "",
