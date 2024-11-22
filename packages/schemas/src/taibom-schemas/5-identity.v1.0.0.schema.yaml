@@ -33,8 +33,8 @@ required:
   - pub
 
 examples:
-  - name: Tony,
-    email: tony@example.com,
-    uuid: 123e4567-e89b-12d3-a456-426614174000,
-    pub: A1B2C3D4E5F678901234567890ABCDEF1234567890ABCDEF1234567890ABCDEF,
+  - name: Tony
+    email: tony@example.com
+    uuid: 123e4567-e89b-12d3-a456-426614174000
+    pub: A1B2C3D4E5F678901234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
     role: Software Engineer
