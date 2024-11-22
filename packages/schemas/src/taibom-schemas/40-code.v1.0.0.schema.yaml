@@ -41,6 +41,7 @@ required:
   - name
   - location
   - sbom
+  - version
 anyOf:
   - required:
       - hash
@@ -48,6 +49,7 @@ anyOf:
       - hashLocation
 examples:
   - name: MyLocalAIModel
+    version: 1.0.0-Alpha.1
     location:
       type: local
       path: /path/to/local/model
@@ -55,6 +57,7 @@ examples:
     hashLocation: /path/to/local/model/hash.txt
     sbom: urn:uuid:65672143-7261-48f2-b991-651a89a38c6b
   - name: RemoteDataAnalyzer
+    version: 1.0.1
     location:
       type: remote
       path: https://example.com/path/to/remote/model
