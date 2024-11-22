@@ -1,0 +1,29 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/25-config.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Trained System Configs
+description: |
+  This schema defines an AI system which may be used for Training AI models or an inferencing system
+type: object
+properties:
+  name:
+    description: Name of the system config.
+    type: string
+  
+  aiSystem:
+    type: string
+    description: ID of the AI system VC
+
+  data:
+    type: string
+    description: ID of the weights which have been produced
+
+
+required:
+  - name
+  - aiSystem
+  - data
+
+examples:
+  - name: "AI Model Training System"
+    aiSystem: "urn:uuid:1cdf9f5c-b62c-4493-868a-aiSystem-123"
+    data: "urn:uuid:1cdf9f5c-b62c-4493-868a-data-abcdefg"

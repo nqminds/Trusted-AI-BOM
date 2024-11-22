@@ -8,7 +8,7 @@ properties:
   name:
     description: Name of the software system.
     type: string
-
+  
   label:
     type: string
     description: Label of data
@@ -24,31 +24,18 @@ properties:
     type: string
     description: ID of the datapack / data / weights which have been used on the system
 
+
 required:
   - name
   - label
   - code
   - data
 
-if:
-  properties:
-    label:
-      const: Training
-then:
-  properties:
-    producedWeights:
-      description: Unique identifier for the produced weights in URN:UUID format.
-      type: string
-  required:
-    - producedWeights
-
 examples:
   - name: "AI Model Training System"
     label: "Training"
     data: "urn:uuid:1cdf9f5c-b62c-4493-868a-datapack-123"
     code: "urn:uuid:1cdf9f5c-b62c-4493-868a-code-abcdefg"
-    producedWeights: "urn:uuid:1cdf9f5c-b62c-4493-868a-weights-789"
-
   - name: "AI Inferencing System"
     label: "Inferencing"
     data: "urn:uuid:1cdf9f5c-b62c-4493-868a-datapack-123"
