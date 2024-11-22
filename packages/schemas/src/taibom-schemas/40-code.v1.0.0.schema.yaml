@@ -58,4 +58,26 @@ examples:
     hash_location: https://example.com/path/to/remote/model/hash.txt
     sbom: urn:uuid:65672143-7261-48f2-b991-651a89a38c6b
 
+context: |
+  ## Introduction
 
+  The **Code Schema** is a JSON schema designed to define and standardize the representation of code or packages used within an AI system in the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures traceability, integrity verification, and association with SBOMs for AI system components.
+
+  ### Description
+  This schema captures essential metadata for code or packages, including:
+  - **Name**: The name of the code or package.
+  - **Location**: Specifies where the code is stored, either locally or remotely, with a defined path or URL.
+  - **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the code.
+  - **Hash Location**: The storage location of the hash, either local or remote.
+  - **SBOM**: The ID of the Software Bill of Materials (SBOM) associated with the code.
+
+  ## Use Case
+
+  The **Code Schema** is primarily used within the TAIBOM framework to:
+  1. **Document Code or Packages**: Provide a standardized representation of code used in AI systems.
+  2. **Ensure Code Integrity**: Enable integrity verification through cryptographic hashes and their associated locations.
+  3. **Link Code to SBOMs**: Establish a connection between the code and its SBOM for enhanced traceability and security.
+
+  By adopting this schema, organizations can maintain reliable and secure records of code used in AI systems, supporting transparency and robust lifecycle management.
+
+  ---

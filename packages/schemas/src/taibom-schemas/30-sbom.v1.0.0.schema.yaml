@@ -135,3 +135,28 @@ examples:
             value: "python"
           - name: "syft:cpe23"
             value: "cpe:2.3:a:absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*"
+
+context: |
+  ## Introduction
+
+  The **SBOM Schema** (Software Bill of Materials) is a JSON schema designed to describe and standardize the components, tools, and metadata associated with a software project within the Trusted AI BOM (TAIBOM) ecosystem. This schema provides a comprehensive overview of a project's dependencies, tools used, and key details for ensuring traceability and security.
+
+  ### Description
+  This schema captures essential metadata for an SBOM, including:
+  - **BOM Format**: The format of the SBOM (e.g., CycloneDX).
+  - **Specification Version**: The version of the SBOM specification used.
+  - **Serial Number**: A unique identifier for the SBOM instance.
+  - **Version**: The version number of the SBOM itself.
+  - **Metadata**: Details about the SBOM generation process, including timestamps, tools, and component information.
+  - **Components**: A detailed list of all components in the SBOM, including their type, name, version, and identifiers (e.g., CPE, PURL).
+
+  ## Use Case
+
+  The **SBOM Schema** is primarily used within the TAIBOM framework to:
+  1. **Document Software Components**: Provide a standardized record of all dependencies and components used in a software project.
+  2. **Enhance Security**: Facilitate vulnerability management by offering detailed metadata, including CPEs and PURLs for components.
+  3. **Support Software Lifecycle Management**: Enable effective tracking of tools and processes involved in the software's creation and maintenance.
+
+  By adopting this schema, organizations can create detailed and reliable SBOMs, ensuring transparency, traceability, and security throughout the software development lifecycle.
+
+  ---

@@ -40,3 +40,26 @@ examples:
     label: "Inferencing"
     data: "urn:uuid:1cdf9f5c-b62c-4493-868a-datapack-123"
     code: "urn:uuid:1cdf9f5c-b62c-4493-868a-code-abcdefg"
+
+context: |
+  ## Introduction
+
+  The **AI System Schema** is a JSON schema designed to define and standardize the representation of AI systems within the Trusted AI BOM (TAIBOM) ecosystem. This schema is applicable for systems used in both training AI models and inferencing, ensuring clarity and traceability of the underlying code and data.
+
+  ### Description
+  This schema captures essential metadata for an AI system, including:
+  - **Name**: The name of the AI system.
+  - **Label**: Indicates the system type, such as *Training* or *Inferencing*.
+  - **Code**: The ID of the code utilized within the system.
+  - **Data**: The ID of the data, datapack, or weights used by the system.
+
+  ## Use Case
+
+  The **AI System Schema** is primarily used within the TAIBOM framework to:
+  1. **Define AI Systems**: Provide a standardized representation of systems used for AI training or inferencing.
+  2. **Track Dependencies**: Ensure traceability by linking the system to its underlying code and data.
+  3. **Enable Lifecycle Management**: Support the management of AI systems across development, deployment, and maintenance phases.
+
+  By adopting this schema, organizations can ensure consistent documentation and robust lifecycle management of AI systems, contributing to transparency and accountability in AI ecosystems.
+
+  ---

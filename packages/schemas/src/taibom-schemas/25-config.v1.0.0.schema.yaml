@@ -27,3 +27,25 @@ examples:
   - name: "AI Model Training System"
     aiSystem: "urn:uuid:1cdf9f5c-b62c-4493-868a-aiSystem-123"
     data: "urn:uuid:1cdf9f5c-b62c-4493-868a-data-abcdefg"
+
+context: |
+  ## Introduction
+
+  The **Trained System Configs Schema** is a JSON schema designed to define AI system configurations within the Trusted AI BOM (TAIBOM) ecosystem. These configurations are used to describe systems involved in training AI models or inferencing processes, ensuring clear traceability and alignment with associated datasets and systems.
+
+  ### Description
+  This schema captures essential metadata for trained system configurations, including:
+  - **Name**: A unique identifier for the system configuration.
+  - **AI System**: The ID of the AI system VC (Verifiable Credential) associated with the configuration.
+  - **Data**: The ID of the weights produced or used by the system.
+
+  ## Use Case
+
+  The **Trained System Configs Schema** is primarily used within the TAIBOM framework to:
+  1. **Document AI Systems**: Provide a standardized format for identifying and describing AI systems involved in training or inferencing.
+  2. **Ensure Traceability**: Link AI systems to specific datasets and outputs (e.g., weights) for robust provenance tracking.
+  3. **Support AI Lifecycle Management**: Enable seamless integration of system configurations into workflows for monitoring and validation.
+
+  By adopting this schema, organizations can maintain clear and consistent documentation of their AI system configurations, supporting transparency and accountability in AI development and deployment.
+
+  ---
