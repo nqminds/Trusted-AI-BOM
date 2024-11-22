@@ -8,6 +8,9 @@ properties:
   name:
     type: string
     description: The name of the code / package.
+  version: 
+    type: string
+    description: Version of produced code
   location:
     type: object
     description: Details about where the dataset is stored, whether on a local filesystem or a remote URL.
@@ -27,7 +30,7 @@ properties:
   hash:
     type: string
     description: The cryptographic hash (e.g., SHA256) of the dataset used for data integrity verification.
-  hash_location:
+  hashLocation:
     type: string
     description: The location where the hash is stored, can be either local or a remote URL.
   sbom:
@@ -42,20 +45,20 @@ anyOf:
   - required:
       - hash
   - required:
-      - hash_location
+      - hashLocation
 examples:
   - name: MyLocalAIModel
     location:
       type: local
       path: /path/to/local/model
     hash: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
-    hash_location: /path/to/local/model/hash.txt
+    hashLocation: /path/to/local/model/hash.txt
     sbom: urn:uuid:65672143-7261-48f2-b991-651a89a38c6b
   - name: RemoteDataAnalyzer
     location:
       type: remote
       path: https://example.com/path/to/remote/model
-    hash_location: https://example.com/path/to/remote/model/hash.txt
+    hashLocation: https://example.com/path/to/remote/model/hash.txt
     sbom: urn:uuid:65672143-7261-48f2-b991-651a89a38c6b
 
 context: |
@@ -66,6 +69,7 @@ context: |
   ### Description
   This schema captures essential metadata for code or packages, including:
   - **Name**: The name of the code or package.
+  - **Version**: The version of the code or package.
   - **Location**: Specifies where the code is stored, either locally or remotely, with a defined path or URL.
   - **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the code.
   - **Hash Location**: The storage location of the hash, either local or remote.

@@ -6,7 +6,7 @@ title: Requirements & Design
 
 ```mermaid
 
-classDiagram 
+classDiagram
     direction LR
 
     class DataPack {
@@ -14,102 +14,99 @@ classDiagram
         datasets
     }
 
-    class TrainingData{
-        name
-        location
-        hash
-        hashLocation
-        lastUpdated
+    class TrainingData {
     }
 
-    class Licence{
+    class Data {
+      name
+      label
+      location.type
+      location.path
+      hashLocation
+      lastAccessed
     }
 
-    class CVE{
+    class Licence {
+    }
+
+    class CVE {
     }
 
     class SBOM {
     }
 
     class TrainedSystem {
-
     }
 
-    class InferenceSystem{
+    class InferenceSystem {
     }
-    
-    class Weights{
+
+    class Weights {
+    }
+
+    class TrainingCode {
+    }
+
+    class InferencingCode {
+    }
+
+    class Code {
+      name
+      location.type
+      location.path
+      hash
+      hashLocation
+      sbom
+    }
+
+    class AISystem {
         name
-        location
-        hash
-        hashLocation
+        label
+        code
+        data
     }
 
-    class TrainingCode { 
-        name
-        location
-        hash
-        hashLocation
+    class Config {
+      name
+      aiSystem
+      data
     }
 
-    class InferencingCode { 
-    name
-    location
-    hash
-    hashLocation
-    }
-
+    %% Relationships
+    %% DataPack and related entities
     TrainingData "*" --o "1" DataPack : Aggregation
     DataPack --* TrainedSystem : Compose
-    Weights --* InferenceSystem : Compose
+    Config --* InferenceSystem : Compose
     TrainedSystem --> Weights : Creates
 
-    %% Licence --> TrainingData
-    %% Licence --> Code
-    %% Licence --> TrainedSystem
-    %% Licence --> InferenceSystem
-
+    %% SBOM and related entities
     CVE "*" o-- "1" SBOM : Aggregation
-    SBOM *-- TrainingCode : Compose  
+    SBOM <-- TrainingCode : Creates
     TrainingCode --* TrainedSystem : Compose
+    SBOM --* Code : Compose
 
-    SBOM *-- InferencingCode : Compose  
+    SBOM <-- InferencingCode : Creates
     InferencingCode --* InferenceSystem : Compose
 
+    %% Config and related entities
+    Weights --* Config : Compose
+    TrainedSystem --* Config : Compose
+
+    %% Inheritance
+    Data <|-- Weights : Inherits
+    Data <|-- TrainingData : Inherits
+
+    Code <|-- TrainingCode : Inherits
+    Code <|-- InferencingCode : Inherits
+
+    AISystem <|-- TrainedSystem : Inherits
+    AISystem <|-- InferenceSystem : Inherits
 
 ```
 
-## Relationships
-
-### Data Relationships
-- **Data to DataPack**:  
-  Represents the collection of datasets within a single data package.
-  
-### TrainedSystem Composition
-- **DataPack to TrainedSystem**:  
-  A `TrainedSystem` is composed of a:
-  - DataPack
-  - TrainingCode
-
-- **TrainedSystem creates Weights**:  
-  The `TrainedSystem` generates or produces weights necessary for the inference process.
-
-### InferenceSystem Composition
-- **Weights to TrainedSystem**:  
-  An `InferenceSystem` is composed of:
-  - Weights
-  - InferencingCode
-
-
-### Code Relationships
-- **CVE to SBOM**:  
-  Indicates that an SBOM aggregates multiple `CVE`s, representing known vulnerabilities associated with the components listed in the SBOM.
-
-- **SBOM to Code**:  
-  Indicates that the SBOM is composed from `Code`, detailing the software components used. 
-
-
 ## Claims & Attestations
+
+Below are a few examples of claims and attestations which can be made on an AI system
 
 ### Data
 
