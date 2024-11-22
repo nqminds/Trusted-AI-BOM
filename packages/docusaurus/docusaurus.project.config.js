@@ -148,7 +148,7 @@ const config = {
 
               {
                 label: 'GitHub',
-                href: 'https://github.com/nqminds',
+                href: DOCUSAURUS_URL,
               },
             ],
           },

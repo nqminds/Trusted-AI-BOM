@@ -50,3 +50,11 @@ examples:
         [{id: 2a54a633-8c62-44c7-8173-f1bbcc72852a, relation: software implementing inferencing}]
       systems:
         [{id: 5e7c9691-a11c-4877-9c92-f74db746c2ec, relation: training system used to generate weights}]
+
+context: |
+  ## Context
+
+  - even includes bulletpoints
+  - hello 
+
+
