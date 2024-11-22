@@ -1,0 +1,90 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Code
+description: |
+  This schema defines an Code which which is used in an AI system
+type: object
+properties:
+  name:
+    type: string
+    description: The name of the code / package.
+  version: 
+    type: string
+    description: Version of produced code
+  location:
+    type: object
+    description: Details about where the dataset is stored, whether on a local filesystem or a remote URL.
+    properties:
+      type:
+        type: string
+        enum:
+          - local
+          - remote
+        description: Indicates whether the dataset is stored locally or remotely.
+      path:
+        type: string
+        description: The path or URL to the dataset location.
+    required:
+      - type
+      - path
+  hash:
+    type: string
+    description: The cryptographic hash (e.g., SHA256) of the dataset used for data integrity verification.
+  hashLocation:
+    type: string
+    description: The location where the hash is stored, can be either local or a remote URL.
+  sbom:
+    type: string
+    description: ID of the SBOM generated from code
+
+required:
+  - name
+  - location
+  - sbom
+  - version
+anyOf:
+  - required:
+      - hash
+  - required:
+      - hashLocation
+examples:
+  - name: MyLocalAIModel
+    version: 1.0.0-Alpha.1
+    location:
+      type: local
+      path: /path/to/local/model
+    hash: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+    hashLocation: /path/to/local/model/hash.txt
+    sbom: urn:uuid:65672143-7261-48f2-b991-651a89a38c6b
+  - name: RemoteDataAnalyzer
+    version: 1.0.1
+    location:
+      type: remote
+      path: https://example.com/path/to/remote/model
+    hashLocation: https://example.com/path/to/remote/model/hash.txt
+    sbom: urn:uuid:65672143-7261-48f2-b991-651a89a38c6b
+
+context: |
+  ## Introduction
+
+  The **Code Schema** is a JSON schema designed to define and standardize the representation of code or packages used within an AI system in the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures traceability, integrity verification, and association with SBOMs for AI system components.
+
+  ### Description
+  This schema captures essential metadata for code or packages, including:
+  - **Name**: The name of the code or package.
+  - **Version**: The version of the code or package.
+  - **Location**: Specifies where the code is stored, either locally or remotely, with a defined path or URL.
+  - **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the code.
+  - **Hash Location**: The storage location of the hash, either local or remote.
+  - **SBOM**: The ID of the Software Bill of Materials (SBOM) associated with the code.
+
+  ## Use Case
+
+  The **Code Schema** is primarily used within the TAIBOM framework to:
+  1. **Document Code or Packages**: Provide a standardized representation of code used in AI systems.
+  2. **Ensure Code Integrity**: Enable integrity verification through cryptographic hashes and their associated locations.
+  3. **Link Code to SBOMs**: Establish a connection between the code and its SBOM for enhanced traceability and security.
+
+  By adopting this schema, organizations can maintain reliable and secure records of code used in AI systems, supporting transparency and robust lifecycle management.
+
+  ---

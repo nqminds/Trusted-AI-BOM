@@ -1,0 +1,107 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: TAIBOM Data
+description: >
+  This schema describes the metadata of a dataset, including the location where it is hosted 
+  (either locally or remotely) and where to resolve the hash for verifying data integrity.
+type: object
+properties:
+  name:
+    type: string
+    description: "The name of the dataset."
+  
+  label:
+    type: string
+    description: Label of data
+    enum:
+      - Training
+      - Weights
+
+  location:
+    type: object
+    description: "Details about where the dataset is stored, whether on a local filesystem or a remote URL."
+    properties:
+      type:
+        type: string
+        enum: [ "local", "remote" ]
+        description: "Indicates whether the dataset is stored locally or remotely."
+      path:
+        type: string
+        description: "The path or URL to the dataset location."
+    required:
+      - type
+      - path
+  
+  hash:
+    type: string
+    description: "The cryptographic hash (e.g., SHA256) of the dataset used for data integrity verification."
+  
+  hashLocation:
+    type: string
+    description: "The location where the hash is stored, can be either local or a remote URL."
+
+  lastAccessed:
+    type: string
+    format: date-time
+    description: "The timestamp when the dataset metadata was accessed."
+
+required:
+  - name
+  - location
+  - lastAccessed
+  - label
+
+anyOf:
+  - required: [ hash ]
+  - required: [ hashLocation ]
+
+examples:
+  - name: "image_classification_v1"
+    label: Training
+    location:
+      type: "local"
+      path: "/data/ai_training/image_classification_v1.zip"
+    hash: "b2c4f5e4d3d8a77c3e5b60d72fdf6d3b9e2f758f85a1fba1c7b5a8b9d2fdb123"
+    hashLocation: "/data/ai_training/image_classification_v1_hash.txt"
+    lastAccessed: "2024-08-25T14:00:00Z"
+
+  - name: "text_sentiment_analysis_corpus"
+    label: Training
+    location:
+      type: "remote"
+      path: "https://ai-datasets.com/sentiment/text_sentiment_analysis_corpus_2024.tar.gz"
+    hashLocation: "https://ai-datasets.com/sentiment/text_sentiment_analysis_corpus_hash.txt"
+    lastAccessed: "2024-09-15T09:00:00Z"
+
+  - name: "object_detection_images_v2"
+    label: Training
+    location:
+      type: "local"
+      path: "/data/ai_training/object_detection_images_v2.tar.gz"
+    hash: "c4e5f6d7e8f7c9a3e5d7b8f7c9e3d8a2e9f7a3d9b2f8c5e3d7a9b5e2d3f9a7b6"
+    lastAccessed: "2024-10-05T11:30:00Z"
+
+context: |
+  ## Introduction
+
+  The **TAIBOM Data Schema** is a JSON schema designed to describe and standardize the metadata associated with datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures datasets can be identified, located, and verified for integrity, enabling seamless and trustworthy AI operations.
+
+  ### Description
+  This schema captures essential metadata for datasets, including:
+  - **Name**: A unique identifier for the dataset.
+  - **Label**: Categorization of the dataset (e.g., Training or Weights).
+  - **Location**: Specifies where the dataset is stored, either locally or remotely, along with the respective path or URL.
+  - **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the dataset.
+  - **Hash Location**: The location (local or remote) where the hash is stored.
+  - **Last Accessed**: The timestamp of the last access to the dataset metadata.
+
+  ## Use Case
+
+  The **TAIBOM Data Schema** is primarily used within the TAIBOM framework to:
+  1. **Enable Dataset Traceability**: Provide a clear and standardized format for referencing datasets and their locations.
+  2. **Ensure Data Integrity**: Support integrity verification through cryptographic hashes and their associated storage locations.
+  3. **Streamline Operations**: Offer metadata for efficient handling of datasets in AI workflows, whether stored locally or remotely.
+
+  By adopting this schema, organizations can standardize how datasets are documented, retrieved, and verified, ensuring robust data handling in AI systems.
+
+  ---

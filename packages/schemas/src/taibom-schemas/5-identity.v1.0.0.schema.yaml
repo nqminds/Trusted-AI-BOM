@@ -1,0 +1,67 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Identity schema
+description: |
+  This schema defines an identity and ties this with an Email, UUID, and public key
+type: object
+properties:
+  name:
+    description: Name of identity.
+    type: string
+  
+  email:
+    type: string
+    description: Email address of user
+
+  uuid:
+    type: string
+    description: UUID resolving to this identity
+
+  pub:
+    type: string
+    description: Public key of identity
+
+  role: 
+    type: string
+    description: Human readable role for this identity
+
+
+required:
+  - name
+  - email
+  - uuid
+  - pub
+  - role
+
+examples:
+  - name: Tony
+    email: tony@example.com
+    uuid: 123e4567-e89b-12d3-a456-426614174000
+    pub: A1B2C3D4E5F678901234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+    role: Software Engineer
+
+context: |
+  ## Introduction
+
+  The **Identity Schema** is a JSON schema designed to establish and standardize the representation of an individual's identity within the Trusted AI BOM (TAIBOM) framework. By associating a name, email, UUID, public key, and a role, this schema enables robust and secure identification of individuals who can make claims and attestations in AI systems.
+
+  ### Description
+  This schema ties an individual identity to:
+  - **Name**: A human-readable identifier.
+  - **Email**: A contact email address.
+  - **UUID**: A universally unique identifier (UUID) that resolves to this identity.
+  - **Public Key**: A cryptographic public key used to authenticate claims and attestations.
+  - **Role**: A human-readable description of the individual's role.
+
+  ## Use Case
+
+  The **Identity Schema** is primarily used within the TAIBOM ecosystem to:
+  1. **Establish Identity**: Provide a standardized identity format for individuals interacting with AI systems.
+  2. **Enable Trust**: Facilitate secure claims and attestations through the binding of a public key to an individual.
+  3. **Support Role-Based Operations**: Incorporate human-readable roles for context in organizational or system-level operations.
+
+  By using this schema, developers and system administrators can ensure that each identity is uniquely tied to a UUID and public key, bolstering the authenticity and security of interactions within AI systems.
+
+  Adopting the **Identity Schema** helps organizations participating in TAIBOM achieve secure and trustworthy interactions in AI-driven ecosystems.
+
+  ---
