@@ -1,0 +1,40 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Identity schema
+description: |
+  This schema defines an identity and ties this with an Email, UUID, and public key
+type: object
+properties:
+  name:
+    description: Name of identity.
+    type: string
+  
+  email:
+    type: string
+    description: Email address of user
+
+  uuid:
+    type: string
+    description: UUID resolving to this identity
+
+  pub:
+    type: string
+    description: Public key of identity
+
+  role: 
+    type: string
+    description: Human readable role for this identity
+
+
+required:
+  - name
+  - email
+  - uuid
+  - pub
+
+examples:
+  - name: Tony,
+    email: tony@example.com,
+    uuid: 123e4567-e89b-12d3-a456-426614174000,
+    pub: A1B2C3D4E5F678901234567890ABCDEF1234567890ABCDEF1234567890ABCDEF,
+    role: Software Engineer
