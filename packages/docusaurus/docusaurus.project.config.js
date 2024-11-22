@@ -87,6 +87,7 @@ const config = {
         id: "sdk",
         path: "./docs/sdk",
         routeBasePath: "sdk",
+        editUrl,
       },
     ],
   ],
