@@ -81,6 +81,14 @@ const config = {
         routeBasePath: "schemas",
       },
     ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "sdk",
+        path: "./docs/sdk",
+        routeBasePath: "sdk",
+      },
+    ],
   ],
 
   themeConfig:
@@ -116,7 +124,13 @@ const config = {
           position: 'left',
           label: 'Schemas',
         },
-
+        {
+          type: 'doc',
+          docId: 'sdk',
+          docsPluginId: "sdk",
+          position: 'left',
+          label: 'SDK',
+        },
         ],
       },
       footer: {
