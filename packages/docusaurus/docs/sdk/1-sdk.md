@@ -18,10 +18,7 @@ The `taibom` CLI tool is designed to manage and create various metadata objects 
 - **Inputs**:
   - Name
   - Email
-  - UUID
   - Role
-  - Path to public key
-  - Path to private key
 - **Description**: Generates and stores identity metadata in a `identity.json` file. Optionally saves the identity for reuse in a global configuration.
 
 ---
@@ -75,7 +72,7 @@ The `taibom` CLI tool is designed to manage and create various metadata objects 
 
 ### Commands
 1. **Identity**
-   - `taibom identity create --name <name> --email <email> --uuid <uuid> --role <role> --pubkey <path> --privkey <path>`
+   - `taibom generate-identity <name> <email> <role>`
 
 2. **Data Taibom**
    - `taibom data create --path <file_or_folder>`
