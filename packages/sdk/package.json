@@ -1,0 +1,19 @@
+{
+  "name": "@nqminds/taibom-sdk",
+  "version": "0.0.1",
+  "description": "SDK for creating & verifying TAIBOMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "taibom": "./bin/cli.js"
+  },
+  "author": "nqminds",
+  "license": "UNLICENCED",
+  "dependencies": {
+    "@nqminds/verifiable-schemas-toolchain": "2.1.0-alpha.2",
+    "commander": "^12.1.0",
+    "uuid": "^11.0.3"
+  }
+}
