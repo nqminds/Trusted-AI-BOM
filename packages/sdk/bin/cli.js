@@ -2,13 +2,28 @@
 
 const { Command } = require('commander');
 const program = new Command();
-const pathModule = require('path'); // Renamed to avoid conflict with 'path'
+const path = require('path'); // Renamed to avoid conflict with 'path'
 const fs = require('fs');
-const { exec } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
 const VC_OUPUT_PATH = "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/verifiable-credentials"
+const SBOM_OUTPUT_PATH = "/home/tony/Projects/taibom-projects/SBOM-GAP/vulnerability-reports/sboms"
 
-const { keypairDir, directoryExists, createVC, getIdentityJson, runBashCommand, generateAndSignVC } = require('../src');
+const { keypairDir, directoryExists, getIdentityJson, runBashCommand, generateAndSignVC, getAndVerifyClaim, getHash} = require('../src');
+
+function retrieveIdentity(identityEmail) {
+  const privateKeyPath = path.join(keypairDir, `${identityEmail}-priv`);
+  const publicKeyPath = path.join(keypairDir, `${identityEmail}-pub`);
+  const identity = getIdentityJson(identityEmail)
+
+  if (!fs.existsSync(privateKeyPath) || !fs.existsSync(publicKeyPath)) {
+    console.error(`Error: Keypair for identity email '${identityEmail}' does not exist.`);
+    process.exit(1);
+  }
+
+  console.log(`Identity keys for '${identityEmail}' found.`);
+  return {identity, privateKeyPath, publicKeyPath}
+}
+
 
 program
   .name("SDK for creating & verifying TAIBOMS")
@@ -32,7 +47,7 @@ program
     if (!directoryExists(keypairDir)) {
       fs.mkdirSync(keypairDir);
     }
-        const keypairPath = pathModule.join(keypairDir, email);
+        const keypairPath = path.join(keypairDir, email);
 
     console.log(`Generating keypair for email: ${email}...`);
   
@@ -61,26 +76,16 @@ program
 
   });
 
-  program
+program
   .command("data-taibom")
   .description("Generate a Data TAIBOM")
   .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
   .argument('<data_directory>', 'The directory of the data')
   .option("--weights", "This data is AI weights", false)
   .action((identityEmail, dataDir, options) => {
-    // Step 1: Check if identity keys exist
-    const privateKeyPath = pathModule.join(keypairDir, `${identityEmail}-priv`);
-    const publicKeyPath = pathModule.join(keypairDir, `${identityEmail}-pub`);
-    const identity = getIdentityJson(identityEmail)
+    const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail)
 
-    if (!fs.existsSync(privateKeyPath) || !fs.existsSync(publicKeyPath)) {
-      console.error(`Error: Keypair for identity email '${identityEmail}' does not exist.`);
-      process.exit(1);
-    }
-
-    console.log(`Identity keys for '${identityEmail}' found.`);
-
-    // Step 2: Verify the data directory exists
+    // Verify the data directory exists
     if (!directoryExists(dataDir)) {
       console.error(`Error: Data directory '${dataDir}' does not exist.`);
       process.exit(1);
@@ -88,10 +93,9 @@ program
 
     console.log(`Data directory '${dataDir}' verified.`);
 
-    // Step 3: Generate the hash of the directory contents
-    // Wrap the directory in double quotes to handle spaces
+    // Generate the hash of the directory contents
     const escapedDataDir = `"${dataDir}"`;
-    const bashCommand = `find ${escapedDataDir} -type f -exec sha256sum {} + | sort | sha256sum | awk '{print $1}'`;
+    const bashCommand = getHash(escapedDataDir);
 
     runBashCommand(bashCommand, (error, hash) => {
       if (error) {
@@ -110,11 +114,103 @@ program
           path: `file://${dataDir}`,
           type: "local"
         },
-        name: pathModule.parse(dataDir).name,
+        name: path.parse(dataDir).name,
       }
       
       generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "data.json", privateKeyPath, VC_OUPUT_PATH);
     });
+  });
+  
+program
+  .command("generate-sbom")
+  .description("Generate and sign an SBOM of code")
+  .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
+  .argument('<code_directory>', 'The directory of the data')
+  .option("--cpp", "[OPTIONAL] Generate a SBOM for C/C++ code", false)
+  .action((identityEmail, codeDirectory, options) => {
+    const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+
+    const codeName = path.basename(codeDirectory)
+    // Verify the code directory exists
+    if (!directoryExists(codeDirectory)) {
+      console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
+      process.exit(1);
+    }
+    const escapedDir = `"${codeDirectory}"`;
+    console.log(`Code directory '${codeDirectory}' verified.`);
+
+    let cliCommand = ""
+    if(options.cpp) {
+      cliCommand += "generateCCPPReport";
+    } else {
+      cliCommand += "generateSbom"; 
+    }
+
+    const bashCommand = `nqmvul -${cliCommand} ${escapedDir} "${codeName}"`
+    console.log("Creating the SBOM")
+
+    runBashCommand(bashCommand); // This will produce an error we are not interested in
+
+    const sbomDir = path.join(SBOM_OUTPUT_PATH, `${codeName}.json`);
+    if(!directoryExists(sbomDir)) {
+      console.error(`Error: SBOM directory '${sbomDir}' does not exist.`);
+      process.exit(1);
+    }
+    const credentialSubject = getAndVerifyClaim(sbomDir, false);
+
+    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "sbom.json", privateKeyPath, VC_OUPUT_PATH);
+  })
+
+program
+  .command("code-taibom")
+  .description("Generate and sign a TAIBOM of code")
+  .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
+  .argument('<code_directory>', 'The directory of the data')
+  .argument("<version>", "Code version number")
+  .option("--sbom <path>", "[OPTIONAL] SBOM TAIBOM claim", false)
+  .option("--name <code_name>", "[OPTIONAL] Name of code or package", false)
+  .action((identityEmail, codeDirectory, version, options) => {
+    const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+
+    const codeName = path.basename(codeDirectory);
+    // Verify the code directory exists
+    if (!directoryExists(codeDirectory)) {
+      console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
+      process.exit(1);
+    }
+    const escapedDir = `"${codeDirectory}"`;
+    console.log(`Code directory '${codeDirectory}' verified.`);
+
+    const bashCommand = getHash(escapedDir);
+
+    let sbom = undefined;
+
+    if(options.sbom){
+      const sbomVc = getAndVerifyClaim(options.sbom);
+      sbom = sbomVc.id
+    }
+
+
+    runBashCommand(bashCommand, (error, hash) => {
+      if (error) {
+        console.error(`Error generating hash: ${error.message}`);
+        process.exit(1);
+      }
+
+
+      const credentialSubject = {
+        hash,
+        location: {
+          path: `file://${codeDirectory}`,
+          type: "local",
+        },
+        name: options.name? options.name : codeName,
+        version,
+        sbom
+      }
+      generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "code.json", privateKeyPath, VC_OUPUT_PATH);
+
+    })
   });
 
 

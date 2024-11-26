@@ -11,7 +11,7 @@ function directoryExists(dirPath) {
   return fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory() || fs.existsSync(dirPath) && fs.statSync(dirPath).isFile();
 }
 
-function getAndVerifyClaim(path) {
+function getAndVerifyClaim(path, claim=true) {
   try {
     // Check if the file exists
     if (!fs.existsSync(path)) {
@@ -57,6 +57,10 @@ function ensureFilesExist(files) {
   }
 }
 
+function getHash(dataDir) {
+  return `find ${dataDir} -type f -exec sha256sum {} + | sort | sha256sum | awk '{print $1}'`;
+}
+
 module.exports = {
-  keypairDir, directoryExists, getIdentityJson, runBashCommand, ensureFilesExist, getAndVerifyClaim
+  keypairDir, directoryExists, getIdentityJson, runBashCommand, ensureFilesExist, getAndVerifyClaim, getHash
 }
