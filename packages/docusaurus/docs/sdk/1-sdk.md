@@ -25,7 +25,9 @@ The `taibom` CLI tool is designed to manage and create various metadata objects 
 
 ### 2. Data Taibom Creation
 - **Inputs**:
-  - Path to a file or folder
+    - Identity email
+    - Path to a file or folder
+    - [OPTIONAL] - Weights flag to identify the data as Weights
 - **Description**: Analyses a file or folder and generates metadata such as name, hash, path. Stores metadata in `data_<name>_taibom.json`.
 
 ---
@@ -75,7 +77,8 @@ The `taibom` CLI tool is designed to manage and create various metadata objects 
    - `taibom generate-identity <name> <email> <role>`
 
 2. **Data Taibom**
-   - `taibom data create --path <file_or_folder>`
+   - `taibom data-taibom <email_identity> <path_to_data_file>` OR
+   - `taibom data-taibom <email_identity> <path_to_data_file> --weights` 
 
 3. **Datapack Taibom**
    - `taibom datapack create --data <data_taibom1> <data_taibom2> ...`
