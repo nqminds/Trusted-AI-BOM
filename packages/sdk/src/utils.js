@@ -58,8 +58,15 @@ function ensureFilesExist(files) {
 }
 
 function getHash(dataDir) {
-  return `find ${dataDir} -type f -exec sha256sum {} + | sort | sha256sum | awk '{print $1}'`;
+  // Strip "file://" prefix if it exists
+  if (dataDir.startsWith('file://')) {
+    dataDir = dataDir.replace('file://', '');
+  }
+
+  // Enclose the path in quotes to handle spaces
+  return `find "${dataDir}" -type f -exec sha256sum {} + | sort | sha256sum | awk '{print $1}'`;
 }
+
 
 module.exports = {
   keypairDir, directoryExists, getIdentityJson, runBashCommand, ensureFilesExist, getAndVerifyClaim, getHash

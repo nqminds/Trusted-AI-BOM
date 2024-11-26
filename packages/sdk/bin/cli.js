@@ -285,4 +285,62 @@ program
   });
 
 
+  function validateLocationHash(claim) {
+    const file_location = claim.credentialSubject.location.path;
+    const bashCommand = getHash(`${file_location}`);
+
+    runBashCommand(bashCommand, (error, hash) => {
+      if (error) {
+        console.error(`Error generating hash: ${error.message}`);
+        process.exit(1);
+      }
+      if (claim.credentialSubject.hash !== hash)
+        throw new Error ("Hash is not validated")
+    })
+
+
+    console.log("TAIBOM claim", claim.id, "VALIDATED")
+  }
+
+  // Validation functions
+program
+  .command("validate-data")
+  .description("Validate a TAIBOM data claim")
+  .argument("<data_taibom>", "Path to TAIBOM data claim")
+  .action((taibom) => {
+    try {
+      const dataClaim = getAndVerifyClaim(taibom);
+
+    // Verify it is a data vc
+    if(dataClaim.credentialSchema.id !== "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml")
+      throw new Error("This is not a TAIBOM data claim")
+    
+    validateLocationHash(dataClaim);
+
+    } catch (err) {
+      console.log(err)
+      throw new Error(`Validation failed for claim at ${taibom}`)
+    }
+  });
+
+program
+  .command("validate-code")
+  .description("Validate a TAIBOM code claim")
+  .argument("<data_taibom>", "Path to TAIBOM data claim")
+  .action((taibom) => {
+    try {
+      const codeClaim = getAndVerifyClaim(taibom);
+
+    // Verify it is a data vc
+    if(codeClaim.credentialSchema.id !== "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml")
+      throw new Error("This is not a TAIBOM code claim")
+    
+    validateLocationHash(codeClaim);
+
+    } catch (err) {
+      console.log(err)
+      throw new Error(`Validation failed for claim at ${taibom}`)
+    }
+  });
+
 program.parse(process.argv);
