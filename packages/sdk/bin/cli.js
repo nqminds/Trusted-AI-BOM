@@ -167,7 +167,7 @@ program
   .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
   .argument('<code_directory>', 'The directory of the data')
   .argument("<version>", "Code version number")
-  .option("--sbom <path>", "[OPTIONAL] SBOM TAIBOM claim", false)
+  .option("--sbomTaibom <path>", "[OPTIONAL] SBOM TAIBOM claim", false)
   .option("--name <code_name>", "[OPTIONAL] Name of code or package", false)
   .action((identityEmail, codeDirectory, version, options) => {
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
@@ -185,8 +185,8 @@ program
 
     let sbom = undefined;
 
-    if(options.sbom){
-      const sbomVc = getAndVerifyClaim(options.sbom);
+    if(options.sbomTaibom){
+      const sbomVc = getAndVerifyClaim(options.sbomTaibom);
       sbom = sbomVc.id
     }
 
@@ -212,6 +212,33 @@ program
 
     })
   });
+
+program
+  .command("system-taibom")
+  .description("Generate and sign a TAIBOM of a AI system")
+  .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
+  .argument("<code_taibom>", "Path to code TAIBOM claim")
+  .argument("<data_taibom>", "Path to code TAIBOM claim")
+  .option("--name <code_name>", "[OPTIONAL] Name of system or package", false)
+  .option("--inferencing", "Label this AI system as inferencing")
+  .action((identityEmail, codeTaibomPath, dataTaibomPath, options) => {
+    const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+
+    // TODO: verify both code and data claims
+    const codeTaibom = getAndVerifyClaim(codeTaibomPath);
+    const dataTaibom = getAndVerifyClaim(dataTaibomPath);
+
+    const label = options.infererencing ? "Inferencing" : "Training"
+
+    const credentialSubject = {
+      code: codeTaibom.id,
+      data: dataTaibom.id,
+      label,
+      name: options.name || codeTaibom.credentialSubject.name
+    }
+    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "ai-system.json", privateKeyPath, VC_OUPUT_PATH);
+
+  })
 
 
 program.parse(process.argv);
