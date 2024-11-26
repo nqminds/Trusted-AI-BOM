@@ -1,0 +1,21 @@
+{
+  "name": "astro",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "prepare": "node src/scripts/import-schemas.js"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/starlight": "^0.29.2",
+    "@nqminds/verifiable-schemas-toolchain": "^2.1.0",
+    "astro": "^4.16.10",
+    "sharp": "^0.32.5"
+  },
+   "license": "ISC"
+}
