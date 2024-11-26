@@ -1,7 +1,7 @@
-const {keypairDir} = require ("./utils");
-const createVC = require("./create-vc")
+const {keypairDir, directoryExists, getIdentityJson, runBashCommand, ensureFilesExist} = require ("./utils");
+const {createVC, generateAndSignVC} = require("./vc-tools")
 
 module.exports ={
-  keypairDir,
-  createVC
+  keypairDir, directoryExists, getIdentityJson, runBashCommand, ensureFilesExist, 
+  createVC, generateAndSignVC
 }

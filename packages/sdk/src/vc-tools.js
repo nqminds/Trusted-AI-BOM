@@ -3,6 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
+const {runBashCommand} = require("./utils")
+const getSchemaDetails = require("./schemas")
+
 // Static VC template with placeholder values
 const staticVC = {
   "@context": [
@@ -22,7 +25,7 @@ const staticVC = {
   "credentialSubject": {}
 };
 
-function createVC(credentialSubject, issuer, schema = "", variables = {}, includeSchema = false) {
+function createVC(credentialSubject, issuer, schema = "", variables = {}) {
   // Create a unique id for the VC
   const vcId = `urn:uuid:${uuidv4()}`;
 
@@ -46,10 +49,26 @@ function createVC(credentialSubject, issuer, schema = "", variables = {}, includ
 
   // Write the VC to the file
   fs.writeFileSync(filePath, JSON.stringify(vc, null, 2));
-
-  console.log(`VC saved to: ${filePath}`);
-
   return {filePath, vcId}; // Return the path for reference
 }
 
-module.exports = createVC;
+function generateAndSignVC(credentialSubject, issuer, schemaName, privateKeyPath, outputPath, appendVcId = true) {
+  const schemaKeyPath = "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/schemas/tony-pub"
+  const {schema, schemaPath} = getSchemaDetails(schemaName);
+
+  const {filePath, vcId} = createVC(credentialSubject, issuer, schema.credentialSubject.$id);
+
+  const output = appendVcId ? path.join(outputPath, `${vcId}.json`) : outputPath;
+
+  const signCommand = `vc_tools_cli sign-vc ${filePath} ${schemaPath} ${privateKeyPath} ${schemaKeyPath} ${output} json`;
+  runBashCommand(signCommand, (error) => {
+    if (error) {
+      console.error(`Error signing VC: ${error.message}`);
+      process.exit(1);
+    }
+    console.log(`VC signed and saved to ${output}`);
+  });
+}
+
+
+module.exports = {createVC, generateAndSignVC};
