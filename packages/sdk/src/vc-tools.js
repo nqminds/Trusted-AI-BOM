@@ -58,7 +58,7 @@ function generateAndSignVC(credentialSubject, issuer, schemaName, privateKeyPath
 
   const {filePath, vcId} = createVC(credentialSubject, issuer, schema.credentialSubject.$id);
 
-  const output = appendVcId ? path.join(outputPath, `${vcId}.json`) : outputPath;
+  const output = appendVcId ? path.join(outputPath, `TAIBOM-${schemaName.split(".")[0]}-${vcId}.json`) : outputPath;
 
   const signCommand = `vc_tools_cli sign-vc ${filePath} ${schemaPath} ${privateKeyPath} ${schemaKeyPath} ${output} json`;
   runBashCommand(signCommand, (error) => {

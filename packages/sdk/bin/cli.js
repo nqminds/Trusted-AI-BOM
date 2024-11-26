@@ -240,5 +240,49 @@ program
 
   })
 
+program
+  .command("datapack-taibom")
+  .description("Generate and sign a TAIBOM of a datapack")
+  .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
+  .argument('<name>', 'The dataset name')
+  .argument('<data_taiboms...>', 'List of file or directory paths (space-separated)')
+  .action((identityEmail, name, dataTaibomPaths) => {
+    const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+
+    const datasets = dataTaibomPaths.map(path => {
+      dataTaibom = getAndVerifyClaim(path)
+      return dataTaibom.id;
+    });
+
+    const credentialSubject = {
+      name, datasets
+    }
+
+    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "datapack.json", privateKeyPath, VC_OUPUT_PATH);
+
+  });
+
+program
+  .command("config-taibom")
+  .description("Generate and sign a TAIBOM of an AI systems config")
+  .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
+  .argument('<ai_system_taibom>', 'AI system TAIOBOM path')
+  .argument('<data_taibom>', 'Path to data configs') 
+  .option("--name <config_name>", "[OPTIONAL] Name of configs", false)
+  .action((identityEmail, aiSystemTaibomPath, dataTaibomPath, options) => {
+    const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+
+    const aiSystem = getAndVerifyClaim(aiSystemTaibomPath)?.id;
+    const data = getAndVerifyClaim(dataTaibomPath);
+
+    console.log(data)
+    const credentialSubject = {
+      aiSystem, data: data.id, name: options.name || data.credentialSubject.name
+    }
+
+    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "config.json", privateKeyPath, VC_OUPUT_PATH);
+
+  });
+
 
 program.parse(process.argv);
