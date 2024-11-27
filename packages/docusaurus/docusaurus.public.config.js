@@ -9,7 +9,7 @@ import {resolve} from "url"
 import 'dotenv/config';
 
 // @ts-ignore
-const {TITLE, TAGLINE, DOCUSAURUS_URL, PROJECT_NAME} = configs;
+const {TITLE, TAGLINE, DOCUSAURUS_URL, PROJECT_NAME, GITHUB_OWNER, GITHUB_REPO} = configs;
 
 const config = {
   title: TITLE,
