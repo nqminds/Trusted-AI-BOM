@@ -94,8 +94,7 @@ program
     console.log(`Data directory '${dataDir}' verified.`);
 
     // Generate the hash of the directory contents
-    const escapedDataDir = `"${dataDir}"`;
-    const bashCommand = getHash(escapedDataDir);
+    const bashCommand = getHash(dataDir);
 
     runBashCommand(bashCommand, (error, hash) => {
       if (error) {
@@ -178,10 +177,9 @@ program
       console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
       process.exit(1);
     }
-    const escapedDir = `"${codeDirectory}"`;
     console.log(`Code directory '${codeDirectory}' verified.`);
 
-    const bashCommand = getHash(escapedDir);
+    const bashCommand = getHash(codeDirectory);
 
     let sbom = undefined;
 
@@ -275,7 +273,6 @@ program
     const aiSystem = getAndVerifyClaim(aiSystemTaibomPath)?.id;
     const data = getAndVerifyClaim(dataTaibomPath);
 
-    console.log(data)
     const credentialSubject = {
       aiSystem, data: data.id, name: options.name || data.credentialSubject.name
     }
