@@ -1,0 +1,30 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:60b8633e-e0b6-40a3-84c7-8852e2dd6562",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:99fd7718-e343-4528-8b0b-ff9ce6e64c36",
+  "validFrom": null,
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "code": "urn:uuid:e29c67d5-31fb-4d75-9c24-bdbe154e39c9",
+    "data": "urn:uuid:bfe846d7-4ca7-4956-a554-2572f6b42537",
+    "label": "Training",
+    "name": "Inference Test with GUI Interface.py"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2024-11-26T13:21:40.764139685Z",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "u9kPzCaEBI3ceWFuRB+LWnWgmsf2fDqKLJv/LrbegpghuvvHt3Z1P+N2IY1PaWiY/OTPkVnJwOWkQJXS0ve/Dg=="
+  }
+}

@@ -81,10 +81,10 @@ context: |
   ## Use Case
 
   The **Code Schema** is primarily used within the TAIBOM framework to:
-  1. **Document Code or Packages**: Provide a standardized representation of code used in AI systems.
+  1. **Document Code or Packages**: Provide a standardised representation of code used in AI systems.
   2. **Ensure Code Integrity**: Enable integrity verification through cryptographic hashes and their associated locations.
   3. **Link Code to SBOMs**: Establish a connection between the code and its SBOM for enhanced traceability and security.
 
-  By adopting this schema, organizations can maintain reliable and secure records of code used in AI systems, supporting transparency and robust lifecycle management.
+  By adopting this schema, organisations can maintain reliable and secure records of code used in AI systems, supporting transparency and robust lifecycle management.
 
   ---

@@ -5,7 +5,7 @@ The Cybersecurity and Infrastructure Security Agency (CISA) is actively involved
 1. **AI BOM Development**:
 
    - **Transparency and Traceability**: CISA is promoting the use of AI BOMs to enhance transparency and traceability in AI systems. This initiative aims to document all components of AI models, including data sources, model architectures, and dependencies, similar to the Software Bill of Materials (SBOM) used in traditional software security.
-   - **Collaboration and Community Engagement**: CISA collaborates with various stakeholders, including federal agencies, private sector companies, and international partners, to develop and refine AI BOM practices. This involves community-driven efforts to create standardized formats and tools for generating AI BOMs.
+   - **Collaboration and Community Engagement**: CISA collaborates with various stakeholders, including federal agencies, private sector companies, and international partners, to develop and refine AI BOM practices. This involves community-driven efforts to create standardised formats and tools for generating AI BOMs.
 
 2. **AI Cybersecurity Roadmap**:
 

@@ -56,12 +56,12 @@ context: |
   ## Use Case
 
   The **Identity Schema** is primarily used within the TAIBOM ecosystem to:
-  1. **Establish Identity**: Provide a standardized identity format for individuals interacting with AI systems.
+  1. **Establish Identity**: Provide a standardised identity format for individuals interacting with AI systems.
   2. **Enable Trust**: Facilitate secure claims and attestations through the binding of a public key to an individual.
   3. **Support Role-Based Operations**: Incorporate human-readable roles for context in organizational or system-level operations.
 
   By using this schema, developers and system administrators can ensure that each identity is uniquely tied to a UUID and public key, bolstering the authenticity and security of interactions within AI systems.
 
-  Adopting the **Identity Schema** helps organizations participating in TAIBOM achieve secure and trustworthy interactions in AI-driven ecosystems.
+  Adopting the **Identity Schema** helps organisations participating in TAIBOM achieve secure and trustworthy interactions in AI-driven ecosystems.
 
   ---

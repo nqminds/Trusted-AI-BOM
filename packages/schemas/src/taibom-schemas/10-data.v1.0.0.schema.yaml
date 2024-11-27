@@ -98,10 +98,10 @@ context: |
   ## Use Case
 
   The **TAIBOM Data Schema** is primarily used within the TAIBOM framework to:
-  1. **Enable Dataset Traceability**: Provide a clear and standardized format for referencing datasets and their locations.
+  1. **Enable Dataset Traceability**: Provide a clear and standardised format for referencing datasets and their locations.
   2. **Ensure Data Integrity**: Support integrity verification through cryptographic hashes and their associated storage locations.
   3. **Streamline Operations**: Offer metadata for efficient handling of datasets in AI workflows, whether stored locally or remotely.
 
-  By adopting this schema, organizations can standardize how datasets are documented, retrieved, and verified, ensuring robust data handling in AI systems.
+  By adopting this schema, organisations can standardize how datasets are documented, retrieved, and verified, ensuring robust data handling in AI systems.
 
   ---

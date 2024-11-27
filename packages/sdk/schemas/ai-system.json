@@ -1,0 +1,60 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:81909970-07c5-46b9-b89b-bbce4599d8ae",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "validFrom": null,
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://json-schema.org/draft/2020-12/schema",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "context": "## Introduction\n\nThe **AI System Schema** is a JSON schema designed to define and standardize the representation of AI systems within the Trusted AI BOM (TAIBOM) ecosystem. This schema is applicable for systems used in both training AI models and inferencing, ensuring clarity and traceability of the underlying code and data.\n\n### Description\nThis schema captures essential metadata for an AI system, including:\n- **Name**: The name of the AI system.\n- **Label**: Indicates the system type, such as *Training* or *Inferencing*.\n- **Code**: The ID of the code utilized within the system.\n- **Data**: The ID of the data, datapack, or weights used by the system.\n\n## Use Case\n\nThe **AI System Schema** is primarily used within the TAIBOM framework to:\n1. **Define AI Systems**: Provide a standardized representation of systems used for AI training or inferencing.\n2. **Track Dependencies**: Ensure traceability by linking the system to its underlying code and data.\n3. **Enable Lifecycle Management**: Support the management of AI systems across development, deployment, and maintenance phases.\n\nBy adopting this schema, organizations can ensure consistent documentation and robust lifecycle management of AI systems, contributing to transparency and accountability in AI ecosystems.\n\n---\n",
+    "description": "This schema defines an AI system which may be used for Training AI models or an inferencing system\n",
+    "properties": {
+      "code": {
+        "description": "ID of the code used in the system",
+        "type": "string"
+      },
+      "data": {
+        "description": "ID of the datapack / data / weights which have been used on the system",
+        "type": "string"
+      },
+      "label": {
+        "description": "Label of data",
+        "enum": [
+          "Training",
+          "Inferencing"
+        ],
+        "type": "string"
+      },
+      "name": {
+        "description": "Name of the software system.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "label",
+      "code",
+      "data"
+    ],
+    "title": "AI System",
+    "type": "object"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2024-11-22T14:00:27.166192568Z",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "ZIdZpOWKuraoMe/70/THlcN7GG9AyzDZR53H44g28BHtCMwYDAuUBL562Bz0ZjMzwGwhZhFePZzsfVJ8fUcHCw=="
+  }
+}

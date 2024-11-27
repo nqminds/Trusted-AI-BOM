@@ -56,10 +56,10 @@ context: |
   ## Use Case
 
   The **AI System Schema** is primarily used within the TAIBOM framework to:
-  1. **Define AI Systems**: Provide a standardized representation of systems used for AI training or inferencing.
+  1. **Define AI Systems**: Provide a standardised representation of systems used for AI training or inferencing.
   2. **Track Dependencies**: Ensure traceability by linking the system to its underlying code and data.
   3. **Enable Lifecycle Management**: Support the management of AI systems across development, deployment, and maintenance phases.
 
-  By adopting this schema, organizations can ensure consistent documentation and robust lifecycle management of AI systems, contributing to transparency and accountability in AI ecosystems.
+  By adopting this schema, organisations can ensure consistent documentation and robust lifecycle management of AI systems, contributing to transparency and accountability in AI ecosystems.
 
   ---

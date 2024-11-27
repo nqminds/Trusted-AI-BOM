@@ -39,10 +39,10 @@ context: |
   ## Use Case
 
   The **TAIBOM Datapack Schema** is primarily used within the TAIBOM framework to:
-  1. **Organize Dataset Collections**: Provide a standardized format for grouping datasets used in AI workflows.
+  1. **Organize Dataset Collections**: Provide a standardised format for grouping datasets used in AI workflows.
   2. **Enable Traceability**: Ensure that each dataset in the collection is uniquely identified and linked to its source.
   3. **Streamline Dataset Verification**: Facilitate verification and management of multiple datasets within a single datapack.
 
-  By adopting this schema, organizations can effectively manage and document groups of datasets, ensuring integrity and ease of use in AI system development and deployment.
+  By adopting this schema, organisations can effectively manage and document groups of datasets, ensuring integrity and ease of use in AI system development and deployment.
 
   ---

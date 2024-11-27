@@ -1,0 +1,94 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:2153c546-2e37-40e1-a3e2-b3269461d493",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "validFrom": null,
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://json-schema.org/draft/2020-12/schema",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "anyOf": [
+      {
+        "required": [
+          "hash"
+        ]
+      },
+      {
+        "required": [
+          "hashLocation"
+        ]
+      }
+    ],
+    "context": "## Introduction\n\nThe **Code Schema** is a JSON schema designed to define and standardize the representation of code or packages used within an AI system in the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures traceability, integrity verification, and association with SBOMs for AI system components.\n\n### Description\nThis schema captures essential metadata for code or packages, including:\n- **Name**: The name of the code or package.\n- **Version**: The version of the code or package.\n- **Location**: Specifies where the code is stored, either locally or remotely, with a defined path or URL.\n- **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the code.\n- **Hash Location**: The storage location of the hash, either local or remote.\n- **SBOM**: The ID of the Software Bill of Materials (SBOM) associated with the code.\n\n## Use Case\n\nThe **Code Schema** is primarily used within the TAIBOM framework to:\n1. **Document Code or Packages**: Provide a standardized representation of code used in AI systems.\n2. **Ensure Code Integrity**: Enable integrity verification through cryptographic hashes and their associated locations.\n3. **Link Code to SBOMs**: Establish a connection between the code and its SBOM for enhanced traceability and security.\n\nBy adopting this schema, organizations can maintain reliable and secure records of code used in AI systems, supporting transparency and robust lifecycle management.\n\n---\n",
+    "description": "This schema defines an Code which which is used in an AI system\n",
+    "properties": {
+      "hash": {
+        "description": "The cryptographic hash (e.g., SHA256) of the dataset used for data integrity verification.",
+        "type": "string"
+      },
+      "hashLocation": {
+        "description": "The location where the hash is stored, can be either local or a remote URL.",
+        "type": "string"
+      },
+      "location": {
+        "description": "Details about where the dataset is stored, whether on a local filesystem or a remote URL.",
+        "properties": {
+          "path": {
+            "description": "The path or URL to the dataset location.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Indicates whether the dataset is stored locally or remotely.",
+            "enum": [
+              "local",
+              "remote"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "path"
+        ],
+        "type": "object"
+      },
+      "name": {
+        "description": "The name of the code / package.",
+        "type": "string"
+      },
+      "sbom": {
+        "description": "ID of the SBOM generated from code",
+        "type": "string"
+      },
+      "version": {
+        "description": "Version of produced code",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "location",
+      "sbom",
+      "version"
+    ],
+    "title": "Code",
+    "type": "object"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2024-11-22T14:00:37.611945128Z",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "ehIHkJ0CAjBhK7sO0VMz8KEF+J5kXWGnQZTehfQVDoAw+fenAz0OfiO0lhhlSbuNYoTI8hYNmOgSp2BrvyJjAA=="
+  }
+}
