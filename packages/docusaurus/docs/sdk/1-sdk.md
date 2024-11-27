@@ -1,94 +1,190 @@
-# Software Development Kit
+# SDK for Creating & Verifying TAIBOMs
 
-Download the SDK from [here](http://example.com)
+### Downloads & Prerequisites
+**(To be filled)**
 
-## Installation instructions
-
-TODO
-
+---
 
 ## Overview
-The `taibom` CLI tool is designed to manage and create various metadata objects such as identities, data taiboms, datapacks, code taiboms, AI system taiboms, and configuration taiboms. It simplifies the process of defining and maintaining metadata for complex systems.
+This SDK provides a command-line interface (CLI) for creating, documenting, signing, and verifying Trusted-AI BOM (TAIBOM) Verifiable Credentials (VCs). It enables the generation of identities, data claims, software bills of materials (SBOMs), and various TAIBOM types for AI systems.
+
+### Features:
+- Identity creation with keypair generation.
+- Generation and signing of data, code, system, datapack, and configuration TAIBOMs.
+- SBOM generation and signing for code repositories.
+- Validation of TAIBOM claims against their associated hashes.
 
 ---
 
-## Core Functionalities
+## Installation
+To use this SDK, ensure the following dependencies are installed:
 
-### 1. Identity Creation
-- **Inputs**:
-  - Name
-  - Email
-  - Role
-- **Description**: Generates and stores identity metadata in a `identity.json` file. Optionally saves the identity for reuse in a global configuration.
+1. **Node.js**: Version 14 or higher.
+2. **VC Tools CLI**: Required for generating keypairs.
+3. **NQMVUL CLI**: For SBOM generation.
+4. **Other tools**: `bash`, `uuid`.
 
----
-
-### 2. Data Taibom Creation
-- **Inputs**:
-    - Identity email
-    - Path to a file or folder
-    - [OPTIONAL] - Weights flag to identify the data as Weights
-- **Description**: Analyses a file or folder and generates metadata such as name, hash, path. Stores metadata in `data_<name>_taibom.json`.
+Install the SDK as a global CLI:
+```bash
+npm install -g path/to/your/sdk
+```
 
 ---
 
-### 3. Datapack Taibom Creation
-- **Inputs**:
-  - Paths to multiple `data_<name>_taibom.json` files
-  - Datapack name
-- **Description**: Aggregates metadata from multiple data taiboms into a single `datapack_<name>_taibom.json` file.
+## CLI Usage
+Below are the available commands and their respective options:
+
+### General Information
+```bash
+taibom-cli --help
+```
+Display the help menu with all commands and options.
+
+### Version Information
+```bash
+taibom-cli --version
+```
+Show the SDK version.
 
 ---
 
-### 4. Code Taibom Creation
-- **Inputs**:
-  - Path to a file or folder containing code
-  - Version
-- **Description**: Analyses code or executables and generates metadata (e.g., SBOM, hash). Stores metadata in `code_<id>_taibom.json` and `sbom_<id>_taibom.json`.
+## Commands
+
+### 1. Generate Identity
+Generate an identity with a keypair.
+```bash
+taibom-cli generate-identity <name> <email> <role>
+```
+#### Arguments:
+- `<name>`: The name of the person.
+- `<email>`: Email address (validated for proper format).
+- `<role>`: The role or designation of the person.
 
 ---
 
-### 5. AI System Taibom Creation
-- **Inputs**:
-  - Code Taibom
-  - Datapack Taibom or Config Taibom
-  - Label: `Training` or `Inferencing`
-  - Name
-- **Description**: Combines metadata from a code taibom and a datapack/config taibom into an `ai_system_<name>_taibom.json` file.
+### 2. Generate Data TAIBOM
+Generate a TAIBOM for a specific dataset.
+```bash
+taibom-cli data-taibom <identity_email> <data_directory> [--weights]
+```
+#### Arguments:
+- `<identity_email>`: Email address of the identity signing the TAIBOM.
+- `<data_directory>`: Directory containing the data.
+
+#### Options:
+- `--weights`: Specify if the data directory contains AI weights.
 
 ---
 
-### 6. Config Taibom Creation
-- **Inputs**:
-  - AI System Taibom
-  - Data Taibom
-  - Name
-- **Description**: Defines configurations for an AI system using its taiboms. Stores metadata in a `config_<name>_taibom.json` file.
+### 3. Generate SBOM
+Generate and sign a Software Bill of Materials (SBOM) for a code repository.
+```bash
+taibom-cli generate-sbom <identity_email> <code_directory> [--cpp]
+```
+#### Arguments:
+- `<identity_email>`: Email address of the identity signing the SBOM.
+- `<code_directory>`: Directory containing the code.
+
+#### Options:
+- `--cpp`: Generate an SBOM for C/C++ code (optional).
 
 ---
 
-## CLI Commands
+### 4. Generate Code TAIBOM
+Create a TAIBOM for a specific version of code.
+```bash
+taibom-cli code-taibom <identity_email> <code_directory> <version> [--sbomTaibom <path>] [--name <code_name>]
+```
+#### Arguments:
+- `<identity_email>`: Email address of the identity signing the TAIBOM.
+- `<code_directory>`: Directory containing the code.
+- `<version>`: Version number of the code.
 
-### Global Option
-- `--config`: Specifies a path to a global configuration file.
+#### Options:
+- `--sbomTaibom <path>`: Reference to an SBOM TAIBOM (optional).
+- `--name <code_name>`: Name of the code or package (optional).
 
-### Commands
-1. **Identity**
-   - `taibom generate-identity <name> <email> <role>`
+---
 
-2. **Data Taibom**
-   - `taibom data-taibom <email_identity> <path_to_data_file>` OR
-   - `taibom data-taibom <email_identity> <path_to_data_file> --weights` 
+### 5. Generate AI System TAIBOM
+Generate a TAIBOM for an AI system.
+```bash
+taibom-cli system-taibom <identity_email> <code_taibom> <data_taibom> [--name <system_name>] [--inferencing]
+```
+#### Arguments:
+- `<identity_email>`: Email address of the identity signing the TAIBOM.
+- `<code_taibom>`: Path to the code TAIBOM claim.
+- `<data_taibom>`: Path to the data TAIBOM claim.
 
-3. **Datapack Taibom**
-   - `taibom datapack create --data <data_taibom1> <data_taibom2> ...`
+#### Options:
+- `--name <system_name>`: Name of the system (optional).
+- `--inferencing`: Label the system as "Inferencing" instead of "Training".
 
-4. **Code Taibom**
-   - `taibom code create --path <file_or_folder> --version <version_number>`
+---
 
-5. **AI System Taibom**
-   - `taibom ai-system create --code <code_taibom> --data <datapack_taibom_or_config_taibom> --label <Training/Inferencing> --name <name>`
+### 6. Generate Datapack TAIBOM
+Create a TAIBOM for a dataset pack consisting of multiple datasets.
+```bash
+taibom-cli datapack-taibom <identity_email> <name> <data_taiboms...>
+```
+#### Arguments:
+- `<identity_email>`: Email address of the identity signing the TAIBOM.
+- `<name>`: Name of the dataset pack.
+- `<data_taiboms...>`: Space-separated paths to data TAIBOM claims.
 
-6. **Config Taibom**
-   - `taibom config create --ai-system <ai_system_taibom> --data <data_taibom> --name <name>`
+---
+
+### 7. Generate Config TAIBOM
+Create a TAIBOM for the configuration of an AI system.
+```bash
+taibom-cli config-taibom <identity_email> <ai_system_taibom> <data_taibom> [--name <config_name>]
+```
+#### Arguments:
+- `<identity_email>`: Email address of the identity signing the TAIBOM.
+- `<ai_system_taibom>`: Path to the AI system TAIBOM.
+- `<data_taibom>`: Path to the data TAIBOM for the configuration.
+
+#### Options:
+- `--name <config_name>`: Name of the configuration (optional).
+
+---
+
+### 8. Validate Data TAIBOM
+Validate the integrity of a data TAIBOM.
+```bash
+taibom-cli validate-data <data_taibom>
+```
+#### Arguments:
+- `<data_taibom>`: Path to the TAIBOM data claim.
+
+---
+
+### 9. Validate Code TAIBOM
+Validate the integrity of a code TAIBOM.
+```bash
+taibom-cli validate-code <code_taibom>
+```
+#### Arguments:
+- `<code_taibom>`: Path to the TAIBOM code claim.
+
+---
+
+## Examples
+
+### Generate Identity
+```bash
+taibom-cli generate-identity "Alice" "alice@example.com" "Data Scientist"
+```
+
+### Create Data TAIBOM
+```bash
+taibom-cli data-taibom alice@example.com ./data/dataset --weights
+```
+
+### Validate Code TAIBOM
+```bash
+taibom-cli validate-code ./claims/code-taibom.json
+```
+
+---
 
