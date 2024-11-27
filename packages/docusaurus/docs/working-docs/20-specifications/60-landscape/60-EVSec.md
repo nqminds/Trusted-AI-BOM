@@ -18,15 +18,15 @@ The concept of an AI/ML BOM is derived from the traditional software BOM (SBOM),
 
 An AI/ML BOM is crucial for several reasons:
 
-1. **Enhanced Security**: By maintaining a detailed inventory of all components, organizations can better identify and mitigate vulnerabilities. This is particularly important as AI systems become more complex and integrated into critical operations.
+1. **Enhanced Security**: By maintaining a detailed inventory of all components, organisations can better identify and mitigate vulnerabilities. This is particularly important as AI systems become more complex and integrated into critical operations.
 
 2. **Transparency and Accountability**: An AI/ML BOM promotes transparency, making it easier for stakeholders to understand the inner workings of AI systems. This transparency is key to building trust and ensuring that AI systems are used responsibly.
 
-3. **Regulatory Compliance**: With increasing regulatory scrutiny on AI, having a comprehensive BOM can help organizations demonstrate compliance with laws and standards. This includes adhering to data protection regulations and ethical guidelines.
+3. **Regulatory Compliance**: With increasing regulatory scrutiny on AI, having a comprehensive BOM can help organisations demonstrate compliance with laws and standards. This includes adhering to data protection regulations and ethical guidelines.
 
 ### Implementing AI/ML BOM
 
-To effectively manage an AI/ML BOM, organizations should leverage automated tools and frameworks. Generative AI can play a significant role in this process by assisting in the creation and maintenance of the BOM. These tools can automate the documentation of data sources, model parameters, and dependencies, reducing the manual effort required.
+To effectively manage an AI/ML BOM, organisations should leverage automated tools and frameworks. Generative AI can play a significant role in this process by assisting in the creation and maintenance of the BOM. These tools can automate the documentation of data sources, model parameters, and dependencies, reducing the manual effort required.
 
 Moreover, integrating AI/ML BOM management into existing DevSecOps practices can streamline the process of identifying and addressing vulnerabilities. Continuous monitoring and updates to the BOM ensure that it remains current and accurate, providing ongoing insights into the security posture of AI systems.
 

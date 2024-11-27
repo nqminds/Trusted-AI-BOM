@@ -42,10 +42,10 @@ context: |
   ## Use Case
 
   The **Trained System Configs Schema** is primarily used within the TAIBOM framework to:
-  1. **Document AI Systems**: Provide a standardized format for identifying and describing AI systems involved in training or inferencing.
+  1. **Document AI Systems**: Provide a standardised format for identifying and describing AI systems involved in training or inferencing.
   2. **Ensure Traceability**: Link AI systems to specific datasets and outputs (e.g., weights) for robust provenance tracking.
   3. **Support AI Lifecycle Management**: Enable seamless integration of system configurations into workflows for monitoring and validation.
 
-  By adopting this schema, organizations can maintain clear and consistent documentation of their AI system configurations, supporting transparency and accountability in AI development and deployment.
+  By adopting this schema, organisations can maintain clear and consistent documentation of their AI system configurations, supporting transparency and accountability in AI development and deployment.
 
   ---

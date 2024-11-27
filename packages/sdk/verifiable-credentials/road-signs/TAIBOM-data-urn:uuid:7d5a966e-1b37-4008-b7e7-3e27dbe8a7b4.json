@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:7d5a966e-1b37-4008-b7e7-3e27dbe8a7b4",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:99fd7718-e343-4528-8b0b-ff9ce6e64c36",
+  "validFrom": null,
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "hash": "c155d48911398c66135f407b1501cab2b15741de5177fd62f0f3f729500dd907",
+    "label": "Training",
+    "lastAccessed": "2024-11-26T11:48:07.578Z",
+    "location": {
+      "path": "file:///home/tony/Projects/taibom-projects/ETS2SignDetection/TAIBOM/Release 1/images/30mph",
+      "type": "local"
+    },
+    "name": "30mph"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2024-11-26T11:48:07.615440473Z",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "M35ZWP/b3vop4KwOLf/C4Id1J0ve7nWu6tWf5zQJJC1Plu2SAYm9LOK74J73L/mqy4Oc7gfj9qXOeO/z2Su3Ag=="
+  }
+}

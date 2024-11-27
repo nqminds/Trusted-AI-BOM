@@ -1,0 +1,51 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:11b362ae-b389-4074-8ea0-4355065394ac",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "validFrom": null,
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://json-schema.org/draft/2020-12/schema",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/25-config.v1.0.0.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "context": "## Introduction\n\nThe **Trained System Configs Schema** is a JSON schema designed to define AI system configurations within the Trusted AI BOM (TAIBOM) ecosystem. These configurations are used to describe systems involved in training AI models or inferencing processes, ensuring clear traceability and alignment with associated datasets and systems.\n\n### Description\nThis schema captures essential metadata for trained system configurations, including:\n- **Name**: A unique identifier for the system configuration.\n- **AI System**: The ID of the AI system VC (Verifiable Credential) associated with the configuration.\n- **Data**: The ID of the weights produced or used by the system.\n\n## Use Case\n\nThe **Trained System Configs Schema** is primarily used within the TAIBOM framework to:\n1. **Document AI Systems**: Provide a standardized format for identifying and describing AI systems involved in training or inferencing.\n2. **Ensure Traceability**: Link AI systems to specific datasets and outputs (e.g., weights) for robust provenance tracking.\n3. **Support AI Lifecycle Management**: Enable seamless integration of system configurations into workflows for monitoring and validation.\n\nBy adopting this schema, organizations can maintain clear and consistent documentation of their AI system configurations, supporting transparency and accountability in AI development and deployment.\n\n---\n",
+    "description": "This schema defines an AI system which may be used for Training AI models or an inferencing system\n",
+    "properties": {
+      "aiSystem": {
+        "description": "ID of the AI system VC",
+        "type": "string"
+      },
+      "data": {
+        "description": "ID of the weights which have been produced",
+        "type": "string"
+      },
+      "name": {
+        "description": "Name of the system config.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "aiSystem",
+      "data"
+    ],
+    "title": "Trained System Configs",
+    "type": "object"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2024-11-22T14:00:47.614074136Z",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "fBdkUxV9F76Xj2CFG4KpoaDwyH3vxS1gc5m/O5a/03KGusEQKWsJ5ZYqGilXX6igodObaQFf51ZEyH/BdSnWBw=="
+  }
+}

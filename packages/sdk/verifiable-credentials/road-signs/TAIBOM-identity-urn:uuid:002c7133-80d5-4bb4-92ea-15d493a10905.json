@@ -1,0 +1,31 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:002c7133-80d5-4bb4-92ea-15d493a10905",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:99fd7718-e343-4528-8b0b-ff9ce6e64c36",
+  "validFrom": null,
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "email": "tony@nquiringminds.com",
+    "name": "Tony",
+    "pub": "/home/tony/.taibom/tony@nquiringminds.com-pub",
+    "role": "Software Engineer",
+    "uuid": "urn:uuid:99fd7718-e343-4528-8b0b-ff9ce6e64c36"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2024-11-26T11:47:46.271314384Z",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "6657tpSdz4mX7Ah3PWHHD+Ce5Pyg3HY5jzEQ40LKMOxo1E3wEXi76q7rNdSuXHem7MOqMhG0oS/5MW7QRdNNBg=="
+  }
+}

@@ -50,10 +50,10 @@ The whitepaper introduces the concept of an AIBOM, which aims to provide a detai
 
 ### Challenges and Future Directions
 
-The whitepaper also highlights challenges in implementing AIBOMs, such as the need for standardized formats and tools for automated generation and maintenance of AIBOMs. It calls for collaborative efforts within the AI community to develop best practices and tools that can facilitate the widespread adoption of AIBOMs.
+The whitepaper also highlights challenges in implementing AIBOMs, such as the need for standardised formats and tools for automated generation and maintenance of AIBOMs. It calls for collaborative efforts within the AI community to develop best practices and tools that can facilitate the widespread adoption of AIBOMs.
 
 ### Conclusion
 
-The Manifest AIBOM Whitepaper underscores the importance of transparency and security in AI systems. By adopting AIBOMs, organizations can ensure that their AI models are not only effective but also secure, ethical, and compliant with regulatory standards. This proactive approach is essential for building trust in AI technologies and ensuring their responsible use.
+The Manifest AIBOM Whitepaper underscores the importance of transparency and security in AI systems. By adopting AIBOMs, organisations can ensure that their AI models are not only effective but also secure, ethical, and compliant with regulatory standards. This proactive approach is essential for building trust in AI technologies and ensuring their responsible use.
 
 For further details, you can access the full whitepaper on Manifest's website [here](https://www.manifestcyber.com/aibom)【26†source】【27†source】.

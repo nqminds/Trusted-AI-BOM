@@ -39,6 +39,6 @@ The document emphasizes the increasing adoption of LLMs in various applications,
 
 ### Conclusion
 
-The OWASP checklist serves as a foundational document to guide organizations in deploying LLMs securely and responsibly. By following these best practices, organizations can mitigate risks, ensure compliance, and promote the ethical use of AI technologies.
+The OWASP checklist serves as a foundational document to guide organisations in deploying LLMs securely and responsibly. By following these best practices, organisations can mitigate risks, ensure compliance, and promote the ethical use of AI technologies.
 
 For more detailed information, you can access the full document [here](https://owasp.org/www-project-top-10-for-large-language-model-applications/llm-top-10-governance-doc/LLM_AI_Security_and_Governance_Checklist-v1.pdf).

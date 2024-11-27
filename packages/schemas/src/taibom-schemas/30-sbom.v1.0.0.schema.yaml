@@ -153,10 +153,10 @@ context: |
   ## Use Case
 
   The **SBOM Schema** is primarily used within the TAIBOM framework to:
-  1. **Document Software Components**: Provide a standardized record of all dependencies and components used in a software project.
+  1. **Document Software Components**: Provide a standardised record of all dependencies and components used in a software project.
   2. **Enhance Security**: Facilitate vulnerability management by offering detailed metadata, including CPEs and PURLs for components.
   3. **Support Software Lifecycle Management**: Enable effective tracking of tools and processes involved in the software's creation and maintenance.
 
-  By adopting this schema, organizations can create detailed and reliable SBOMs, ensuring transparency, traceability, and security throughout the software development lifecycle.
+  By adopting this schema, organisations can create detailed and reliable SBOMs, ensuring transparency, traceability, and security throughout the software development lifecycle.
 
   ---

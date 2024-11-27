@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:1f2159d8-056e-4907-a5a7-0c505d1f69e9",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:99fd7718-e343-4528-8b0b-ff9ce6e64c36",
+  "validFrom": null,
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "hash": "d1a42acb92e24c9205cb94b5deb8191fe17c0ddd3485701bc7a2a7aa4f4ea859",
+    "label": "Weights",
+    "lastAccessed": "2024-11-26T12:05:19.927Z",
+    "location": {
+      "path": "file:///home/tony/Projects/taibom-projects/ETS2SignDetection/TAIBOM/Release 1/traffic_sign_classifier.h5",
+      "type": "local"
+    },
+    "name": "traffic_sign_classifier"
+  },
+  "proof": {
+    "type": "DataIntegrityProof",
+    "created": "2024-11-26T12:05:19.954744462Z",
+    "cryptosuite": "eddsa-rdfc-2022",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "WoVQjbf9YsK7jADUm0rFvIo5tyap6fulW+/eiU3HEjhbay+hkHdDqOOg866t3KRvkzIc+IEDpUl9K6WMFAitCw=="
+  }
+}

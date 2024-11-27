@@ -30,6 +30,6 @@ Large Language Models (LLMs) have become integral to many modern applications, r
 
 ### Conclusion
 
-The blog post concludes by emphasizing the importance of a holistic approach to securing the LLM stack. This involves not only securing individual components but also ensuring the overall integrity and reliability of the AI system. By implementing robust security measures, organizations can harness the full potential of LLMs while mitigating associated risks.
+The blog post concludes by emphasizing the importance of a holistic approach to securing the LLM stack. This involves not only securing individual components but also ensuring the overall integrity and reliability of the AI system. By implementing robust security measures, organisations can harness the full potential of LLMs while mitigating associated risks.
 
 For more in-depth details, the original blog post can be accessed [here](https://blogs.cisco.com/learning/securing-the-llm-stack).
