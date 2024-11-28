@@ -40,7 +40,6 @@ properties:
 required:
   - name
   - location
-  - sbom
   - version
 anyOf:
   - required:
