@@ -1,0 +1,83 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/62-sbom-attestation.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2020-12/schema
+title: SBOM Attestation
+description: |
+  This schema extends the generic Attestation Schema to define an attestation for SBOM (Software Bill of Materials).
+type: object
+properties:
+  component:
+    type: string
+    description: Component ID of a VC claim
+  attestation:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - SBOM
+        description: Type of attestation, set to "SBOM" for this schema.
+      sbom:
+        #$ref: ./30-sbom.v1.0.0.schema.yaml TODO: Fix ref
+        type: object
+    required:
+      - type
+      - sbom
+required:
+  - component
+  - attestation
+examples:
+  - component: urn:uuid:777e8887-e89b-12d3-a456-426614174010
+    attestation:
+      type: SBOM
+      sbom:
+        bomFormat: "CycloneDX"
+        specVersion: "1.6"
+        serialNumber: "urn:uuid:e865fb76-fb02-4554-bad7-7a92344317fe"
+        version: 1
+        metadata:
+          timestamp: "2024-10-18T15:15:51Z"
+          tools:
+            components:
+              - type: "application"
+                author: "anchore"
+                name: "syft"
+                version: "1.14.1"
+          component:
+            bom-ref: "51f6561dc978bfb7"
+            type: "file"
+            name: "/project"
+        components:
+          - bom-ref: "pkg:pypi/absl-py@1.4.0?package-id=3ca3d32070abe037"
+            type: "library"
+            name: "absl-py"
+            version: "1.4.0"
+            cpe: "cpe:2.3:a:python-absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*"
+            purl: "pkg:pypi/absl-py@1.4.0"
+            properties:
+              - name: "syft:package:foundBy"
+                value: "python-package-cataloger"
+              - name: "syft:package:language"
+                value: "python"
+              - name: "syft:package:type"
+                value: "python"
+              - name: "syft:cpe23"
+                value: "cpe:2.3:a:absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*"
+
+context: |
+  ## Introduction
+
+  The **SBOM Attestation Schema** extends the generic Attestation Schema to enable attestations related to SBOMs (Software Bill of Materials). By referencing the existing SBOM schema, this schema ensures consistency in how SBOM details are represented across the TAIBOM framework.
+
+  ### Description
+  This schema includes:
+  - **Type**: The attestation type, set to "SBOM".
+  - **SBOM**: References the detailed SBOM schema to provide comprehensive metadata about the component’s software dependencies.
+
+  ## Use Case
+
+  The **SBOM Attestation Schema** is used to:
+  1. **Document SBOM Information**: Attach detailed SBOM data to attestations for components.
+  2. **Enable Traceability**: Link SBOMs to attestations for enhanced transparency in software supply chains.
+  3. **Support Compliance**: Ensure compliance with SBOM standards and regulations.
+
+  By leveraging the existing SBOM schema, this attestation schema promotes reusability and standardisation.
