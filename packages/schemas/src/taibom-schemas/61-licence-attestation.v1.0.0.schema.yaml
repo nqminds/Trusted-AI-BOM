@@ -17,13 +17,8 @@ properties:
         enum:
           - License
         description: Type of attestation, set to "License" for this schema.
-      license:
-        type: string
-        description: |
-          The license text or license information being attested.
     required:
       - type
-      - license
 required:
   - component
   - attestation

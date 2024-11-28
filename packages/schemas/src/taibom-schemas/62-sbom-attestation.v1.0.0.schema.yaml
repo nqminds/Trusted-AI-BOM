@@ -16,12 +16,8 @@ properties:
         enum:
           - SBOM
         description: Type of attestation, set to "SBOM" for this schema.
-      sbom:
-        #$ref: ./30-sbom.v1.0.0.schema.yaml TODO: Fix ref
-        type: object
     required:
       - type
-      - sbom
 required:
   - component
   - attestation
