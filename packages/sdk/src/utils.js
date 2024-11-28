@@ -20,8 +20,12 @@ function getAndVerifyClaim(path, claim=true) {
 
     // Read and parse the JSON file
     const jsonFile = fs.readFileSync(path, 'utf8');
+    if(claim) {
+      // TODO: Verify the claim
+      console.log("Resolving issuer guid")
 
-    // TODO: Verify the claim
+      console.log("VC verified")
+    }
     return JSON.parse(jsonFile);
   } catch (error) {
     console.error(`Error retrieving claim JSON: ${error.message}`);

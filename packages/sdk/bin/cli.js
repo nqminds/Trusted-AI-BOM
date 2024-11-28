@@ -286,6 +286,7 @@ program
     const file_location = claim.credentialSubject.location.path;
     const bashCommand = getHash(`${file_location}`);
 
+    console.log("Rehashing file location & Verifying")
     runBashCommand(bashCommand, (error, hash) => {
       if (error) {
         console.error(`Error generating hash: ${error.message}`);
