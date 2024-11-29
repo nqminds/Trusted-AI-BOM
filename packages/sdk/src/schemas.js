@@ -6,7 +6,7 @@ const {getAndVerifyClaim} = require("./utils")
 
 function getSchemaDetails(schemaName) {
   const schemaPath = path.join(ROOT_SCHEMA_DIR, schemaName);
-  const schema =  getAndVerifyClaim(schemaPath)
+  const schema =  getAndVerifyClaim(schemaPath, true, true)
   return {schemaPath, schema}
 }
 

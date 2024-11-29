@@ -11,7 +11,7 @@ function directoryExists(dirPath) {
   return fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory() || fs.existsSync(dirPath) && fs.statSync(dirPath).isFile();
 }
 
-function getAndVerifyClaim(path, claim=true) {
+function getAndVerifyClaim(path, claim=true, silent=false) {
   try {
     // Check if the file exists
     if (!fs.existsSync(path)) {
@@ -20,13 +20,14 @@ function getAndVerifyClaim(path, claim=true) {
 
     // Read and parse the JSON file
     const jsonFile = fs.readFileSync(path, 'utf8');
-    if(claim) {
+    const jsonVc = JSON.parse(jsonFile);
+    if(claim && !silent) {
       // TODO: Verify the claim
-      console.log("Resolving issuer guid")
+      console.log("Resolving issuer guid", jsonVc.issuer)
 
-      console.log("VC verified")
+      console.log("TAIBOM VC valid and verified. ID: ",jsonVc.id,)
     }
-    return JSON.parse(jsonFile);
+    return jsonVc;
   } catch (error) {
     console.error(`Error retrieving claim JSON: ${error.message}`);
     return null;
@@ -36,7 +37,7 @@ function getAndVerifyClaim(path, claim=true) {
 function getIdentityJson(email) {
   const homeDir = require('os').homedir(); // Get user's home directory
   const identityPath = path.join(homeDir, '.taibom', `${email}-identity.json`);
-  return getAndVerifyClaim(identityPath)
+  return getAndVerifyClaim(identityPath, true, true)
 }
 
 function runBashCommand(bashCommand, callback) {

@@ -47,7 +47,7 @@ program
     if (!directoryExists(keypairDir)) {
       fs.mkdirSync(keypairDir);
     }
-        const keypairPath = path.join(keypairDir, email);
+    const keypairPath = path.join(keypairDir, email);
 
     console.log(`Generating keypair for email: ${email}...`);
   
@@ -341,4 +341,64 @@ program
     }
   });
 
-program.parse(process.argv);
+program
+  .command("generate-vc")
+  .description("Generate and sign a TAIBOM VC")
+  .argument("<json_data_file>", "Path to Json data to be signed")
+  .argument("<schema_name>", "Name of the TAIBOM schema (include .json extension)")
+  .argument("<signing_key_path>", "Signing Key")
+  .option("--uuid <issuer_uuid>", "Issuer UUID", null)
+  .option("--out <output_dir>", "Output directory")
+  .action((dataFile, schemaName, signingKeyPath, options) => {
+    const credentialSubject = getAndVerifyClaim(dataFile, false);
+    let uuid = options.uuid ?? `urn:uuid:${uuidv4()}`;
+    let outputDir = options.outputDir ?? VC_OUPUT_PATH;
+    generateAndSignVC(credentialSubject, uuid, schemaName, signingKeyPath, outputDir)
+  })
+
+
+  function createAttestation(attestation, taibomId, identity, schemaName = "attestation.json") {
+    const {identity: identityJson, privateKeyPath} = identity;
+    const credentialSubject = {
+      attestation,
+      component: taibomId
+    }
+
+    generateAndSignVC(credentialSubject, identityJson.credentialSubject.uuid, schemaName, privateKeyPath, VC_OUPUT_PATH)
+  }
+
+
+  program
+    .command("attest")
+    .description("Function by which an attestation can be made about a TAIBOM component")
+    .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
+    .argument("<taibom_component_path>", "The path to the TAIBOM component VC to make an attestation about")
+    .argument("<attestation_json_path>", "Path to attestation to be made")
+    .option(
+      "--type <attestation_type>", 
+      "Type of attestation", 
+      (val) => {
+        const allowedValues = ['sbom', 'licence'];
+        if (!allowedValues.includes(val)) {
+          throw new Error(`Invalid type. Allowed values are: ${allowedValues.join(', ')}`);
+        }
+        return val;
+      },
+      null, 
+    )
+    .action((identityEmail, taibomVc, attestationPath, option) => {
+      const identity = retrieveIdentity(identityEmail);
+  
+      const taibomId = getAndVerifyClaim(taibomVc)?.id;
+      const attestation = getAndVerifyClaim(attestationPath, false);
+
+      if(option.type) {
+        createAttestation({type: option.type, ...attestation}, taibomId, identity, schemaName = `${option.type}-attestation.json`);
+      } else {
+        createAttestation(attestation, taibomId, identity, schemaName = "attestation.json");
+
+      }
+    });
+  
+  program.parse(process.argv);
+  
