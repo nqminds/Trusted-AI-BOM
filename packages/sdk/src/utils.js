@@ -96,7 +96,7 @@ function processVulnerabilityReport(inputFilePath, outputDirectory) {
       const type = fixedIn ? parts[3] : parts[2];
       const vulnerability = fixedIn ? parts[4] : parts[3];
       const rawSeverity = fixedIn ? parts[5] : parts[4];
-      const validSeverities = ['Medium', 'High', 'Critical', 'Low'];
+      const validSeverities = ['Medium', 'High', 'Critical', 'Low', 'Negligible'];
       const severity = validSeverities.includes(rawSeverity) ? rawSeverity : 'Unknown';
       const sanitizedFileName = name.replace(/[^a-zA-Z0-9-_]/g, '_');
 
