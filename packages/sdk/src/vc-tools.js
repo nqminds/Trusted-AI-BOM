@@ -68,6 +68,7 @@ function generateAndSignVC(credentialSubject, issuer, schemaName, privateKeyPath
     }
     console.log(`VC signed and saved to ${output}`);
   });
+  return vcId;
 }
 
 

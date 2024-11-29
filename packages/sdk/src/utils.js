@@ -78,7 +78,7 @@ function processVulnerabilityReport(inputFilePath, outputDirectory) {
   const lines = fileContent.split('\n').filter(line => line.trim());
 
   lines.shift();
-  lines.forEach((line, index) => {
+  const vulnerabilities = lines.map((line, index) => {
       const parts = line.split(/\s{2,}/);
 
       if (parts.length < 5) {
@@ -99,9 +99,8 @@ function processVulnerabilityReport(inputFilePath, outputDirectory) {
       const rawSeverity = fixedIn ? parts[5] : parts[4];
       const validSeverities = ['Medium', 'High', 'Critical', 'Low', 'Negligible'];
       const severity = validSeverities.includes(rawSeverity) ? rawSeverity : 'Unknown';
-      const sanitizedFileName = name.replace(/[^a-zA-Z0-9-_]/g, '_');
 
-      const jsonData = {
+      return {
           [name]: {
               installed: installed,
               'fixed-in': fixedIn,
@@ -110,12 +109,8 @@ function processVulnerabilityReport(inputFilePath, outputDirectory) {
               severity: severity,
           },
       };
-
-      const outputFilePath = `${outputDirectory}/${sanitizedFileName}_${index + 1}.json`;
-      fs.writeFileSync(outputFilePath, JSON.stringify(jsonData, null, 4), 'utf8');
   });
-
-  console.log(`Processed ${lines.length} vulnerabilities and saved JSON files in ${outputDirectory}`);
+  return vulnerabilities;
 }
 
 module.exports = {

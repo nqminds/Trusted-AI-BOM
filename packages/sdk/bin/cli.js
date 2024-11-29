@@ -7,8 +7,11 @@ const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const VC_OUPUT_PATH = "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/verifiable-credentials"
 const SBOM_OUTPUT_PATH = "/home/tony/Projects/taibom-projects/SBOM-GAP/vulnerability-reports/sboms"
+const VULNERABILITY_REPORT_OUTPUT_PATH = "/home/tony/Projects/taibom-projects/SBOM-GAP/vulnerability-reports/reports"
+
 
 const { keypairDir, directoryExists, getIdentityJson, runBashCommand, generateAndSignVC, getAndVerifyClaim, getHash} = require('../src');
+const { processVulnerabilityReport } = require('../src/utils');
 
 function retrieveIdentity(identityEmail) {
   const privateKeyPath = path.join(keypairDir, `${identityEmail}-priv`);
@@ -148,7 +151,7 @@ program
     const bashCommand = `nqmvul -${cliCommand} ${escapedDir} "${codeName}"`
     console.log("Creating the SBOM")
 
-    runBashCommand(bashCommand); // This will produce an error we are not interested in
+    runBashCommand(bashCommand);
 
     const sbomDir = path.join(SBOM_OUTPUT_PATH, `${codeName}.json`);
     if(!directoryExists(sbomDir)) {
@@ -157,7 +160,16 @@ program
     }
     const credentialSubject = getAndVerifyClaim(sbomDir, false);
 
-    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "sbom.json", privateKeyPath, VC_OUPUT_PATH);
+    const sbomTaibomId = generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "sbom.json", privateKeyPath, VC_OUPUT_PATH);
+
+    const vulnerabilities = processVulnerabilityReport(path.join(VULNERABILITY_REPORT_OUTPUT_PATH, `vulnerability_report_${codeName}`))
+
+    vulnerabilities.map((jsonVulnerability) => createAttestation(
+      {type: "vulnerability", vulnerability: jsonVulnerability},
+      sbomTaibomId,
+      {identity, privateKeyPath, publicKeyPath},
+      "vulnerability-attestation.json"
+    ))
   })
 
 program
@@ -378,7 +390,7 @@ program
       "--type <attestation_type>", 
       "Type of attestation", 
       (val) => {
-        const allowedValues = ['sbom', 'licence'];
+        const allowedValues = ['sbom', 'licence', "vulnerability"];
         if (!allowedValues.includes(val)) {
           throw new Error(`Invalid type. Allowed values are: ${allowedValues.join(', ')}`);
         }
