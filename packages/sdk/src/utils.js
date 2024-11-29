@@ -72,6 +72,58 @@ function getHash(dataDir) {
 }
 
 
+function processVulnerabilityReport(inputFilePath, outputDirectory) {
+  const fileContent = fs.readFileSync(inputFilePath, 'utf8');
+  const lines = fileContent.split('\n').filter(line => line.trim());
+
+  lines.shift();
+  lines.forEach((line, index) => {
+      const parts = line.split(/\s{2,}/);
+
+      if (parts.length < 5) {
+          console.warn(`Could not parse line ${index + 1}: ${line}`);
+          return;
+      }
+
+      const name = parts[0];
+      const installed = parts[1] !== '-' ? parts[1] : null;
+      let fixedIn = null;
+
+      if (parts[2].match(/^(\d+(\.\d+)*)(,\s*\d+(\.\d+)*)*$/) || parts[2].match(/^\(.*\)$/)) {
+          fixedIn = parts[2].split(',').map(v => v.trim());
+      }
+
+      const type = fixedIn ? parts[3] : parts[2];
+      const vulnerability = fixedIn ? parts[4] : parts[3];
+      const rawSeverity = fixedIn ? parts[5] : parts[4];
+      const validSeverities = ['Medium', 'High', 'Critical', 'Low'];
+      const severity = validSeverities.includes(rawSeverity) ? rawSeverity : 'Unknown';
+      const sanitizedFileName = name.replace(/[^a-zA-Z0-9-_]/g, '_');
+
+      const jsonData = {
+          [name]: {
+              installed: installed,
+              'fixed-in': fixedIn,
+              type: type,
+              vulnerability: vulnerability,
+              severity: severity,
+          },
+      };
+
+      const outputFilePath = `${outputDirectory}/${sanitizedFileName}_${index + 1}.json`;
+      fs.writeFileSync(outputFilePath, JSON.stringify(jsonData, null, 4), 'utf8');
+  });
+
+  console.log(`Processed ${lines.length} vulnerabilities and saved JSON files in ${outputDirectory}`);
+}
+
 module.exports = {
-  keypairDir, directoryExists, getIdentityJson, runBashCommand, ensureFilesExist, getAndVerifyClaim, getHash
+  keypairDir, 
+  directoryExists, 
+  getIdentityJson, 
+  runBashCommand, 
+  ensureFilesExist, 
+  getAndVerifyClaim, 
+  getHash,
+  processVulnerabilityReport
 }
