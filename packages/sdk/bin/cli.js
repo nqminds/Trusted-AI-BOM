@@ -5,7 +5,6 @@ const program = new Command();
 const path = require('path'); // Renamed to avoid conflict with 'path'
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
-const VC_OUPUT_PATH = "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/verifiable-credentials"
 const os = require('os');
 
 const { keypairDir, directoryExists, getIdentityJson, runBashCommand, generateAndSignVC, getAndVerifyClaim, getHash} = require('../src');
@@ -37,7 +36,10 @@ program
   .argument('<name>', 'The name of the person')
   .argument('<email>', 'The email of the person')
   .argument('<role>', 'The role of the person')
-  .action((name, email, role) => {
+  .option("--out <output_dir>", "Output directory")
+  .action((name, email, role, options) => {
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
+
     // Validate email format (basic check)
     if (!/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email)) {
       console.log('Invalid email format.');
@@ -73,7 +75,7 @@ program
     };
 
     generateAndSignVC(identity, uuid, "identity.json", privateKeyPath, `${keypairPath}-identity.json`, false);
-    generateAndSignVC(identity, uuid, "identity.json", privateKeyPath, VC_OUPUT_PATH);
+    generateAndSignVC(identity, uuid, "identity.json", privateKeyPath, outputDir);
 
   });
 
@@ -83,8 +85,10 @@ program
   .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
   .argument('<data_directory>', 'The directory of the data')
   .option("--weights", "This data is AI weights", false)
+  .option("--out <output_dir>", "Output directory")
   .action((identityEmail, dataDir, options) => {
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail)
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     // Verify the data directory exists
     if (!directoryExists(dataDir)) {
@@ -117,7 +121,7 @@ program
         name: path.parse(dataDir).name,
       }
       
-      generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "data.json", privateKeyPath, VC_OUPUT_PATH);
+      generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "data.json", privateKeyPath, outputDir);
     });
   });
   
@@ -127,8 +131,10 @@ program
   .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
   .argument('<code_directory>', 'The directory of the data')
   .option("--cpp", "[OPTIONAL] Generate a SBOM for C/C++ code", false)
+  .option("--out <output_dir>", "Output directory")
   .action((identityEmail, codeDirectory, options) => {
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     const tempDir = os.tmpdir();
     const codeName = path.basename(codeDirectory)
@@ -150,25 +156,26 @@ program
     const bashCommand = `nqmvul -${cliCommand} ${escapedDir} "${codeName}" --out ${tempDir}`
     console.log("Creating the SBOM")
 
-    runBashCommand(bashCommand);
-
-    const sbomDir = path.join(tempDir, `${codeName}.json`);
-    if(!directoryExists(sbomDir)) {
-      console.error(`Error: SBOM directory '${sbomDir}' does not exist.`);
-      process.exit(1);
-    }
-    const credentialSubject = getAndVerifyClaim(sbomDir, false);
-
-    const sbomTaibomId = generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "sbom.json", privateKeyPath, VC_OUPUT_PATH);
-
-    const vulnerabilities = processVulnerabilityReport(path.join(tempDir, `vulnerability_report_${codeName}`))
-
-    vulnerabilities.map((jsonVulnerability) => createAttestation(
-      {type: "vulnerability", vulnerability: jsonVulnerability},
-      sbomTaibomId,
-      {identity, privateKeyPath, publicKeyPath},
-      "vulnerability-attestation.json"
-    ))
+    runBashCommand(bashCommand, () => {
+      const sbomDir = path.join(tempDir, `${codeName}.json`);
+      if(!directoryExists(sbomDir)) {
+        console.error(`Error: SBOM directory '${sbomDir}' does not exist.`);
+        process.exit(1);
+      }
+      const credentialSubject = getAndVerifyClaim(sbomDir, false);
+  
+      const sbomTaibomId = generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "sbom.json", privateKeyPath, outputDir);
+  
+      const vulnerabilities = processVulnerabilityReport(path.join(tempDir, `vulnerability_report_${codeName}`))
+  
+      vulnerabilities.map((jsonVulnerability) => createAttestation(
+        {type: "vulnerability", vulnerability: jsonVulnerability},
+        sbomTaibomId,
+        {identity, privateKeyPath, publicKeyPath},
+        "vulnerability-attestation.json",
+        outputDir
+      ))
+    });
   })
 
 program
@@ -179,8 +186,10 @@ program
   .argument("<version>", "Code version number")
   .option("--sbomTaibom <path>", "[OPTIONAL] SBOM TAIBOM claim", false)
   .option("--name <code_name>", "[OPTIONAL] Name of code or package", false)
+  .option("--out <output_dir>", "Output directory")
   .action((identityEmail, codeDirectory, version, options) => {
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     const codeName = path.basename(codeDirectory);
     // Verify the code directory exists
@@ -217,7 +226,7 @@ program
         version,
         sbom
       }
-      generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "code.json", privateKeyPath, VC_OUPUT_PATH);
+      generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "code.json", privateKeyPath, outputDir);
 
     })
   });
@@ -230,10 +239,11 @@ program
   .argument("<data_taibom>", "Path to code TAIBOM claim")
   .option("--name <code_name>", "[OPTIONAL] Name of system or package", false)
   .option("--inferencing", "Label this AI system as inferencing")
+  .option("--out <output_dir>", "Output directory")
   .action((identityEmail, codeTaibomPath, dataTaibomPath, options) => {
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    // TODO: verify both code and data claims
     const codeTaibom = getAndVerifyClaim(codeTaibomPath);
     const dataTaibom = getAndVerifyClaim(dataTaibomPath);
 
@@ -245,7 +255,7 @@ program
       label,
       name: options.name || codeTaibom.credentialSubject.name
     }
-    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "ai-system.json", privateKeyPath, VC_OUPUT_PATH);
+    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "ai-system.json", privateKeyPath, outputDir);
 
   })
 
@@ -255,8 +265,10 @@ program
   .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
   .argument('<name>', 'The dataset name')
   .argument('<data_taiboms...>', 'List of file or directory paths (space-separated)')
-  .action((identityEmail, name, dataTaibomPaths) => {
+  .option("--out <output_dir>", "Output directory")
+  .action((identityEmail, name, dataTaibomPaths, options) => {
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     const datasets = dataTaibomPaths.map(path => {
       dataTaibom = getAndVerifyClaim(path)
@@ -267,7 +279,7 @@ program
       name, datasets
     }
 
-    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "datapack.json", privateKeyPath, VC_OUPUT_PATH);
+    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "datapack.json", privateKeyPath, outputDir);
 
   });
 
@@ -278,8 +290,10 @@ program
   .argument('<ai_system_taibom>', 'AI system TAIOBOM path')
   .argument('<data_taibom>', 'Path to data configs') 
   .option("--name <config_name>", "[OPTIONAL] Name of configs", false)
+  .option("--out <output_dir>", "Output directory")
   .action((identityEmail, aiSystemTaibomPath, dataTaibomPath, options) => {
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     const aiSystem = getAndVerifyClaim(aiSystemTaibomPath)?.id;
     const data = getAndVerifyClaim(dataTaibomPath);
@@ -288,7 +302,7 @@ program
       aiSystem, data: data.id, name: options.name || data.credentialSubject.name
     }
 
-    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "config.json", privateKeyPath, VC_OUPUT_PATH);
+    generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "config.json", privateKeyPath, outputDir);
 
   });
 
@@ -316,15 +330,17 @@ program
   .command("validate-data")
   .description("Validate a TAIBOM data claim")
   .argument("<data_taibom>", "Path to TAIBOM data claim")
-  .action((taibom) => {
+  .option("--out <output_dir>", "Output directory")
+  .action((taibom, options) => {
     try {
       const dataClaim = getAndVerifyClaim(taibom);
+      let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    // Verify it is a data vc
-    if(dataClaim.credentialSchema.id !== "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml")
-      throw new Error("This is not a TAIBOM data claim")
-    
-    validateLocationHash(dataClaim);
+      // Verify it is a data vc
+      if(dataClaim.credentialSchema.id !== "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml")
+        throw new Error("This is not a TAIBOM data claim")
+      
+      validateLocationHash(dataClaim);
 
     } catch (err) {
       console.log(err)
@@ -336,15 +352,17 @@ program
   .command("validate-code")
   .description("Validate a TAIBOM code claim")
   .argument("<data_taibom>", "Path to TAIBOM data claim")
-  .action((taibom) => {
+  .option("--out <output_dir>", "Output directory")
+  .action((taibom, options) => {
     try {
       const codeClaim = getAndVerifyClaim(taibom);
+      let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    // Verify it is a data vc
-    if(codeClaim.credentialSchema.id !== "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml")
-      throw new Error("This is not a TAIBOM code claim")
-    
-    validateLocationHash(codeClaim);
+      // Verify it is a data vc
+      if(codeClaim.credentialSchema.id !== "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml")
+        throw new Error("This is not a TAIBOM code claim")
+      
+      validateLocationHash(codeClaim);
 
     } catch (err) {
       console.log(err)
@@ -363,19 +381,19 @@ program
   .action((dataFile, schemaName, signingKeyPath, options) => {
     const credentialSubject = getAndVerifyClaim(dataFile, false);
     let uuid = options.uuid ?? `urn:uuid:${uuidv4()}`;
-    let outputDir = options.outputDir ?? VC_OUPUT_PATH;
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
     generateAndSignVC(credentialSubject, uuid, schemaName, signingKeyPath, outputDir)
   })
 
 
-  function createAttestation(attestation, taibomId, identity, schemaName = "attestation.json") {
+  function createAttestation(attestation, taibomId, identity, schemaName = "attestation.json", outputDir) {
     const {identity: identityJson, privateKeyPath} = identity;
     const credentialSubject = {
       attestation,
       component: taibomId
     }
 
-    generateAndSignVC(credentialSubject, identityJson.credentialSubject.uuid, schemaName, privateKeyPath, VC_OUPUT_PATH)
+    generateAndSignVC(credentialSubject, identityJson.credentialSubject.uuid, schemaName, privateKeyPath, outputDir)
   }
 
 
@@ -385,6 +403,7 @@ program
     .argument('<identity_email>', 'The email of the identity to sign this TAIBOM')
     .argument("<taibom_component_path>", "The path to the TAIBOM component VC to make an attestation about")
     .argument("<attestation_json_path>", "Path to attestation to be made")
+    .option("--out <output_dir>", "Output directory")
     .option(
       "--type <attestation_type>", 
       "Type of attestation", 
@@ -399,14 +418,15 @@ program
     )
     .action((identityEmail, taibomVc, attestationPath, option) => {
       const identity = retrieveIdentity(identityEmail);
-  
+      let outputDir = options.out ? path.resolve(options.out) : process.cwd();
+
       const taibomId = getAndVerifyClaim(taibomVc)?.id;
       const attestation = getAndVerifyClaim(attestationPath, false);
 
       if(option.type) {
-        createAttestation({type: option.type, ...attestation}, taibomId, identity, schemaName = `${option.type}-attestation.json`);
+        createAttestation({type: option.type, ...attestation}, taibomId, identity, schemaName = `${option.type}-attestation.json`, outputDir);
       } else {
-        createAttestation(attestation, taibomId, identity, schemaName = "attestation.json");
+        createAttestation(attestation, taibomId, identity, schemaName = "attestation.json", outputDir);
 
       }
     });
