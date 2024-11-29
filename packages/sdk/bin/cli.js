@@ -6,9 +6,7 @@ const path = require('path'); // Renamed to avoid conflict with 'path'
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const VC_OUPUT_PATH = "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/verifiable-credentials"
-const SBOM_OUTPUT_PATH = "/home/tony/Projects/taibom-projects/SBOM-GAP/vulnerability-reports/sboms"
-const VULNERABILITY_REPORT_OUTPUT_PATH = "/home/tony/Projects/taibom-projects/SBOM-GAP/vulnerability-reports/reports"
-
+const os = require('os');
 
 const { keypairDir, directoryExists, getIdentityJson, runBashCommand, generateAndSignVC, getAndVerifyClaim, getHash} = require('../src');
 const { processVulnerabilityReport } = require('../src/utils');
@@ -132,6 +130,7 @@ program
   .action((identityEmail, codeDirectory, options) => {
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
 
+    const tempDir = os.tmpdir();
     const codeName = path.basename(codeDirectory)
     // Verify the code directory exists
     if (!directoryExists(codeDirectory)) {
@@ -148,12 +147,12 @@ program
       cliCommand += "generateSbom"; 
     }
 
-    const bashCommand = `nqmvul -${cliCommand} ${escapedDir} "${codeName}"`
+    const bashCommand = `nqmvul -${cliCommand} ${escapedDir} "${codeName}" --out ${tempDir}`
     console.log("Creating the SBOM")
 
     runBashCommand(bashCommand);
 
-    const sbomDir = path.join(SBOM_OUTPUT_PATH, `${codeName}.json`);
+    const sbomDir = path.join(tempDir, `${codeName}.json`);
     if(!directoryExists(sbomDir)) {
       console.error(`Error: SBOM directory '${sbomDir}' does not exist.`);
       process.exit(1);
@@ -162,7 +161,7 @@ program
 
     const sbomTaibomId = generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "sbom.json", privateKeyPath, VC_OUPUT_PATH);
 
-    const vulnerabilities = processVulnerabilityReport(path.join(VULNERABILITY_REPORT_OUTPUT_PATH, `vulnerability_report_${codeName}`))
+    const vulnerabilities = processVulnerabilityReport(path.join(tempDir, `vulnerability_report_${codeName}`))
 
     vulnerabilities.map((jsonVulnerability) => createAttestation(
       {type: "vulnerability", vulnerability: jsonVulnerability},
