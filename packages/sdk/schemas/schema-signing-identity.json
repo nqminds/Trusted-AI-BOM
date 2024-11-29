@@ -1,0 +1,7 @@
+{
+  "email": "schema-signer@nquiringminds.com",
+  "name": "Tony's Schema signing identity",
+  "pub": "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/schemas/tony-pub",
+  "role": "Schema Signer",
+  "uuid": "urn:uuid:00000000-0000-0000-0000-000000000000"
+}
