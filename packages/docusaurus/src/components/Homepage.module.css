@@ -64,7 +64,7 @@
 }
 
 .button:hover {
-  color: var(--ifm-color-accent);
+  color: var(--ifm-color-secondary) !important;
   background: linear-gradient(135deg, var(--ifm-color-primary), var(--ifm-color-accent));
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   transform: scale(1.1);
