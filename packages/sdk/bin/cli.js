@@ -247,7 +247,7 @@ program
     const codeTaibom = getAndVerifyClaim(codeTaibomPath);
     const dataTaibom = getAndVerifyClaim(dataTaibomPath);
 
-    const label = options.infererencing ? "Inferencing" : "Training"
+    const label = options.inferencing ? "Inferencing" : "Training"
 
     const credentialSubject = {
       code: codeTaibom.id,
