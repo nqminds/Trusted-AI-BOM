@@ -113,6 +113,7 @@ a:hover{
 .hero__title {
   font-size: var(--ifm-typography-2c11d45-font-size);
   font-weight: var(--ifm-typography-2c11d45-font-weight);
+  color: var(--ifm-color-f898f31);
 }
 
 .docusaurus-highlight-code-line {
@@ -264,4 +265,61 @@ img {
 /* Apply animation to the egg timer */
 .rotate-animation {
   animation: rotate260 8s cubic-bezier(0.42, 0, 0.58, 1) infinite; /* 8s duration */
+}
+
+.hero--primary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(
+      rgba(1, 28, 64, 0.8), 
+      rgba(1, 28, 64, 0.55)
+    ), url(../../static/img/banner.jpg);
+  background-size: cover;
+  background-position: center; /* Moves the image 10% to the left */
+  background-attachment: fixed;
+  height: 60vh; /* Adjust height as needed */
+  padding: 2rem;
+}
+
+.hero__title {
+  font-size: 3.5rem; /* Adjust for screen sizes */
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 1rem;
+}
+
+.hero__subtitle {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: "Lato", sans-serif;
+}
+
+
+@media (max-width: 768px) {
+  .hero--primary {
+    padding: 1rem;
+    height: 60vh;
+  }
+
+  .hero--primary h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero--primary p {
+    font-size: 1rem;
+  }
+
+  .hero--primary .cta-button {
+    font-size: 1rem;
+  }
 }
