@@ -281,7 +281,7 @@ img {
   background-size: cover;
   background-position: center; /* Moves the image 10% to the left */
   background-attachment: fixed;
-  height: 60vh; /* Adjust height as needed */
+  height: 70vh; /* Adjust height as needed */
   padding: 2rem;
 }
 
