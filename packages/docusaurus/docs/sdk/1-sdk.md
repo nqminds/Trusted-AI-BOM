@@ -1,7 +1,10 @@
 # SDK for Creating & Verifying TAIBOMs
 
 ### Downloads & Prerequisites
-**(To be filled)**
+
+- [SBOM-GAP tool](https://sbom-gap.nqminds.com/cli/)
+- [Verifiable-Credential-Tools](https://github.com/nqminds/Verifiable-Credential-Tools)
+
 
 ---
 
