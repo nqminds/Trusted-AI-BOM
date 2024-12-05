@@ -5,11 +5,10 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import configs from "../../config.json";
-import {resolve} from "url"
 import 'dotenv/config';
 
 // @ts-ignore
-const {TITLE, TAGLINE, DOCUSAURUS_URL, PROJECT_NAME, GITHUB_OWNER, GITHUB_REPO} = configs;
+const {TITLE, PUBLIC_DOCUSAURUS_URL, TAGLINE, PROJECT_NAME, GITHUB_OWNER, GITHUB_REPO} = configs;
 
 const config = {
   title: TITLE,
@@ -19,7 +18,7 @@ const config = {
     // Put your custom environment here
     octokitToken: process.env.OCTOKIT_TOKEN,
   },
-  url: DOCUSAURUS_URL,
+  url: PUBLIC_DOCUSAURUS_URL,
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
   organizationName: 'nqminds',
