@@ -36,6 +36,7 @@ program
   .argument('<name>', 'The name of the person')
   .argument('<email>', 'The email of the person')
   .argument('<role>', 'The role of the person')
+  .option("--uuid <uuid>", "UUID")
   .option("--out <output_dir>", "Output directory")
   .action((name, email, role, options) => {
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
@@ -63,7 +64,7 @@ program
     // Generate keys for the user
     runBashCommand(bashCommand);
 
-    const uuid = `urn:uuid:${uuidv4()}`;
+    const uuid = options.uuid?? `urn:uuid:${uuidv4()}`;
 
     // Define identity object
     const identity = {
@@ -164,17 +165,22 @@ program
       }
       const credentialSubject = getAndVerifyClaim(sbomDir, false);
   
-      const sbomTaibomId = generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "sbom.json", privateKeyPath, outputDir);
-  
-      const vulnerabilities = processVulnerabilityReport(path.join(tempDir, `vulnerability_report_${codeName}`))
-  
-      vulnerabilities.map((jsonVulnerability) => createAttestation(
-        {type: "vulnerability", vulnerability: jsonVulnerability},
-        sbomTaibomId,
-        {identity, privateKeyPath, publicKeyPath},
-        "vulnerability-attestation.json",
-        outputDir
-      ))
+
+      generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "sbom.json", privateKeyPath, outputDir, (sbomTaibompath) => {
+        const sbomTaibom = getAndVerifyClaim(sbomTaibompath)
+        const vulnerabilities = processVulnerabilityReport(path.join(tempDir, `vulnerability_report_${codeName}`))
+    
+        vulnerabilities.map((jsonVulnerability) => createAttestation(
+          {type: "vulnerability", vulnerability: jsonVulnerability},
+          {id: sbomTaibom.id, hash: sbomTaibom.proof.proofValue},
+          {identity, privateKeyPath, publicKeyPath},
+          "vulnerability-attestation.json",
+          outputDir
+        ))
+      }, true, true);
+
+     
+
     });
   })
 
@@ -205,7 +211,7 @@ program
 
     if(options.sbomTaibom){
       const sbomVc = getAndVerifyClaim(options.sbomTaibom);
-      sbom = sbomVc.id
+      sbom = {id: sbomVc.id, hash: sbomVc.proof.proofValue}
     }
 
 
@@ -217,7 +223,7 @@ program
 
 
       const credentialSubject = {
-        hash,
+        hash: {value: hash},
         location: {
           path: `file://${codeDirectory}`,
           type: "local",
@@ -250,8 +256,8 @@ program
     const label = options.inferencing ? "Inferencing" : "Training"
 
     const credentialSubject = {
-      code: codeTaibom.id,
-      data: dataTaibom.id,
+      code: {id: codeTaibom.id, hash: codeTaibom.proof.proofValue},
+      data: {id: dataTaibom.id, hash: dataTaibom.proof.proofValue},
       label,
       name: options.name || codeTaibom.credentialSubject.name
     }
@@ -272,7 +278,7 @@ program
 
     const datasets = dataTaibomPaths.map(path => {
       dataTaibom = getAndVerifyClaim(path)
-      return dataTaibom.id;
+      return {id: dataTaibom.id, hash: dataTaibom.proof.proofValue}
     });
 
     const credentialSubject = {
@@ -295,11 +301,11 @@ program
     const {identity, privateKeyPath, publicKeyPath} = retrieveIdentity(identityEmail);
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    const aiSystem = getAndVerifyClaim(aiSystemTaibomPath)?.id;
+    const aiSystem = getAndVerifyClaim(aiSystemTaibomPath);
     const data = getAndVerifyClaim(dataTaibomPath);
 
     const credentialSubject = {
-      aiSystem, data: data.id, name: options.name || data.credentialSubject.name
+      aiSystem: {id: aiSystem.id, hash: aiSystem.proof.proofValue}, data: {id: data.id, hash: data.proof.proofValue}, name: options.name || data.credentialSubject.name
     }
 
     generateAndSignVC(credentialSubject, identity.credentialSubject.uuid, "config.json", privateKeyPath, outputDir);
@@ -386,11 +392,11 @@ program
   })
 
 
-  function createAttestation(attestation, taibomId, identity, schemaName = "attestation.json", outputDir) {
+  function createAttestation(attestation, taibom, identity, schemaName = "attestation.json", outputDir) {
     const {identity: identityJson, privateKeyPath} = identity;
     const credentialSubject = {
       attestation,
-      component: taibomId
+      component: taibom
     }
 
     generateAndSignVC(credentialSubject, identityJson.credentialSubject.uuid, schemaName, privateKeyPath, outputDir)
@@ -416,17 +422,17 @@ program
       },
       null, 
     )
-    .action((identityEmail, taibomVc, attestationPath, option) => {
+    .action((identityEmail, taibomVc, attestationPath, options) => {
       const identity = retrieveIdentity(identityEmail);
       let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-      const taibomId = getAndVerifyClaim(taibomVc)?.id;
+      const taibom = getAndVerifyClaim(taibomVc);
       const attestation = getAndVerifyClaim(attestationPath, false);
 
-      if(option.type) {
-        createAttestation({type: option.type, ...attestation}, taibomId, identity, schemaName = `${option.type}-attestation.json`, outputDir);
+      if(options.type) {
+        createAttestation({type: options.type, ...attestation}, {id: taibom.id, hash: taibom.proof.proofValue}, identity, schemaName = `${options.type}-attestation.json`, outputDir);
       } else {
-        createAttestation(attestation, taibomId, identity, schemaName = "attestation.json", outputDir);
+        createAttestation(attestation, {id: taibom.id, hash: taibom.proof.proofValue}, identity, schemaName = "attestation.json", outputDir);
 
       }
     });

@@ -19,7 +19,7 @@ properties:
 
   pub:
     type: string
-    description: Public key of identity
+    description: Path to public key of identity
 
   role: 
     type: string
@@ -37,20 +37,20 @@ examples:
   - name: Tony
     email: tony@example.com
     uuid: 123e4567-e89b-12d3-a456-426614174000
-    pub: A1B2C3D4E5F678901234567890ABCDEF1234567890ABCDEF1234567890ABCDEF
+    pub:  /home/tony/.taibom/tony@nqminds.com-pub
     role: Software Engineer
 
 context: |
   ## Introduction
 
-  The **Identity Schema** is a JSON schema designed to establish and standardize the representation of an individual's identity within the Trusted AI BOM (TAIBOM) framework. By associating a name, email, UUID, public key, and a role, this schema enables robust and secure identification of individuals who can make claims and attestations in AI systems.
+  The **Identity Schema** is a JSON schema designed to establish and standardise the representation of an individual's identity within the Trusted AI BOM (TAIBOM) framework. By associating a name, email, UUID, public key, and a role, this schema enables robust and secure identification of individuals who can make claims and attestations in AI systems.
 
   ### Description
   This schema ties an individual identity to:
   - **Name**: A human-readable identifier.
   - **Email**: A contact email address.
   - **UUID**: A universally unique identifier (UUID) that resolves to this identity.
-  - **Public Key**: A cryptographic public key used to authenticate claims and attestations.
+  - **Public Key**: A path to cryptographic public key used to authenticate claims and attestations.
   - **Role**: A human-readable description of the individual's role.
 
   ## Use Case
@@ -58,7 +58,7 @@ context: |
   The **Identity Schema** is primarily used within the TAIBOM ecosystem to:
   1. **Establish Identity**: Provide a standardised identity format for individuals interacting with AI systems.
   2. **Enable Trust**: Facilitate secure claims and attestations through the binding of a public key to an individual.
-  3. **Support Role-Based Operations**: Incorporate human-readable roles for context in organizational or system-level operations.
+  3. **Support Role-Based Operations**: Incorporate human-readable roles for context in organisational or system-level operations.
 
   By using this schema, developers and system administrators can ensure that each identity is uniquely tied to a UUID and public key, bolstering the authenticity and security of interactions within AI systems.
 

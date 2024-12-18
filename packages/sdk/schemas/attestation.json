@@ -2,11 +2,11 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2"
   ],
-  "id": "urn:uuid:66306b64-d30f-47c7-ac2f-adc5663ddcb3",
+  "id": "urn:uuid:4f5ff041-17f7-4de0-befa-990ecf6fcd9b",
   "type": "VerifiableCredential",
   "name": null,
   "description": null,
-  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
   "validFrom": null,
   "validUntil": null,
   "credentialStatus": null,
@@ -17,8 +17,8 @@
   "credentialSubject": {
     "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/60-attestation.v1.0.0.schema.yaml",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "context": "## Introduction\n\nThe **Attestation Schema** is a JSON schema designed to define and standardise attestations made about components within an AI system. These attestations provide essential information about various claims, ranging from performance metrics to ethical reviews, supporting traceability and accountability within the Trusted AI BOM (TAIBOM) framework.\n\n### Description\nThis schema captures attestations with the following details:\n- **Component**: The component being attested to, identified by a unique ID.\n- **Attestation**: The claim made about the component, including its type, claimant, and supporting evidence.\n\n### Types of Attestations\nAttestations can take any form, such as:\n- **SBOM Claims**: Verifying a Software Bill of Materials (SBOM) by a third party.\n- **CVE Claims**: AI agents asserting vulnerabilities.\n- **Bias Claims**: Ethical audits identifying biases in AI components.\n- **Best Practice Claims**: Statements affirming adherence to industry best practices.\n- **Performance Claims**: Testers documenting performance metrics.\n\n## Use Case\n\nThe **Attestation Schema** is used to:\n1. **Document Claims**: Provide a formal structure for recording attestations related to AI system components.\n2. **Support Accountability**: Ensure claims about AI components are transparent and traceable.\n3. **Enable Audits and Compliance**: Facilitate ethical and performance audits by linking components with attestations and evidence.\n\nBy employing this schema, organisations can ensure robust tracking and verification of claims made about AI system components, enhancing trust and accountability within AI ecosystems.\n",
-    "description": "This schema defines a generic attestation to any component of an AI system\n",
+    "context": "## Introduction\n\nThe **Attestation Schema** is a JSON schema designed to define and standardise attestations made about components within an AI system. These attestations provide essential information about various claims, ranging from performance metrics to ethical reviews, supporting traceability and accountability within the Trusted AI BOM (TAIBOM) framework.\n\n### Description\nThis schema captures attestations with the following details:\n- **Component**: The component being attested to, identified by a unique ID and its associated hash.\n- **Attestation**: The claim made about the component, including its type, claimant, and supporting evidence.\n- **Hash**: A cryptographic hash to verify the integrity of the attestation.\n\n### Types of Attestations\nAttestations can take any form, such as:\n- **Bias Claims**: Ethical audits identifying biases in AI components.\n- **Performance Claims**: Testers documenting performance metrics.\n- **Best Practice Claims**: Statements affirming adherence to industry best practices.\n\n## Use Case\n\nThe **Attestation Schema** is used to:\n1. **Document Claims**: Provide a formal structure for recording attestations related to AI system components.\n2. **Support Accountability**: Ensure claims about AI components are transparent and traceable.\n3. **Enable Audits and Compliance**: Facilitate ethical and performance audits by linking components with attestations and evidence.\n\nBy employing this schema, organisations can ensure robust tracking and verification of claims made about AI system components, enhancing trust and accountability within AI ecosystems.\n",
+    "description": "This schema defines a generic attestation to any component of an AI system.\n",
     "examples": [
       {
         "attestation": {
@@ -32,23 +32,14 @@
               "url": "https://example.com/audit-reports/223e4567"
             }
           ],
-          "findings": [
-            {
-              "biasType": "gender",
-              "evidence": "The system exhibited a 15% lower selection rate for female candidates during evaluation tests.\n"
-            },
-            {
-              "recommendations": [
-                "Perform rebalancing of training data to address gender imbalance.",
-                "Implement post-hoc fairness adjustments."
-              ]
-            }
-          ],
-          "organization": "Ethical AI Oversight Board",
+          "hash": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+          "organisation": "Ethical AI Oversight Board",
           "type": "Bias Assessment"
         },
-        "component": "urn:uuid:222e3337-e89b-12d3-a456-426614174004",
-        "id": "urn:uuid:223e4567-e89b-12d3-a456-426614174003"
+        "component": {
+          "hash": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+          "id": "urn:uuid:222e3337-e89b-12d3-a456-426614174004"
+        }
       },
       {
         "attestation": {
@@ -66,36 +57,41 @@
               "url": "https://example.com/videos/performance-demo.mp4"
             }
           ],
-          "metrics": [
-            {
-              "description": "The component maintained throughput above 5000 transactions/second under standard conditions.",
-              "metricName": "throughput",
-              "unit": "transactions/second",
-              "value": 5000
-            },
-            {
-              "description": "Average latency was 20ms, meeting SLA requirements.",
-              "metricName": "latency",
-              "unit": "milliseconds",
-              "value": 20
-            }
-          ],
-          "organization": "AI Performance Testing Labs",
-          "role": "QA Tester",
+          "hash": "f9e8d7c6b5a4d3c2b1a0e9f8d7c6b5a4d3c2b1a0",
+          "organisation": "AI Performance Testing Labs",
           "type": "Performance Evaluation"
         },
-        "component": "urn:uuid:333e4447-e89b-12d3-a456-426614174006",
-        "id": "urn:uuid:333e4567-e89b-12d3-a456-426614174005"
+        "component": {
+          "hash": "f9e8d7c6b5a4d3c2b1a0e9f8d7c6b5a4d3c2b1a0",
+          "id": "urn:uuid:333e4447-e89b-12d3-a456-426614174006"
+        }
       }
     ],
     "properties": {
       "attestation": {
-        "description": "Attestation made about the component",
+        "description": "Attestation made about the component.",
+        "required": [
+          "type"
+        ],
         "type": "object"
       },
       "component": {
-        "description": "Component ID of a VC claim",
-        "type": "string"
+        "description": "Component reference, including an ID and hash for the VC claim.",
+        "properties": {
+          "hash": {
+            "description": "Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.",
+            "type": "string"
+          },
+          "id": {
+            "description": "The component ID (unique identifier) of the VC claim.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "hash"
+        ],
+        "type": "object"
       }
     },
     "required": [
@@ -107,9 +103,9 @@
   },
   "proof": {
     "type": "DataIntegrityProof",
-    "created": "2024-11-28T13:20:50.970094284Z",
+    "created": "2024-12-05T11:46:33.733399840Z",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "+VTeWaBEwIQ8MldbGWlQBenWSfiS6+HKMpDCOx6e3MbjY1ar0/LKVlniyqDtihfs3dXB1Qal4BTW4sAeAZd1BQ=="
+    "proofValue": "zvkmQxlyOHQ7Uru69Zs8Ag9c3maU4LVNKb43+tIO+aDZvOUqOtkuufuGqM/eqaQm0MIjkVfEzCCceL44w49NAw=="
   }
 }

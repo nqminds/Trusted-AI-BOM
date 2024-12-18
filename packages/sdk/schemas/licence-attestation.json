@@ -2,11 +2,11 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2"
   ],
-  "id": "urn:uuid:6bcce291-8c90-4e5f-b4cf-530cce21afb1",
+  "id": "urn:uuid:ea935c11-379d-4b65-b920-0066c4d2de75",
   "type": "VerifiableCredential",
   "name": null,
   "description": null,
-  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
   "validFrom": null,
   "validUntil": null,
   "credentialStatus": null,
@@ -25,7 +25,10 @@
           "license": "This component is distributed under the Apache License, Version 2.0.\n",
           "type": "License"
         },
-        "component": "urn:uuid:555e6667-e89b-12d3-a456-426614174008"
+        "component": {
+          "hash": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+          "id": "urn:uuid:555e6667-e89b-12d3-a456-426614174008"
+        }
       }
     ],
     "properties": {
@@ -34,7 +37,7 @@
           "type": {
             "description": "Type of attestation, set to \"License\" for this schema.",
             "enum": [
-              "licence"
+              "License"
             ],
             "type": "string"
           }
@@ -45,8 +48,22 @@
         "type": "object"
       },
       "component": {
-        "description": "Component ID of a VC claim",
-        "type": "string"
+        "description": "Component reference, including an ID and hash for the VC claim.",
+        "properties": {
+          "hash": {
+            "description": "Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.",
+            "type": "string"
+          },
+          "id": {
+            "description": "The component ID (unique identifier) of the VC claim.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "hash"
+        ],
+        "type": "object"
       }
     },
     "required": [
@@ -58,9 +75,9 @@
   },
   "proof": {
     "type": "DataIntegrityProof",
-    "created": "2024-11-28T13:41:35.829451294Z",
+    "created": "2024-12-05T11:51:50.661440767Z",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "AzkGPNml0v8WL+dNzGpWgK6wpPfz3/xnUEcBJ0STw5FL14E6JHMln2LMuR3FvXFe/zhQiTXCd8M2WeZ+YO4XAw=="
+    "proofValue": "J0FI3MiO5H2+pTO7LwDMoaHNryJxAT89C2wBgl8mw3tRxI12Pml1kSyB+rOpQZe3FfELGiNRX5vqR5TtLiUIAA=="
   }
 }

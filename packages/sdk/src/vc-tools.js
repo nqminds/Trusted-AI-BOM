@@ -52,7 +52,7 @@ function createVC(credentialSubject, issuer, schema = "", variables = {}) {
   return {filePath, vcId}; // Return the path for reference
 }
 
-function generateAndSignVC(credentialSubject, issuer, schemaName, privateKeyPath, outputPath, appendVcId = true) {
+function generateAndSignVC(credentialSubject, issuer, schemaName, privateKeyPath, outputPath, callback = ()=>{}, appendVcId = true) {
   const schemaKeyPath = "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/schemas/tony-pub"
   const {schema, schemaPath} = getSchemaDetails(schemaName);
 
@@ -60,15 +60,15 @@ function generateAndSignVC(credentialSubject, issuer, schemaName, privateKeyPath
   const guid = vcId.split(":")[2]
   const output = appendVcId ? path.join(outputPath, `TAIBOM-${schemaName.split(".")[0]}-${guid}.json`) : outputPath;
 
-  const signCommand = `vc_tools_cli sign-vc ${filePath} ${schemaPath} ${privateKeyPath} ${schemaKeyPath} ${output} json`;
+  const signCommand = `vc_tools_cli sign-vc "${filePath}" ${schemaPath} ${privateKeyPath} ${schemaKeyPath} "${output}" json`;
   runBashCommand(signCommand, (error) => {
     if (error) {
       console.error(`Error signing VC: ${error.message}`);
       process.exit(1);
     }
     console.log(`VC signed and saved to ${output}`);
+    callback(output); 
   });
-  return vcId;
 }
 
 

@@ -2,11 +2,11 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2"
   ],
-  "id": "urn:uuid:9855513e-4880-476e-a110-438f5d71739f",
+  "id": "urn:uuid:4b708a50-bb77-4d6b-a566-3affa03a5456",
   "type": "VerifiableCredential",
   "name": null,
   "description": null,
-  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
   "validFrom": null,
   "validUntil": null,
   "credentialStatus": null,
@@ -17,8 +17,17 @@
   "credentialSubject": {
     "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "context": "## Introduction\n\nThe **Identity Schema** is a JSON schema designed to establish and standardize the representation of an individual's identity within the Trusted AI BOM (TAIBOM) framework. By associating a name, email, UUID, public key, and a role, this schema enables robust and secure identification of individuals who can make claims and attestations in AI systems.\n\n### Description\nThis schema ties an individual identity to:\n- **Name**: A human-readable identifier.\n- **Email**: A contact email address.\n- **UUID**: A universally unique identifier (UUID) that resolves to this identity.\n- **Public Key**: A cryptographic public key used to authenticate claims and attestations.\n- **Role**: A human-readable description of the individual's role.\n\n## Use Case\n\nThe **Identity Schema** is primarily used within the TAIBOM ecosystem to:\n1. **Establish Identity**: Provide a standardized identity format for individuals interacting with AI systems.\n2. **Enable Trust**: Facilitate secure claims and attestations through the binding of a public key to an individual.\n3. **Support Role-Based Operations**: Incorporate human-readable roles for context in organizational or system-level operations.\n\nBy using this schema, developers and system administrators can ensure that each identity is uniquely tied to a UUID and public key, bolstering the authenticity and security of interactions within AI systems.\n\nAdopting the **Identity Schema** helps organizations participating in TAIBOM achieve secure and trustworthy interactions in AI-driven ecosystems.\n\n---\n",
+    "context": "## Introduction\n\nThe **Identity Schema** is a JSON schema designed to establish and standardise the representation of an individual's identity within the Trusted AI BOM (TAIBOM) framework. By associating a name, email, UUID, public key, and a role, this schema enables robust and secure identification of individuals who can make claims and attestations in AI systems.\n\n### Description\nThis schema ties an individual identity to:\n- **Name**: A human-readable identifier.\n- **Email**: A contact email address.\n- **UUID**: A universally unique identifier (UUID) that resolves to this identity.\n- **Public Key**: A path to cryptographic public key used to authenticate claims and attestations.\n- **Role**: A human-readable description of the individual's role.\n\n## Use Case\n\nThe **Identity Schema** is primarily used within the TAIBOM ecosystem to:\n1. **Establish Identity**: Provide a standardised identity format for individuals interacting with AI systems.\n2. **Enable Trust**: Facilitate secure claims and attestations through the binding of a public key to an individual.\n3. **Support Role-Based Operations**: Incorporate human-readable roles for context in organisational or system-level operations.\n\nBy using this schema, developers and system administrators can ensure that each identity is uniquely tied to a UUID and public key, bolstering the authenticity and security of interactions within AI systems.\n\nAdopting the **Identity Schema** helps organisations participating in TAIBOM achieve secure and trustworthy interactions in AI-driven ecosystems.\n\n---\n",
     "description": "This schema defines an identity and ties this with an Email, UUID, and public key\n",
+    "examples": [
+      {
+        "email": "tony@example.com",
+        "name": "Tony",
+        "pub": "/home/tony/.taibom/tony@nqminds.com-pub",
+        "role": "Software Engineer",
+        "uuid": "123e4567-e89b-12d3-a456-426614174000"
+      }
+    ],
     "properties": {
       "email": {
         "description": "Email address of user",
@@ -29,7 +38,7 @@
         "type": "string"
       },
       "pub": {
-        "description": "Public key of identity",
+        "description": "Path to public key of identity",
         "type": "string"
       },
       "role": {
@@ -53,9 +62,9 @@
   },
   "proof": {
     "type": "DataIntegrityProof",
-    "created": "2024-11-22T14:01:16.966050663Z",
+    "created": "2024-12-05T11:50:30.720755316Z",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "0Fry1rYTciNzOW9sqlO0LCZyznoaiu4RxVUYt/PVuT4h+teHyiLMZiTsylx0LcZnKR7RGeWvgCV4PfQT8dJlBA=="
+    "proofValue": "epiIPX9lNpVL8bALpOsWJRocH0qQDRC2NYmGmKV46CbQmaMFgbUE9lQOQYWSmMxb4+6gJJ7vxJAaim/dGZaYBA=="
   }
 }

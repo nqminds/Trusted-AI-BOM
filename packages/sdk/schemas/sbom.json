@@ -2,11 +2,11 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2"
   ],
-  "id": "urn:uuid:21214b05-17a1-4132-9766-a1aa530c1754",
+  "id": "urn:uuid:9605a804-9b37-4cf2-b522-b15bd51a57c7",
   "type": "VerifiableCredential",
   "name": null,
   "description": null,
-  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
   "validFrom": null,
   "validUntil": null,
   "credentialStatus": null,
@@ -17,8 +17,62 @@
   "credentialSubject": {
     "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/30-sbom.v1.0.0.schema.yaml",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "context": "## Introduction\n\nThe **SBOM Schema** (Software Bill of Materials) is a JSON schema designed to describe and standardize the components, tools, and metadata associated with a software project within the Trusted AI BOM (TAIBOM) ecosystem. This schema provides a comprehensive overview of a project's dependencies, tools used, and key details for ensuring traceability and security.\n\n### Description\nThis schema captures essential metadata for an SBOM, including:\n- **BOM Format**: The format of the SBOM (e.g., CycloneDX).\n- **Specification Version**: The version of the SBOM specification used.\n- **Serial Number**: A unique identifier for the SBOM instance.\n- **Version**: The version number of the SBOM itself.\n- **Metadata**: Details about the SBOM generation process, including timestamps, tools, and component information.\n- **Components**: A detailed list of all components in the SBOM, including their type, name, version, and identifiers (e.g., CPE, PURL).\n\n## Use Case\n\nThe **SBOM Schema** is primarily used within the TAIBOM framework to:\n1. **Document Software Components**: Provide a standardized record of all dependencies and components used in a software project.\n2. **Enhance Security**: Facilitate vulnerability management by offering detailed metadata, including CPEs and PURLs for components.\n3. **Support Software Lifecycle Management**: Enable effective tracking of tools and processes involved in the software's creation and maintenance.\n\nBy adopting this schema, organizations can create detailed and reliable SBOMs, ensuring transparency, traceability, and security throughout the software development lifecycle.\n\n---\n",
+    "context": "## Introduction\n\nThe **SBOM Schema** (Software Bill of Materials) is a JSON schema designed to describe and standardise the components, tools, and metadata associated with a software project within the Trusted AI BOM (TAIBOM) ecosystem. This schema provides a comprehensive overview of a project's dependencies, tools used, and key details for ensuring traceability and security.\n\n### Description\nThis schema captures essential metadata for an SBOM, including:\n- **BOM Format**: The format of the SBOM (e.g., CycloneDX).\n- **Specification Version**: The version of the SBOM specification used.\n- **Serial Number**: A unique identifier for the SBOM instance.\n- **Version**: The version number of the SBOM itself.\n- **Metadata**: Details about the SBOM generation process, including timestamps, tools, and component information.\n- **Components**: A detailed list of all components in the SBOM, including their type, name, version, and identifiers (e.g., CPE, PURL).\n\n## Use Case\n\nThe **SBOM Schema** is primarily used within the TAIBOM framework to:\n1. **Document Software Components**: Provide a standardised record of all dependencies and components used in a software project.\n2. **Enhance Security**: Facilitate vulnerability management by offering detailed metadata, including CPEs and PURLs for components.\n3. **Support Software Lifecycle Management**: Enable effective tracking of tools and processes involved in the software's creation and maintenance.\n\nBy adopting this schema, organisations can create detailed and reliable SBOMs, ensuring transparency, traceability, and security throughout the software development lifecycle.\n\n---\n",
     "description": "A software bill of materials (SBOM) generated for the project.",
+    "examples": [
+      {
+        "bomFormat": "CycloneDX",
+        "components": [
+          {
+            "bom-ref": "pkg:pypi/absl-py@1.4.0?package-id=3ca3d32070abe037",
+            "cpe": "cpe:2.3:a:python-absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*",
+            "name": "absl-py",
+            "properties": [
+              {
+                "name": "syft:package:foundBy",
+                "value": "python-package-cataloger"
+              },
+              {
+                "name": "syft:package:language",
+                "value": "python"
+              },
+              {
+                "name": "syft:package:type",
+                "value": "python"
+              },
+              {
+                "name": "syft:cpe23",
+                "value": "cpe:2.3:a:absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*"
+              }
+            ],
+            "purl": "pkg:pypi/absl-py@1.4.0",
+            "type": "library",
+            "version": "1.4.0"
+          }
+        ],
+        "metadata": {
+          "component": {
+            "bom-ref": "51f6561dc978bfb7",
+            "name": "/project",
+            "type": "file"
+          },
+          "timestamp": "2024-10-18T15:15:51Z",
+          "tools": {
+            "components": [
+              {
+                "author": "anchore",
+                "name": "syft",
+                "type": "application",
+                "version": "1.14.1"
+              }
+            ]
+          }
+        },
+        "serialNumber": "urn:uuid:e865fb76-fb02-4554-bad7-7a92344317fe",
+        "specVersion": "1.6",
+        "version": 1
+      }
+    ],
     "properties": {
       "bomFormat": {
         "description": "Format of the SBOM.",
@@ -160,9 +214,9 @@
   },
   "proof": {
     "type": "DataIntegrityProof",
-    "created": "2024-11-22T14:01:28.549492227Z",
+    "created": "2024-12-05T11:52:49.505776515Z",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "jpZQwoWEVXKP0/eNUXNdo3HCqG4WIkEokdUjgsfAl+3fDG3O7Kt3Q4DtsIRQWUk9vcy0qScWsPCksYzfrRG6DA=="
+    "proofValue": "BdYeVf3VZ3ltYP0tWOsdg3lbKfYz5IvCR7vs03hEQLEhnCsMu56TPaT/TtNCubiBBb+DBeDvk6EwJuA0kUlIDg=="
   }
 }

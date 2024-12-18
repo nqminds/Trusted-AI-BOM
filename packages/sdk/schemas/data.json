@@ -2,11 +2,11 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2"
   ],
-  "id": "urn:uuid:0957f7be-2ae9-487d-96a6-0c636f2b333c",
+  "id": "urn:uuid:070b8565-2435-4bda-ab7c-95a3220d0f39",
   "type": "VerifiableCredential",
   "name": null,
   "description": null,
-  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
   "validFrom": null,
   "validUntil": null,
   "credentialStatus": null,
@@ -29,8 +29,41 @@
         ]
       }
     ],
-    "context": "## Introduction\n\nThe **TAIBOM Data Schema** is a JSON schema designed to describe and standardize the metadata associated with datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures datasets can be identified, located, and verified for integrity, enabling seamless and trustworthy AI operations.\n\n### Description\nThis schema captures essential metadata for datasets, including:\n- **Name**: A unique identifier for the dataset.\n- **Label**: Categorization of the dataset (e.g., Training or Weights).\n- **Location**: Specifies where the dataset is stored, either locally or remotely, along with the respective path or URL.\n- **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the dataset.\n- **Hash Location**: The location (local or remote) where the hash is stored.\n- **Last Accessed**: The timestamp of the last access to the dataset metadata.\n\n## Use Case\n\nThe **TAIBOM Data Schema** is primarily used within the TAIBOM framework to:\n1. **Enable Dataset Traceability**: Provide a clear and standardized format for referencing datasets and their locations.\n2. **Ensure Data Integrity**: Support integrity verification through cryptographic hashes and their associated storage locations.\n3. **Streamline Operations**: Offer metadata for efficient handling of datasets in AI workflows, whether stored locally or remotely.\n\nBy adopting this schema, organizations can standardize how datasets are documented, retrieved, and verified, ensuring robust data handling in AI systems.\n\n---\n",
+    "context": "## Introduction\n\nThe **TAIBOM Data Schema** is a JSON schema designed to describe and standardise the metadata associated with datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures datasets can be identified, located, and verified for integrity, enabling seamless and trustworthy AI operations.\n\n### Description\nThis schema captures essential metadata for datasets, including:\n- **Name**: A unique identifier for the dataset.\n- **Label**: Categorisation of the dataset (e.g., Training or Weights).\n- **Location**: Specifies where the dataset is stored, either locally or remotely, along with the respective path or URL.\n- **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the dataset.\n- **Hash Location**: The location (local or remote) where the hash is stored.\n- **Last Accessed**: The timestamp of the last access to the dataset metadata.\n\n## Use Case\n\nThe **TAIBOM Data Schema** is primarily used within the TAIBOM framework to:\n1. **Enable Dataset Traceability**: Provide a clear and standardised format for referencing datasets and their locations.\n2. **Ensure Data Integrity**: Support integrity verification through cryptographic hashes and their associated storage locations.\n3. **Streamline Operations**: Offer metadata for efficient handling of datasets in AI workflows, whether stored locally or remotely.\n\nBy adopting this schema, organisations can standardise how datasets are documented, retrieved, and verified, ensuring robust data handling in AI systems.\n\n---\n",
     "description": "This schema describes the metadata of a dataset, including the location where it is hosted  (either locally or remotely) and where to resolve the hash for verifying data integrity.\n",
+    "examples": [
+      {
+        "hash": "b2c4f5e4d3d8a77c3e5b60d72fdf6d3b9e2f758f85a1fba1c7b5a8b9d2fdb123",
+        "hashLocation": "/data/ai_training/image_classification_v1_hash.txt",
+        "label": "Training",
+        "lastAccessed": "2024-08-25T14:00:00Z",
+        "location": {
+          "path": "/data/ai_training/image_classification_v1.zip",
+          "type": "local"
+        },
+        "name": "image_classification_v1"
+      },
+      {
+        "hashLocation": "https://ai-datasets.com/sentiment/text_sentiment_analysis_corpus_hash.txt",
+        "label": "Training",
+        "lastAccessed": "2024-09-15T09:00:00Z",
+        "location": {
+          "path": "https://ai-datasets.com/sentiment/text_sentiment_analysis_corpus_2024.tar.gz",
+          "type": "remote"
+        },
+        "name": "text_sentiment_analysis_corpus"
+      },
+      {
+        "hash": "c4e5f6d7e8f7c9a3e5d7b8f7c9e3d8a2e9f7a3d9b2f8c5e3d7a9b5e2d3f9a7b6",
+        "label": "Training",
+        "lastAccessed": "2024-10-05T11:30:00Z",
+        "location": {
+          "path": "/data/ai_training/object_detection_images_v2.tar.gz",
+          "type": "local"
+        },
+        "name": "object_detection_images_v2"
+      }
+    ],
     "properties": {
       "hash": {
         "description": "The cryptographic hash (e.g., SHA256) of the dataset used for data integrity verification.",
@@ -91,9 +124,9 @@
   },
   "proof": {
     "type": "DataIntegrityProof",
-    "created": "2024-11-22T14:00:57.548039207Z",
+    "created": "2024-12-05T11:49:30.381855038Z",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "FkaUd7pggGh4azy7x6tvZV/ssBaxT5khvuNvSwXMQPegSSLfYWrghQO80Q4fibv5rTgAN4hEmPjHx9abAgrxBA=="
+    "proofValue": "vhsyHgXAqwj6fWqrQn4d5SFN8y1X+RiVX+8JUrsVpYi7T2XRSpQvDUrpN3wtxj3HWP+oRaTW+9VYJGbNcGnuCw=="
   }
 }

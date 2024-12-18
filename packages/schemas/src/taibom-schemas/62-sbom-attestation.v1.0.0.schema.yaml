@@ -6,8 +6,19 @@ description: |
 type: object
 properties:
   component:
-    type: string
-    description: Component ID of a VC claim
+    type: object
+    description: Component reference, including an ID and hash for the VC claim.
+    properties:
+      id:
+        type: string
+        description: The component ID (unique identifier) of the VC claim.
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.
+    required:
+      - id
+      - hash
+
   attestation:
     type: object
     properties:
@@ -18,11 +29,15 @@ properties:
         description: Type of attestation, set to "SBOM" for this schema.
     required:
       - type
+
 required:
   - component
   - attestation
+
 examples:
-  - component: urn:uuid:777e8887-e89b-12d3-a456-426614174010
+  - component:
+      id: urn:uuid:777e8887-e89b-12d3-a456-426614174010
+      hash: abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef
     attestation:
       type: SBOM
       sbom:
