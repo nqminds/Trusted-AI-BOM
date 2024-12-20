@@ -1,0 +1,5 @@
+{
+  "inference_output_path": "/home/ash/Documents/ClaimCascade/packages/claim_cascade/inference_input_vcs",
+  "policy_output_path": "/home/ash/Documents/ClaimCascade/packages/claim_cascade/policy_input_vcs",
+  "claim_cascade_root_keys_path": "/home/ash/Documents/ClaimCascade/packages/claim_cascade/root_keys"
+}
