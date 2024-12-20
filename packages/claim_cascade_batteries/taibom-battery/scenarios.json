@@ -40,37 +40,37 @@
       ],
       "inference_packs": [
         {
-          "path": "ai_system/taibom-demo-pack",
+          "path": "ai_system/ETS2SignDetection-release-4-pack",
           "signing_key": "keys/tony.priv"
         },
         {
-          "path": "code/taibom-demo-pack",
+          "path": "code/ETS2SignDetection-release-4-pack",
           "signing_key": "keys/tony.priv"
         },
         {
-          "path": "config/taibom-demo-pack",
+          "path": "config/ETS2SignDetection-release-4-pack",
           "signing_key": "keys/tony.priv"
         },
         {
-          "path": "data/taibom-demo-pack",
+          "path": "data/ETS2SignDetection-release-4-pack",
           "signing_key": "keys/tony.priv"
         },
         {
-          "path": "datapack/taibom-demo-pack",
+          "path": "datapack/ETS2SignDetection-release-4-pack",
           "signing_key": "keys/tony.priv"
         },
         {
-          "path": "identity/taibom-demo-pack",
+          "path": "identity/ETS2SignDetection-release-4-pack",
           "signing_key": "keys/tony.priv"
         },
         {
-          "path": "sbom/taibom-demo-pack",
+          "path": "sbom/ETS2SignDetection-release-4-pack",
           "signing_key": "keys/tony.priv"
         }
       ],
       "inference_rules": [
         {
-          "path": "taibom-demo-pack",
+          "path": "ETS2SignDetection-release-4-pack",
           "signing_key": "keys/tony.priv"
         }
       ]
