@@ -1,0 +1,79 @@
+{
+  "scenarios": [
+    {
+      "name": "ETS2SignDetection Release 4",
+      "queries": [
+        {
+          "name": "Get all taibom data statements",
+          "query": "db:get_all_taibom_data(_, _, _, _, _, _, _, MatchingData)"
+        },
+        {
+          "name": "Get all training data",
+          "query": "db:get_all_taibom_data(_, _, _, \"Training\", _, _, _, MatchingData)"
+        },
+        {
+          "name": "Get all weights data",
+          "query": "db:get_all_taibom_data(_, _, _, \"Weights\", _, _, _, MatchingData)"
+        },
+        {
+          "name": "Get all datapacks containing data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:get_taibom_data(_, _, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", _, _, _, _),  db:get_taibom_datapack(_Datasets, Id, DatasetName), member(dataset(_, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"), _Datasets)"
+        },
+        {
+          "name": "Get all ai systems which rely on data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:get_taibom_data(_, _, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", _, _, _, _), db:get_taibom_datapack(_Datasets, _DatapackId, _), member(dataset(_, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"), _Datasets), get_ai_system(_, data(_, _DatapackId), Label, Name)"
+        },
+        {
+          "name": "Use rule to get all ai systems which rely on data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:ai_systems_containing_data(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", AISystemName)"
+        }
+      ],
+      "policy_packs": [
+        {
+          "path": "group_membership/pack1",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "identity_bindings/pack1",
+          "signing_key": "keys/admin.priv"
+        }
+      ],
+      "inference_packs": [
+        {
+          "path": "ai_system/taibom-demo-pack",
+          "signing_key": "keys/tony.priv"
+        },
+        {
+          "path": "code/taibom-demo-pack",
+          "signing_key": "keys/tony.priv"
+        },
+        {
+          "path": "config/taibom-demo-pack",
+          "signing_key": "keys/tony.priv"
+        },
+        {
+          "path": "data/taibom-demo-pack",
+          "signing_key": "keys/tony.priv"
+        },
+        {
+          "path": "datapack/taibom-demo-pack",
+          "signing_key": "keys/tony.priv"
+        },
+        {
+          "path": "identity/taibom-demo-pack",
+          "signing_key": "keys/tony.priv"
+        },
+        {
+          "path": "sbom/taibom-demo-pack",
+          "signing_key": "keys/tony.priv"
+        }
+      ],
+      "inference_rules": [
+        {
+          "path": "taibom-demo-pack",
+          "signing_key": "keys/tony.priv"
+        }
+      ]
+    }
+  ]
+}

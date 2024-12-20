@@ -1,0 +1,24 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:8ae33149-7706-43b6-bc44-abb9e63ef9fc",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2024-12-18T17:22:33+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "email": "tony@nqminds.com",
+    "name": "Tony",
+    "pub": "/home/tony/.taibom/tony@nqminds.com-pub",
+    "role": "Software Engineer",
+    "uuid": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d"
+  }
+}
