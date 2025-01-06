@@ -19,7 +19,7 @@
   --ifm-typography-primary-line-height: 1.2em;
 
   --ifm-typography-text-font-family: "Lato";
-  --ifm-typography-text-font-size: 16px;
+  --ifm-typography-text-font-size: 18px;
   --ifm-typography-text-font-weight: 375;
   --ifm-typography-text-line-height: 1.4em;
 
@@ -89,6 +89,10 @@ p, li {
   font-size: var(--ifm-typography-text-font-size);
   font-weight: var(--ifm-typography-text-font-weight);
   line-height: var(--ifm-typography-text-line-height);
+}
+
+.menu__link, .table-of-contents__link {
+  font-size: 16px !important;
 }
 a {
   color: var(--ifm-color-text-header);

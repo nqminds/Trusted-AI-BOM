@@ -58,9 +58,9 @@ export default function HomepageWGList() {
           ))}
         </div>
         <div className='container'>
-          <h4>
+          <h3>
             TAIBOM (Trusted AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI systems.
-          </h4>
+          </h3>
           <ul>
             <li>
               <b>Versioning: </b>
