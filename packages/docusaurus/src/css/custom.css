@@ -2,7 +2,6 @@
 @import url(../fonts/Montserrat/mosteratt.css);
 @import url(../fonts/Varela-Round/varela-round.css);
 
-
 :root {
   --ifm-color-primary: #607d8b;
   --ifm-color-secondary: #d3dddf;
@@ -15,13 +14,13 @@
 
   --ifm-typography-primary-font-family: "Lato";
   --ifm-typography-primary-font-size: 45px;
-  --ifm-typography-primary-font-weight: 300;
+  --ifm-typography-primary-font-weight: 375;
   --ifm-typography-primary-text-transform: capitalize;
   --ifm-typography-primary-line-height: 1.2em;
 
   --ifm-typography-text-font-family: "Lato";
   --ifm-typography-text-font-size: 16px;
-  --ifm-typography-text-font-weight: 300;
+  --ifm-typography-text-font-weight: 375;
   --ifm-typography-text-line-height: 1.4em;
 
   --ifm-typography-accent-font-family: "Lato";
@@ -37,11 +36,11 @@
 
   --ifm-typography-ef2c50b-font-family: "Lato";
   --ifm-typography-ef2c50b-font-size: 15px;
-  --ifm-typography-ef2c50b-font-weight: 300;
+  --ifm-typography-ef2c50b-font-weight: 375;
 
   --ifm-typography-f8a9e51-font-family: "Lato";
   --ifm-typography-f8a9e51-font-size: 35px;
-  --ifm-typography-f8a9e51-font-weight: 300;
+  --ifm-typography-f8a9e51-font-weight: 375;
   --ifm-typography-f8a9e51-text-transform: capitalize;
   --ifm-typography-f8a9e51-line-height: 1.2em;
 
@@ -54,11 +53,9 @@
   background-color: var(--ifm-color-b500f0a);
 }
 
-
 input[type="checkbox"] { /* change "blue" browser chrome to yellow */
   filter: invert(100%) hue-rotate(18deg) brightness(1.7);
 }
-
 h1 {
   color: var(--ifm-color-text-header);
   font-family: var(--ifm-typography-primary-font-family),Sans-serif;
@@ -67,7 +64,6 @@ h1 {
   text-transform: var(--ifm-typography-primary-text-transform);
   line-height: var(--ifm-typography-primary-line-height);
 }
-
 h2 {
   color: var(--ifm-color-011c40);
   font-family: var(--ifm-typography-f8a9e51-font-family),Sans-serif;
@@ -78,7 +74,6 @@ h2 {
   letter-spacing: var(--ifm-typography-f8a9e51-letter-spacing);
   word-spacing: var(--ifm-typography-f8a9e51-word-spacing);
 }
-
 h3{
   font-family: var(--ifm-typography-6ed476c-font-family),Sans-serif;
   font-size: var(--ifm-typography-6ed476c-font-size);
@@ -88,7 +83,6 @@ h3{
   letter-spacing: var(--ifm-typography-6ed476c-letter-spacing);
   word-spacing: var(--ifm-typography-6ed476c-word-spacing);
 }
-
 p, li {
   color: var(--ifm-color-text);
   font-family: var(--ifm-typography-text-font-family),Sans-serif;
@@ -96,7 +90,6 @@ p, li {
   font-weight: var(--ifm-typography-text-font-weight);
   line-height: var(--ifm-typography-text-line-height);
 }
-
 a {
   color: var(--ifm-color-text-header);
   text-decoration: none;
@@ -105,68 +98,53 @@ a:hover{
   color: var(--ifm-color-accent)!important;
   text-decoration: underline;
 }
-
 .button_src-components-Homepage-module {
   color: var(--ifm-color-text-header) !important;
 }
-
 .hero__title {
   font-size: var(--ifm-typography-2c11d45-font-size);
   font-weight: var(--ifm-typography-2c11d45-font-weight);
-  color: var(--ifm-color-f898f31);
 }
-
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
-
 /* Easiest way of removing breadcrumbs, Couldn't fix on the docusaurus config */
 .breadcrumbs {
   display: none;
 }
-
 .menu__link {
   text-transform: var(--ifm-typography-primary-text-transform);
 }
-
 .menu__link--active, .table-of-contents__link--active {
   font-weight: var(--ifm-typography-6ed476c-font-weight);
   color: var(--ifm-color-text-header)!important;
-
 }
-
 .menu__link:hover {
   color: var(--ifm-color-text-header) !important;
 }
-
 table {
   display: inline-table;
   width: 100%;
 }
-
 table thead {
   background-color: var(--ifm-color-primary);
   color: var(--ifm-color-f898f31);
 }
-
 table th {
   border: none;
 }
-
 tbody tr:nth-child(even) {
   background-color: var(--ifm-color-table-row);
 }
-
 img[title="Diagram generated via mermaid"] {
   display: grid;
   justify-content: center;
   padding-bottom: 1em;
   width: 100%;
 }
-
 .demoHeader {
   color: var(--ifm-color-011c40);
   font-family: var(--ifm-typography-f8a9e51-font-family),Sans-serif;
@@ -177,23 +155,19 @@ img[title="Diagram generated via mermaid"] {
   letter-spacing: var(--ifm-typography-f8a9e51-letter-spacing);
   word-spacing: var(--ifm-typography-f8a9e51-word-spacing);
 }
-
 img {
   width: 100%;
   display: block; /* Remove default inline alignment */
   margin: 0 auto
 }
-
 /* Enable horizontal scrolling for tables */
 .table-wrapper {
   overflow-x: auto;
 }
-
 /* Optional: Adjust the max-width to fit your content */
 .table-wrapper table {
   max-width: 100%;
 }
-
 @media (min-width: 1850px) {
   .controls {
     position: fixed;
@@ -202,9 +176,6 @@ img {
     z-index: 9999; /* Ensure it's on top of other elements */
   }
 }
-
-
-
 .menu-select {
   color: var(--ifm-color-text-header);
   text-decoration: none;
@@ -221,12 +192,10 @@ img {
   -moz-appearance: none;
   width: 100%;
 }
-
 .menu-select option {
   text-align: left; /* Reset text alignment for options */
   padding-left: 0 !important;
 }
-
 .menu-select:hover {
   text-decoration: underline;
 }
@@ -234,9 +203,7 @@ img {
   position: relative;
   display: inline-block;
   width: 100%;
-
 }
-
 .menu-select-icon {
   position: absolute;
   top: 50%;
@@ -245,7 +212,6 @@ img {
   pointer-events: none;
   color: var(--ifm-color-text-header)
 }
-
 /* Define keyframe animation for rotating */
 @keyframes rotate260 {
   0% {
@@ -261,7 +227,6 @@ img {
       animation-timing-function: cubic-bezier(0.85, 0, 0.15, 1); /* End fast */
   }
 }
-
 /* Apply animation to the egg timer */
 .rotate-animation {
   animation: rotate260 8s cubic-bezier(0.42, 0, 0.58, 1) infinite; /* 8s duration */
@@ -273,7 +238,7 @@ img {
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #fff;
+  color: #fff !important;
   background: linear-gradient(
       rgba(1, 28, 64, 0.8), 
       rgba(1, 28, 64, 0.55)
@@ -281,10 +246,9 @@ img {
   background-size: cover;
   background-position: center; /* Moves the image 10% to the left */
   background-attachment: fixed;
-  height: 70vh; /* Adjust height as needed */
+  height: 60vh; /* Adjust height as needed */
   padding: 2rem;
 }
-
 .hero__title {
   font-size: 3.5rem; /* Adjust for screen sizes */
   font-weight: 700;
@@ -293,8 +257,8 @@ img {
   letter-spacing: 1px;
   font-family: "Montserrat", sans-serif;
   margin-bottom: 1rem;
+  color: #fff !important;
 }
-
 .hero__subtitle {
   font-size: 1.5rem;
   font-weight: 400;
@@ -303,23 +267,24 @@ img {
   margin: 0 auto;
   font-family: "Lato", sans-serif;
 }
-
-
 @media (max-width: 768px) {
   .hero--primary {
     padding: 1rem;
     height: 60vh;
   }
-
   .hero--primary h1 {
     font-size: 2.5rem;
   }
-
   .hero--primary p {
     font-size: 1rem;
   }
-
   .hero--primary .cta-button {
     font-size: 1rem;
   }
+}
+
+#__docusaurus_skipToContent_fallback {
+  background: linear-gradient(135deg, #d3dddf, #7e93a0);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
