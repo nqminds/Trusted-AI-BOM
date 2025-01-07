@@ -1,0 +1,33 @@
+.card {
+  border-radius: 4px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  margin: 0.8rem;
+  padding: 2.5rem;
+  height: 95%;
+  width: 20rem;
+}
+
+.cardLink:hover {
+  text-decoration: none;
+}
+
+html[data-theme='dark'] .card {
+  background-color: #242526;
+}
+
+html[data-theme='light'] .card {
+  background-color: white;
+}
+.card:hover {
+  transform: scale(1.05);
+}
+
+.button {
+  background-color: var(--ifm-color-primary-lightest);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  outline: none;
+  cursor: pointer;
+  border: none;
+}

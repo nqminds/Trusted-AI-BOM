@@ -34,8 +34,8 @@ function IconContainer({ png, title, description, docsLink }) {
           </div>
         )}
         <div className={styles.textContainer}>
-          <h3 className={styles.title}>{title}</h3>
-          <p className={styles.description}>{description}</p>
+          <h3 className={styles.title} style={{textAlign: 'center'}}>{title}</h3>
+          <p className={styles.description} style={{textAlign: 'center'}}>{description}</p>
           <Link
             className={`${styles.button} ${styles.glassButton}`}
             to={docsLink}
@@ -58,9 +58,9 @@ export default function HomepageWGList() {
           ))}
         </div>
         <div className='container'>
-          <h4>
+          <h3>
             TAIBOM (Trusted AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI systems.
-          </h4>
+          </h3>
           <ul>
             <li>
               <b>Versioning: </b>

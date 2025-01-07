@@ -163,7 +163,7 @@ const config = {
 
               {
                 label: 'GitHub',
-                href: DOCUSAURUS_URL,
+                href: `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}`,
               },
             ],
           },

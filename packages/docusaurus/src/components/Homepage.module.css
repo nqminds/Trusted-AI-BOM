@@ -70,29 +70,6 @@
   transform: scale(1.1);
 }
 
-/* Section Title and Text */
-h3 {
-  font-family: var(--ifm-typography-6ed476c-font-family), Sans-serif;
-  font-size: var(--ifm-typography-6ed476c-font-size);
-  font-weight: var(--ifm-typography-6ed476c-font-weight);
-  color: var(--ifm-color-text-header);
-  margin: 0.5em 0;
-  text-align: center;
-  background: linear-gradient(90deg, var(--ifm-color-primary), var(--ifm-color-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-p {
-  color: var(--ifm-color-text);
-  font-family: var(--ifm-typography-text-font-family), Sans-serif;
-  font-size: var(--ifm-typography-text-font-size);
-  font-weight: var(--ifm-typography-text-font-weight);
-  line-height: var(--ifm-typography-text-line-height);
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
 /* Row Layout */
 .row {
   display: grid;
