@@ -6,6 +6,18 @@
 - [Verifiable-Credential-Tools](https://github.com/nqminds/Verifiable-Credential-Tools/tree/main/vc_tools_cli)
 
 
+### Download the TAIBOM SDK
+
+  <a href="/dist/taibom-sdk-linux">
+    Download for Linux
+  </a>
+  <a href="/dist/taibom-sdk-macos">
+    Download for macOS
+  </a>
+  <a href="/dist/taibom-sdk-win.exe">
+    Download for Windows
+  </a>
+
 ---
 
 ## Overview
