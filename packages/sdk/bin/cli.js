@@ -323,12 +323,11 @@ program
         console.error(`Error generating hash: ${error.message}`);
         process.exit(1);
       }
-      if (claim.credentialSubject.hash !== hash)
+      if (claim.credentialSubject.hash?.value && claim.credentialSubject.hash.value !== hash && claim.credentialSubject.hash !== hash)
         throw new Error ("Hash is not validated")
+      else
+        console.log("TAIBOM claim", claim.id, "VALIDATED")
     })
-
-
-    console.log("TAIBOM claim", claim.id, "VALIDATED")
   }
 
   // Validation functions
@@ -357,7 +356,7 @@ program
 program
   .command("validate-code")
   .description("Validate a TAIBOM code claim")
-  .argument("<data_taibom>", "Path to TAIBOM data claim")
+  .argument("<data_taibom>", "Path to TAIBOM code claim")
   .option("--out <output_dir>", "Output directory")
   .action((taibom, options) => {
     try {
@@ -365,7 +364,7 @@ program
       let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
       // Verify it is a data vc
-      if(codeClaim.credentialSchema.id !== "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml")
+      if(codeClaim.credentialSchema.id !== "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.1.schema.yaml")
         throw new Error("This is not a TAIBOM code claim")
       
       validateLocationHash(codeClaim);
