@@ -1,6 +1,10 @@
 // TODO: this is hard coded
 const path = require("path");
-const ROOT_SCHEMA_DIR = "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/schemas"
+const os = require('os');
+
+// Get the user's home directory
+const homeDir = os.homedir();
+const ROOT_SCHEMA_DIR = path.join(homeDir, '.taibom/schemas');
 
 const {getAndVerifyClaim} = require("./utils")
 

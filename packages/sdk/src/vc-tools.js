@@ -45,7 +45,7 @@ function createVC(credentialSubject, issuer, schema = "", variables = {}) {
   const tempDir = os.tmpdir();
   
   // Define the path where the VC will be saved
-  const filePath = path.join(tempDir, `${vcId}.json`);
+  const filePath = path.join(tempDir, `${vcId.replace("urn:uuid:", "")}.json`);
 
   // Write the VC to the file
   fs.writeFileSync(filePath, JSON.stringify(vc, null, 2));
@@ -53,7 +53,8 @@ function createVC(credentialSubject, issuer, schema = "", variables = {}) {
 }
 
 function generateAndSignVC(credentialSubject, issuer, schemaName, privateKeyPath, outputPath, callback = ()=>{}, appendVcId = true) {
-  const schemaKeyPath = "/home/tony/Projects/Trusted-AI-BOM/packages/sdk/schemas/tony-pub"
+  const homeDir = os.homedir();
+  const schemaKeyPath = path.join(homeDir, '.taibom/schemas/tony-pub');
   const {schema, schemaPath} = getSchemaDetails(schemaName);
 
   const {filePath, vcId} = createVC(credentialSubject, issuer, schema.credentialSubject.$id);

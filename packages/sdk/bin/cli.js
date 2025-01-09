@@ -75,7 +75,7 @@ program
       role
     };
 
-    generateAndSignVC(identity, uuid, "identity.json", privateKeyPath, `${keypairPath}-identity.json`, false);
+    generateAndSignVC(identity, uuid, "identity.json", privateKeyPath, `${keypairPath}-identity.json`,()=> {}, false);
     generateAndSignVC(identity, uuid, "identity.json", privateKeyPath, outputDir);
 
   });
