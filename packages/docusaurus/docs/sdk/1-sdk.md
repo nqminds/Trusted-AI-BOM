@@ -2,7 +2,7 @@
 
 ### Downloads & Prerequisites
 
-- [SBOM-GAP tool](https://sbom-gap.nqminds.com/cli/)
+- [SBOM-GAP tool](https://sbom-gap.nqminds.com/cli/) - Not essential unless you are wanting to create SBOMS: `taibom-cli generate-sbom`
 - [Verifiable-Credential-Tools](https://github.com/nqminds/Verifiable-Credential-Tools/tree/main/vc_tools_cli)
 
 
