@@ -21,8 +21,13 @@
     "pkg": "^5.8.1"
   },
   "pkg": {
-    "scripts": "build/**/*.js",
-    "assets": "build/**/*.json",
+    "scripts": "index.js",
+    "assets": [
+      "schemas/**/*.json",
+      "dist/**/*",
+      "scripts/copySchemas.js",
+      "bin/**/*"
+    ],
     "targets": [
       "node18-linux-x64",
       "node18-macos-x64",

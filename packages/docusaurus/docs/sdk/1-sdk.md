@@ -3,19 +3,13 @@
 ### Downloads & Prerequisites
 
 - [SBOM-GAP tool](https://sbom-gap.nqminds.com/cli/) - Not essential unless you are wanting to create SBOMS: `taibom-cli generate-sbom`
-- [Verifiable-Credential-Tools](https://github.com/nqminds/Verifiable-Credential-Tools/tree/main/vc_tools_cli)
+- Verifiable-Credential-Tools: [see docs](./2-vc-tool.md)
 
 
 ### Download the TAIBOM SDK
 
-  <a href="/dist/taibom-sdk-linux">
-    Download for Linux
-  </a>
-  <a href="/dist/taibom-sdk-macos">
-    Download for macOS
-  </a>
-  <a href="/dist/taibom-sdk-win.exe">
-    Download for Windows
+  <a href="/nqminds-taibom-sdk-0.0.1.tgz">
+    Download
   </a>
 
 ---
