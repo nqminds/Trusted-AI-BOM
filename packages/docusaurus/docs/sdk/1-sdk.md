@@ -9,7 +9,7 @@
 ### Download the TAIBOM SDK
 
   <a href="/nqminds-taibom-sdk-0.0.1.tgz">
-    Download
+    Download the SDK here!
   </a>
 
 ---
