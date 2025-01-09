@@ -139,7 +139,7 @@ examples:
 context: |
   ## Introduction
 
-  The **SBOM Schema** (Software Bill of Materials) is a JSON schema designed to describe and standardize the components, tools, and metadata associated with a software project within the Trusted AI BOM (TAIBOM) ecosystem. This schema provides a comprehensive overview of a project's dependencies, tools used, and key details for ensuring traceability and security.
+  The **SBOM Schema** (Software Bill of Materials) is a JSON schema designed to describe and standardise the components, tools, and metadata associated with a software project within the Trusted AI BOM (TAIBOM) ecosystem. This schema provides a comprehensive overview of a project's dependencies, tools used, and key details for ensuring traceability and security.
 
   ### Description
   This schema captures essential metadata for an SBOM, including:

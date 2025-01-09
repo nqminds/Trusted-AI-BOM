@@ -1,0 +1,63 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/61-license-attestation.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2020-12/schema
+title: License Attestation
+description: |
+  This schema extends the Attestation Schema to define a specific attestation for licenses, 
+  retaining only the attestation type and license information.
+type: object
+properties:
+  component:
+    type: object
+    description: Component reference, including an ID and hash for the VC claim.
+    properties:
+      id:
+        type: string
+        description: The component ID (unique identifier) of the VC claim.
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.
+    required:
+      - id
+      - hash
+
+  attestation:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - License
+        description: Type of attestation, set to "License" for this schema.
+    required:
+      - type
+
+required:
+  - component
+  - attestation
+
+examples:
+  - component:
+      id: urn:uuid:555e6667-e89b-12d3-a456-426614174008
+      hash: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+    attestation:
+      type: License
+      license: |
+        This component is distributed under the Apache License, Version 2.0.
+
+context: |
+  ## Introduction
+
+  The **License Attestation Schema** is a JSON schema that extends the generic Attestation Schema to define license-related attestations. By removing extraneous fields, this schema focuses solely on the attestation type and license text, simplifying its use for licensing documentation.
+
+  ### Description
+  This schema includes:
+  - **Type**: The attestation type, set to "License".
+  - **License**: A free-text field for specifying the license information or text.
+
+  ## Use Case
+
+  The **License Attestation Schema** is used to:
+  1. **Document Licensing Information**: Provide a minimalistic yet formal structure for recording license details.
+  2. **Support Compliance**: Ensure straightforward documentation of licensing requirements for components.
+  
+  By focusing only on essential fields, this schema simplifies license documentation while maintaining clarity and consistency.

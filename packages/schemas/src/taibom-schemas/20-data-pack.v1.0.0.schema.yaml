@@ -1,9 +1,9 @@
-$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/20-data-pack.v1.0.0.schema.yaml
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/20-data-pack.v1.0.1.schema.yaml
 $schema: https://json-schema.org/draft/2019-09/schema
 title: TAIBOM Datapack
 description: >
   A datapack schema that describes a collection of datasets used for raw data, training data, and testing data. 
-  Each collection has a hash and a hash location for verifying data integrity.
+  Each collection has a unique identifier and a cryptographic hash for verifying data integrity.
 type: object
 properties:
   name:
@@ -12,8 +12,20 @@ properties:
   datasets:
     type: array
     items:
-      type: string
-    description: "A list of data IDs from a VC claim"
+      type: object
+      properties:
+        id:
+          type: string
+          description: "The unique identifier of the dataset, such as a VC ID or a DID."
+          format: uri
+        hash:
+          type: string
+          description: "The cryptographic hash (e.g., SHA-256) of the dataset for data integrity."
+      required:
+        - id
+        - hash
+    description: >
+      A list of dataset objects, each containing an ID and a cryptographic hash.
     minItems: 1
     uniqueItems: true
 required:
@@ -23,23 +35,27 @@ required:
 examples:
   - name: Raw collection
     datasets:
-      - urn:uuid:data-vc-1234
-      - urn:uuid:data-vc-4567
+      - id: urn:uuid:data-vc-1234
+        hash: 3b74b7f0b762998774a97b2c4c648a0f8c51f04d6c74f2e7698f4d8b9
+      - id: urn:uuid:data-vc-4567
+        hash: 23d9f32cb1628925d3f048cf3eb8f1ea4f7e61f3f3426a0c33b5df5b5a
 
 context: |
   ## Introduction
 
-  The **TAIBOM Datapack Schema** is a JSON schema designed to describe and standardize collections of datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures that groups of datasets, whether used for raw data, training, or testing, are organized and verified for integrity.
+  The **TAIBOM Datapack Schema** is a JSON schema designed to describe and standardise collections of datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures that groups of datasets, whether used for raw data, training, or testing, are organised and verified for integrity.
 
   ### Description
   This schema captures essential metadata for datapacks, including:
   - **Name**: A unique identifier for the datapack.
-  - **Datasets**: A collection of dataset IDs, ensuring traceability and uniqueness.
+  - **Datasets**: A collection of dataset objects, each containing:
+    - A unique identifier (`id`) for traceability.
+    - A cryptographic hash (`hash`) to ensure data integrity.
 
   ## Use Case
 
   The **TAIBOM Datapack Schema** is primarily used within the TAIBOM framework to:
-  1. **Organize Dataset Collections**: Provide a standardised format for grouping datasets used in AI workflows.
+  1. **Organise Dataset Collections**: Provide a standardised format for grouping datasets used in AI workflows.
   2. **Enable Traceability**: Ensure that each dataset in the collection is uniquely identified and linked to its source.
   3. **Streamline Dataset Verification**: Facilitate verification and management of multiple datasets within a single datapack.
 

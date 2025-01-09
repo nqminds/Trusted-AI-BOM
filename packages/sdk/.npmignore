@@ -1,0 +1,5 @@
+src/
+*.js
+node_modules/
+!.npmignore
+dist/
