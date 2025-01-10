@@ -15,6 +15,6 @@
   },
   "credentialSubject": {
     "type": "rule",
-    "rule": "ai_systems_containing_data(DataId, AISystemName) :-\n    % Find the datapack containing the specific data item\n    db:get_taibom_data(_, _, _, DataId, _, _, _, _),\n    db:get_taibom_datapack(_, Datasets, DatapackId, _),\n    member(dataset(_, DataId), Datasets),\n    % Find the AI system linked to the datapack\n    get_ai_system(_, _, data(_, DatapackId), _, AISystemName)."
+    "rule": "ai_systems_containing_data(DataId, AISystemName) :-\n    % Find the datapack containing the specific data item\n    db:get_taibom_data(DataVcId, _, _, _, _, _, _),\n    db:get_taibom_datapack(DatapackVcId, Datasets, _),\n    member(dataset(_, DataVcId), Datasets),\n    % Find the AI system linked to the datapack\n    get_ai_system(_, _, data(_, DatapackVcId), _, AISystemName)."
   }
 }

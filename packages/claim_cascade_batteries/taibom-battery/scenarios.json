@@ -5,23 +5,23 @@
       "queries": [
         {
           "name": "Get all taibom data statements",
-          "query": "db:get_all_taibom_data(_, _, _, _, _, _, _, _, MatchingData)"
+          "query": "db:get_all_taibom_data( _, _, _, _, _, _, _, MatchingData)"
         },
         {
           "name": "Get all training data",
-          "query": "db:get_all_taibom_data(_, _, _, _, \"Training\", _, _, _, MatchingData)"
+          "query": "db:get_all_taibom_data(_, _, _, \"Training\", _, _, _, MatchingData)"
         },
         {
           "name": "Get all weights data",
-          "query": "db:get_all_taibom_data(_, _, _, _, \"Weights\", _, _, _, MatchingData)"
+          "query": "db:get_all_taibom_data(_, _, _, \"Weights\", _, _, _, MatchingData)"
         },
         {
           "name": "Get all datapacks containing data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
-          "query": "db:get_taibom_data(_, _, _, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", _, _, _, _),  db:get_taibom_datapack(_, _Datasets, Id, DatasetName), member(dataset(_, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"), _Datasets)"
+          "query": "db:get_taibom_data(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", _, _, _, _, _, _),  db:get_taibom_datapack(VcId, _Datasets, DatasetName), member(dataset(_, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"), _Datasets)"
         },
         {
           "name": "Get all ai systems which rely on data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
-          "query": "db:get_taibom_data(_, _, _, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", _, _, _, _), db:get_taibom_datapack(_, _Datasets, _DatapackId, _), member(dataset(_, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"), _Datasets), get_ai_system(_, _, data(_, _DatapackId), Label, Name)"
+          "query": "db:get_taibom_data(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", _, _, _, _, _, _), db:get_taibom_datapack(_DatapackVcId_, _Datasets, _), member(dataset(_, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"), _Datasets), get_ai_system(_, _, data(_, _DatapackVcId), Label, Name)"
         },
         {
           "name": "Use rule to get all ai systems which rely on data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
