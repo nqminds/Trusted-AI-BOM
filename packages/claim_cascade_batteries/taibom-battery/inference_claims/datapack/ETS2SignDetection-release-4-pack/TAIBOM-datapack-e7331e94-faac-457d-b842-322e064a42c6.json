@@ -15,7 +15,6 @@
     "type": "JsonSchema"
   },
   "credentialSubject": {
-    "id": "urn:uuid:e7331e94-faac-457d-b842-322e064a42c6",
     "datasets": [
       {
         "hash": "u24U8GRf3VMZIkUJMiCfFqfMWHBwzdQ6WoOrrfBqaDev0nXYFsaGxZdOo3soTZJaQhTTB8tpRHxwF8udr99wCQ==",

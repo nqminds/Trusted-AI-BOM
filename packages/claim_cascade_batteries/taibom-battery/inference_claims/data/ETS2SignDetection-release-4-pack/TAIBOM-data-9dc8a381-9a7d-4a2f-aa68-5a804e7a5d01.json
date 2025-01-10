@@ -15,7 +15,6 @@
     "type": "JsonSchema"
   },
   "credentialSubject": {
-    "id": "urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01",
     "hash": "8024d0b6f45b7547e1aae4511887520594c6038bf7d89bc44f154f2002a75b04",
     "label": "Weights",
     "lastAccessed": "2024-12-16T13:32:43.303Z",

@@ -32,10 +32,6 @@
     "context": "## Introduction\n\nThe **TAIBOM Data Schema** is a JSON schema designed to describe and standardise the metadata associated with datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures datasets can be identified, located, and verified for integrity, enabling seamless and trustworthy AI operations.\n\n### Description\nThis schema captures essential metadata for datasets, including:\n- **Name**: A unique identifier for the dataset.\n- **Label**: Categorisation of the dataset (e.g., Training or Weights).\n- **Location**: Specifies where the dataset is stored, either locally or remotely, along with the respective path or URL.\n- **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the dataset.\n- **Hash Location**: The location (local or remote) where the hash is stored.\n- **Last Accessed**: The timestamp of the last access to the dataset metadata.\n\n## Use Case\n\nThe **TAIBOM Data Schema** is primarily used within the TAIBOM framework to:\n1. **Enable Dataset Traceability**: Provide a clear and standardised format for referencing datasets and their locations.\n2. **Ensure Data Integrity**: Support integrity verification through cryptographic hashes and their associated storage locations.\n3. **Streamline Operations**: Offer metadata for efficient handling of datasets in AI workflows, whether stored locally or remotely.\n\nBy adopting this schema, organisations can standardise how datasets are documented, retrieved, and verified, ensuring robust data handling in AI systems.\n\n---\n",
     "description": "This schema describes the metadata of a dataset, including the location where it is hosted  (either locally or remotely) and where to resolve the hash for verifying data integrity.\n",
     "properties": {
-      "id": {
-        "type": "string",
-        "description": "id of the dataset"
-      },
       "hash": {
         "description": "The cryptographic hash (e.g., SHA256) of the dataset used for data integrity verification.",
         "type": "string"

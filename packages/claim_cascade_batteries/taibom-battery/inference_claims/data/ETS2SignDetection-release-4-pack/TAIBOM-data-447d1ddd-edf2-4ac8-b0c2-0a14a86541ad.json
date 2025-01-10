@@ -15,7 +15,6 @@
     "type": "JsonSchema"
   },
   "credentialSubject": {
-    "id": "urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad",
     "hash": "0ea4133d796cf4c6c444d7ca1a94343798fc974c1fcca9cf168345b02a526a51",
     "label": "Training",
     "lastAccessed": "2024-12-16T13:26:30.868Z",
