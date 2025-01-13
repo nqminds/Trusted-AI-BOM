@@ -1,0 +1,28 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:c0035d9e-98e2-43dc-95f2-3295fae775ce",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:2649b7f0-7de7-418e-a29a-8c1f668c820f",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/25-config.v1.0.1.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "aiSystem": {
+      "hash": "569DviDebedPeE4FxyNHpS/E/2UNBYZzMkIyOZ23PqW/xgO38ucAvsHj/0z9at2v8TsY4dW3SzOhB/rG1amtDg==",
+      "id": "urn:uuid:65a2eb6b-2b09-41c9-aa72-3a23eee3c7c3"
+    },
+    "data": {
+      "hash": "8rHMt8udaOH6LO7pX5ij6V27nWBcZ1PzdrV643kCRqc/dKSdwoOmjJd0RS2ftM7OY4Iq1pdmXLUJdcB+fzkMDw==",
+      "id": "urn:uuid:af322bc0-151d-44dc-ba7b-160f1030e822"
+    },
+    "name": "traffic_sign_classifier"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:1b2984e0-7687-4463-9e9e-6bcb2589a2f1",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
+  "validFrom": "2024-12-18T17:22:33+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/20-data-pack.v1.0.1.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "context": "## Introduction\n\nThe **TAIBOM Datapack Schema** is a JSON schema designed to describe and standardise collections of datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures that groups of datasets, whether used for raw data, training, or testing, are organised and verified for integrity.\n\n### Description\nThis schema captures essential metadata for datapacks, including:\n- **Name**: A unique identifier for the datapack.\n- **Datasets**: A collection of dataset objects, each containing:\n  - A unique identifier (`id`) for traceability.\n  - A cryptographic hash (`hash`) to ensure data integrity.\n\n## Use Case\n\nThe **TAIBOM Datapack Schema** is primarily used within the TAIBOM framework to:\n1. **Organise Dataset Collections**: Provide a standardised format for grouping datasets used in AI workflows.\n2. **Enable Traceability**: Ensure that each dataset in the collection is uniquely identified and linked to its source.\n3. **Streamline Dataset Verification**: Facilitate verification and management of multiple datasets within a single datapack.\n\nBy adopting this schema, organisations can effectively manage and document groups of datasets, ensuring integrity and ease of use in AI system development and deployment.\n\n---\n",
+    "description": "A datapack schema that describes a collection of datasets used for raw data, training data, and testing data.  Each collection has a unique identifier and a cryptographic hash for verifying data integrity.\n",
+    "properties": {
+      "datasets": {
+        "description": "A list of dataset objects, each containing an ID and a cryptographic hash.\n",
+        "items": {
+          "properties": {
+            "hash": {
+              "description": "The cryptographic hash (e.g., SHA-256) of the dataset for data integrity.",
+              "type": "string"
+            },
+            "id": {
+              "description": "The unique identifier of the dataset, such as a VC ID or a DID.",
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "hash"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array",
+        "uniqueItems": true
+      },
+      "name": {
+        "description": "The name of the datapack.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "datasets"
+    ],
+    "title": "TAIBOM_Datapack",
+    "type": "object"
+  }
+}

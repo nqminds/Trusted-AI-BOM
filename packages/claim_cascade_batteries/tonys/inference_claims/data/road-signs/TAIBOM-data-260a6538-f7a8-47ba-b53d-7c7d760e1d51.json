@@ -1,0 +1,27 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:260a6538-f7a8-47ba-b53d-7c7d760e1d51",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "hash": "3810669ad1c80dbf97fca040503a7fa4984f41a1e13f226f27837587aba626a7",
+    "label": "Training",
+    "lastAccessed": "2024-12-05T13:29:48.003Z",
+    "location": {
+      "path": "file:///home/tony/Projects/taibom-projects/ETS2SignDetection/TAIBOM/Release 1/images/National Speed Limit/",
+      "type": "local"
+    },
+    "name": "National Speed Limit"
+  }
+}

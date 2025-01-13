@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:516139b8-2b17-42b0-bfad-af21bd139b8f",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.1.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "hash": {
+      "value": "bcfcd1956d8df27d65f4bfeae5e2cc517fbf7b373e87d525c91a1ec1d6591760"
+    },
+    "location": {
+      "path": "file://../training/",
+      "type": "local"
+    },
+    "name": "training",
+    "sbom": {
+      "hash": "Jz/k5QoduUDEpCDaKYxvu9UsajqcLVtwxrdcQLxDlp2OmJ1GjmuuUUt2g0mCRKCUsjd+GQ0MJM3wRzoItW3lAA==",
+      "id": "urn:uuid:c7a82326-367e-4232-9e09-21706b61664a"
+    },
+    "version": "4.0.0"
+  }
+}

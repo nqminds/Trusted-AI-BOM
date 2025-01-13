@@ -1,0 +1,29 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:ed427fe0-d9c6-48c2-8c09-6cc873f18da8",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "code": {
+      "hash": "KoJh/lvWAHdBDbjuTeMDNYVFO9XnQEveDdJx2JjJbiJo8WwncQJQtQty80wQEm3c6P0C7VszxUenZeBWRFAABw==",
+      "id": "urn:uuid:eebeccf6-aba9-43c3-bdce-bb4193fa08fb"
+    },
+    "data": {
+      "hash": "4F2KXU/bdisfUw+T1fzY+ZlAVlepzW/0NSAhQL0XBFIcNew4gB8rZX2uU5LGxk0g/1iRFGcTfcKhMibgN+lMDA==",
+      "id": "urn:uuid:d2b54e80-d37a-4ef5-b9dc-45f07d70f9b4"
+    },
+    "label": "Training",
+    "name": "traffic_sign_model_builder.py"
+  }
+}

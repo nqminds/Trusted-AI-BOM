@@ -1,0 +1,27 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:deca9bea-65ef-4e18-8376-0992ca6b0121",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "hash": "2c4f57fe9f2c048865af60ef3b8f50f97a4f67d6bf2feea4cee9c936dcb41594",
+    "label": "Training",
+    "lastAccessed": "2024-12-05T13:29:11.488Z",
+    "location": {
+      "path": "file:///home/tony/Projects/taibom-projects/ETS2SignDetection/TAIBOM/Release 1/images/20mph",
+      "type": "local"
+    },
+    "name": "20mph"
+  }
+}

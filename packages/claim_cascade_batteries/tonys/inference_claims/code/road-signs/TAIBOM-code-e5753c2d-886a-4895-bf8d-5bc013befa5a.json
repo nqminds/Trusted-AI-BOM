@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:e5753c2d-886a-4895-bf8d-5bc013befa5a",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.1.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "hash": {
+      "value": "4d01e6aa7ddf91ceb11502461bc6e6483bf94ed0aa6cceaf10325a345a77aba4"
+    },
+    "location": {
+      "path": "file://../training/traffic_sign_model_builder.py",
+      "type": "local"
+    },
+    "name": "traffic_sign_model_builder.py",
+    "sbom": {
+      "hash": "5cFBRRnqTth0WT3/mSZi0djyfAJZGzb/J81p7IcYpr2iGLUa/l7DIIlkMXJiVLOlx7xqhr1LM9Lx8akMyTDtCw==",
+      "id": "urn:uuid:62a3f84d-955c-4baa-870f-959d65161e94"
+    },
+    "version": "3.0.0"
+  }
+}

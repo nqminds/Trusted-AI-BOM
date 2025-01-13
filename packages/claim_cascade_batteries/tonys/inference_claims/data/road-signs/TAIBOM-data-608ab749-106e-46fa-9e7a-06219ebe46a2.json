@@ -1,0 +1,27 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:608ab749-106e-46fa-9e7a-06219ebe46a2",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "hash": "c155d48911398c66135f407b1501cab2b15741de5177fd62f0f3f729500dd907",
+    "label": "Training",
+    "lastAccessed": "2024-12-05T13:29:37.276Z",
+    "location": {
+      "path": "file:///home/tony/Projects/taibom-projects/ETS2SignDetection/TAIBOM/Release 1/images/30mph",
+      "type": "local"
+    },
+    "name": "30mph"
+  }
+}

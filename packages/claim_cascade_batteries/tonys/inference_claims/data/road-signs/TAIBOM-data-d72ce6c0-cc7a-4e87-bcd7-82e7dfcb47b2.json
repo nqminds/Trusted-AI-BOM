@@ -1,0 +1,27 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:d72ce6c0-cc7a-4e87-bcd7-82e7dfcb47b2",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:2649b7f0-7de7-418e-a29a-8c1f668c820f",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "hash": "0ea4133d796cf4c6c444d7ca1a94343798fc974c1fcca9cf168345b02a526a51",
+    "label": "Training",
+    "lastAccessed": "2025-01-09T14:45:17.785Z",
+    "location": {
+      "path": "file://../images/30mph/",
+      "type": "local"
+    },
+    "name": "30mph"
+  }
+}

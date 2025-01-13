@@ -1,0 +1,29 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:c37aaec4-096d-49ba-9867-8455d7ce33a0",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "code": {
+      "hash": "xXSHwPX7uMXV7HDYN2yY0DSl8ZvjYJ01znDrK8shIVbwD0gdPBbuaXWNKsRUo8B2uY+tCQNoGtuWtL9YoRWdCA==",
+      "id": "urn:uuid:1f1b30b3-c9e2-4d37-8272-a3224b72fc7b"
+    },
+    "data": {
+      "hash": "W9Styft4zJkIV9qrkEB++P5o82QU8Lh1dkoBus0hogu3hviRgSYsr8uiP3tdIvHbwVmcS6Gvceq+6IbLF/agAA==",
+      "id": "urn:uuid:005b58b9-0e80-4b50-8aed-6e02d864bd91"
+    },
+    "label": "Inferencing",
+    "name": "Inference Test with GUI Interface.py"
+  }
+}

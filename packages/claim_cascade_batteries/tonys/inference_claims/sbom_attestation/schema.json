@@ -1,0 +1,127 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:0924320e-4241-4e0a-a96b-15e324ea0f75",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
+  "validFrom": "2024-12-18T17:22:33+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/62-sbom-attestation.v1.0.0.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "context": "## Introduction\n\nThe **SBOM Attestation Schema** extends the generic Attestation Schema to enable attestations related to SBOMs (Software Bill of Materials). By referencing the existing SBOM schema, this schema ensures consistency in how SBOM details are represented across the TAIBOM framework.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"SBOM\".\n- **SBOM**: References the detailed SBOM schema to provide comprehensive metadata about the component’s software dependencies.\n\n## Use Case\n\nThe **SBOM Attestation Schema** is used to:\n1. **Document SBOM Information**: Attach detailed SBOM data to attestations for components.\n2. **Enable Traceability**: Link SBOMs to attestations for enhanced transparency in software supply chains.\n3. **Support Compliance**: Ensure compliance with SBOM standards and regulations.\n\nBy leveraging the existing SBOM schema, this attestation schema promotes reusability and standardisation.\n",
+    "description": "This schema extends the generic Attestation Schema to define an attestation for SBOM (Software Bill of Materials).\n",
+    "examples": [
+      {
+        "attestation": {
+          "sbom": {
+            "bomFormat": "CycloneDX",
+            "components": [
+              {
+                "bom-ref": "pkg:pypi/absl-py@1.4.0?package-id=3ca3d32070abe037",
+                "cpe": "cpe:2.3:a:python-absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*",
+                "name": "absl-py",
+                "properties": [
+                  {
+                    "name": "syft:package:foundBy",
+                    "value": "python-package-cataloger"
+                  },
+                  {
+                    "name": "syft:package:language",
+                    "value": "python"
+                  },
+                  {
+                    "name": "syft:package:type",
+                    "value": "python"
+                  },
+                  {
+                    "name": "syft:cpe23",
+                    "value": "cpe:2.3:a:absl-py:python-absl-py:1.4.0:*:*:*:*:*:*:*"
+                  }
+                ],
+                "purl": "pkg:pypi/absl-py@1.4.0",
+                "type": "library",
+                "version": "1.4.0"
+              }
+            ],
+            "metadata": {
+              "component": {
+                "bom-ref": "51f6561dc978bfb7",
+                "name": "/project",
+                "type": "file"
+              },
+              "timestamp": "2024-10-18T15:15:51Z",
+              "tools": {
+                "components": [
+                  {
+                    "author": "anchore",
+                    "name": "syft",
+                    "type": "application",
+                    "version": "1.14.1"
+                  }
+                ]
+              }
+            },
+            "serialNumber": "urn:uuid:e865fb76-fb02-4554-bad7-7a92344317fe",
+            "specVersion": "1.6",
+            "version": 1
+          },
+          "type": "SBOM"
+        },
+        "component": {
+          "hash": "abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef",
+          "id": "urn:uuid:777e8887-e89b-12d3-a456-426614174010"
+        }
+      }
+    ],
+    "properties": {
+      "attestation": {
+        "properties": {
+          "type": {
+            "description": "Type of attestation, set to \"SBOM\" for this schema.",
+            "enum": [
+              "SBOM"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "type": "object"
+      },
+      "component": {
+        "description": "Component reference, including an ID and hash for the VC claim.",
+        "properties": {
+          "hash": {
+            "description": "Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.",
+            "type": "string"
+          },
+          "id": {
+            "description": "The component ID (unique identifier) of the VC claim.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "hash"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "component",
+      "attestation"
+    ],
+    "title": "SBOM_Attestation",
+    "type": "object"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:3d9de978-4074-4d74-8f58-24833885e6bb",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-01-01T00:00:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/20-data-pack.v1.0.1.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "datasets": [
+      {
+        "hash": "RYOrpellzT2e/kr8wpHXCjFgRvh4lURJcCDSr2aGOcSO0VR3tA67ODAdMp7PjYotcHiZS2wDjt+QKmKuBErACQ==",
+        "id": "urn:uuid:deca9bea-65ef-4e18-8376-0992ca6b0121"
+      },
+      {
+        "hash": "eISSX1N45eFyN5qrrBxZtwObjRkmowPCQY0e0hEZqxPVcMPDrahAzqYLmt9t7S5RRkwh1q9su82KHwE4RRzZBg==",
+        "id": "urn:uuid:608ab749-106e-46fa-9e7a-06219ebe46a2"
+      },
+      {
+        "hash": "oRiGUZX0ikpjMs1GRVicmw2vyhRGlINpKGeOlTZh0SVMDrdy+sqmU7EEtmNenPYuWF9ONbz3SRz0pMbmTNV1Bw==",
+        "id": "urn:uuid:de5fea6f-9717-4fdf-92db-4e17780027fe"
+      },
+      {
+        "hash": "6q92ZtO36quvsrORYJB/13KFicpUlUVvRN2PuUWuMgu3/Kwx2tpw6f6lu4nvG+CTQlpI1n46zwznWSPwm9twAQ==",
+        "id": "urn:uuid:49f9a7be-cf3c-4315-abd7-dbd8db67e0af"
+      },
+      {
+        "hash": "wR9FSoZ/6/UINu3I2KaE3LCx0inbPSxRAV3TtJeTlsQCpYBTuyrOibapgbGXBxOY3N/TdjNGnL0tvtxnfAOpBA==",
+        "id": "urn:uuid:260a6538-f7a8-47ba-b53d-7c7d760e1d51"
+      }
+    ],
+    "name": "Road signs"
+  }
+}
