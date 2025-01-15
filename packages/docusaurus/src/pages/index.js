@@ -4,6 +4,7 @@ import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import Homepage from '../components/Homepage';
+import Companies from '../partials/home/comapnies';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -27,6 +28,7 @@ export default function Home() {
       description={`${siteConfig.description}`}>
       <HomepageHeader />
       <article>
+        <Companies/>
         <Homepage />
       </article>
     </Layout>
