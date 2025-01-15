@@ -1,0 +1,41 @@
+/* Container for the panel (optional, based on how Panel component is styled) */
+.panel {
+  padding: 20px;
+}
+
+/* Styling the Marquee container */
+.marquee {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+/* Styling the links that wrap the images */
+.marquee a {
+  display: inline-block;
+  padding: 0 25px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+/* Ensuring images inside the links are responsive */
+.marquee img {
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect for logos */
+.marquee a:hover img {
+  transform: scale(1.05);
+}
+
+/* Responsive Image Size */
+.w-48 {
+  width: 192px;
+}
+
+/* For adding margin between the logos */
+.m-4 {
+  margin: 0 16px;
+}

@@ -3,16 +3,19 @@ import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
-import Homepage from '../components/Homepage';
 import Companies from '../partials/home/comapnies';
+import Intro from '../partials/home/intro';
+import HowItWorks from '../partials/home/how-it-works';
+import BenefitsOfTaibom from '../partials/home/benefits';
+import TechnicalDetails from '../partials/home/technical-details';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <h1 className="hero__title" style={{fontSize: 70}}>Trustworthy AI Bill of Materials</h1>
+        <h2 className="hero__subtitle">{siteConfig.tagline}</h2>
         <div className={styles.buttons}>
         </div>
       </div>
@@ -29,7 +32,13 @@ export default function Home() {
       <HomepageHeader />
       <article>
         <Companies/>
-        <Homepage />
+        <Intro/>
+        <br/>
+        <HowItWorks/>
+        <br/>
+        <BenefitsOfTaibom/>
+        <br/>
+        <TechnicalDetails/>
       </article>
     </Layout>
   );
