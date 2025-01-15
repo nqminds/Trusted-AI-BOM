@@ -8,7 +8,7 @@ export default function Companies() {
 
   return <Panel color={"light"} container={false}>
 
-    <Marquee pauseOnHover={false} gradient={true} gradientColor={"#f3f4f6"} gradientWidth={150}>
+    <Marquee>
       <a
         target="_blank"
         rel="noopener noreferrer"

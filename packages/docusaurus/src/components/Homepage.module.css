@@ -6,7 +6,7 @@
   align-items: center;
   padding: 2rem 0;
   width: 100%;
-  background: linear-gradient(135deg, #d3dddf, #607d8b); /* Subtle gradient matching your theme */
+  background: linear-gradient(135deg, #d3dddf, var(--ifm-colour-background)); /* Subtle gradient matching your theme */
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }

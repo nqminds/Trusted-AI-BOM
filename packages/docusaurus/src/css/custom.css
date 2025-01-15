@@ -3,11 +3,12 @@
 @import url(../fonts/Varela-Round/varela-round.css);
 
 :root {
-  --ifm-color-primary: #607d8b;
+  --ifm-color-primary: rgb(0, 32, 96);
   --ifm-color-secondary: #d3dddf;
   --ifm-color-text-header: #011c40;
   --ifm-color-text: #353535;
-  --ifm-color-accent: #011c40;
+  --ifm-color-accent: #ff9900;
+  --ifm-color-background: rgba(0, 32, 96, 0.6);
   --ifm-color-011c40: #011c40;
   --ifm-color-f898f31: #fffefe;
   --ifm-color-table-row: hsla(0, 0%, 0%, 0.1);
@@ -288,7 +289,7 @@ img {
 }
 
 #__docusaurus_skipToContent_fallback {
-  background: linear-gradient(135deg, #d3dddf, #7e93a0);
+  background: linear-gradient(135deg, #d3dddf, var(--ifm-color-background));
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
