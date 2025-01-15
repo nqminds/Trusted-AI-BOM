@@ -5,7 +5,7 @@
       "queries": [
         {
           "name": "Get all taibom data statements",
-          "query": "db:get_ai_system(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", _, _, _, _)"
+          "query": "db:get_all_taibom_data( _, _, _, _, _, _, _, MatchingData)"
         }
       ],
       "policy_packs": [
