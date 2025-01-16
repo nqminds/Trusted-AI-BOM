@@ -1,13 +1,17 @@
 @import url(banners.css);
 @import url(../fonts/Montserrat/mosteratt.css);
 @import url(../fonts/Varela-Round/varela-round.css);
+@import url(landing-page.css);
 
 :root {
-  --ifm-color-primary: #607d8b;
+  --ifm-color-primary: #021632;
   --ifm-color-secondary: #d3dddf;
   --ifm-color-text-header: #011c40;
   --ifm-color-text: #353535;
-  --ifm-color-accent: #011c40;
+  --ifm-color-accent: #ff9900;
+  --ifm-color-background: rgba(0, 32, 96, 0.6);
+  --ifm-color-seondary-background: rgba(2, 22, 50, 0.3);
+
   --ifm-color-011c40: #011c40;
   --ifm-color-f898f31: #fffefe;
   --ifm-color-table-row: hsla(0, 0%, 0%, 0.1);
@@ -19,7 +23,7 @@
   --ifm-typography-primary-line-height: 1.2em;
 
   --ifm-typography-text-font-family: "Lato";
-  --ifm-typography-text-font-size: 18px;
+  --ifm-typography-text-font-size: 20px;
   --ifm-typography-text-font-weight: 375;
   --ifm-typography-text-line-height: 1.4em;
 
@@ -246,7 +250,7 @@ img {
   background: linear-gradient(
       rgba(1, 28, 64, 0.8), 
       rgba(1, 28, 64, 0.55)
-    ), url(../../static/img/banner.jpg);
+    ), url(../../static/img/taibom.jpg);
   background-size: cover;
   background-position: center; /* Moves the image 10% to the left */
   background-attachment: fixed;
@@ -264,7 +268,7 @@ img {
   color: #fff !important;
 }
 .hero__subtitle {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 400;
   line-height: 1.5;
   max-width: 800px;
@@ -288,7 +292,36 @@ img {
 }
 
 #__docusaurus_skipToContent_fallback {
-  background: linear-gradient(135deg, #d3dddf, #7e93a0);
+  background: linear-gradient(135deg, #d3dddf, var(--ifm-color-background));
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.secondary_background {
+  background: var(--ifm-color-seondary-background)
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+  background: linear-gradient(135deg, #d3dddf, var(--ifm-colour-background)); /* Subtle gradient matching your theme */
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.1); /* Translucent overlay */
+  backdrop-filter: blur(8px); /* Blur effect */
+  border-radius: 15px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+.max-w-full {
+  width: 80vw;
+  justify-self: center;
 }

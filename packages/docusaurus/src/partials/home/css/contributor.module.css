@@ -1,0 +1,58 @@
+/* Container for the entire list */
+.people-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Reduced gap between items */
+  justify-content: center;
+  margin: 15px 0; /* Reduced margin */
+}
+
+/* Individual contributor card styling */
+.contributor-item {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px; /* Reduced padding */
+  width: 180px; /* Smaller width */
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.contributor-item:hover {
+  transform: translateY(-3px); /* Less pronounced hover effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly smaller shadow */
+}
+
+/* Flexbox layout for content inside contributor card */
+.contributor-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Avatar styling */
+.contributor-avatar {
+  width: 40px; /* Smaller avatar */
+  height: 40px; /* Smaller avatar */
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px; /* Reduced margin */
+}
+
+/* Text styling for names and company */
+.contributor-name {
+  font-size: 0.9rem; /* Smaller font size */
+  font-weight: bold;
+  color: #333;
+  margin-top: 8px; /* Reduced margin */
+}
+
+.contributor-company {
+  font-size: 0.8rem; /* Smaller company font */
+  color: #666;
+  font-style: italic;
+  font-weight: bold;
+  margin-top: 4px; /* Reduced margin */
+}

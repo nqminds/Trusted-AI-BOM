@@ -1,0 +1,63 @@
+.container {
+  display: flex;
+  flex-wrap: wrap; /* Ensure responsiveness on smaller screens */
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the content */
+  gap: 20px;
+  padding: 20px;
+}
+
+.image-container {
+  flex: 1 1 50%; /* Takes up 50% of the width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  border-radius: 15px; /* Rounds the corners of the image */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+  max-width: 100%; /* Ensures the image doesn't overflow */
+  height: auto;
+}
+
+.text-container {
+  flex: 1 1 50%; /* Takes up 50% of the width */
+  text-align: left;
+  padding: 10px;
+}
+
+.text-container h1 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.text-container p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555; /* Light grey text color */
+}
+
+/* Media query for smaller screens to stack the content */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Stack the image and text on top of each other */
+    align-items: center; /* Center align the items */
+  }
+
+  .image-container,
+  .text-container {
+    flex: 1 1 100%; /* Each takes up full width on smaller screens */
+    text-align: center; /* Center-align text for smaller screens */
+  }
+
+  .image-container img {
+    width: 100%; /* Make the image take up the full width */
+    height: auto;
+  }
+
+  .text-container {
+    padding: 20px;
+  }
+}

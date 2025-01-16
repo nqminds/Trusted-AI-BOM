@@ -11,6 +11,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@nqminds/verifiable-schemas-toolchain": "^1.0.7"
+    "@nqminds/verifiable-schemas-toolchain": "2.1.0-alpha.3"
   }
 }
