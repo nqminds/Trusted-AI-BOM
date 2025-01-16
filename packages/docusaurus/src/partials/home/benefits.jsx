@@ -5,41 +5,29 @@ import styles from "./css/benefits.module.css"; // Import the CSS file
 export default function BenefitsOfTaibom() {
   const benefits = [
     {
-      icon: "🚀", // Replace with an actual icon or image
-      title: "Transparency",
-      description: "Ensure clear visibility into AI system processes and dependencies.",
+      icon: "🔒", // Security
+      title: "Security",
+      description:
+        "The trustworthiness (or trustability) of the AI system improves through strong interoperable foundations.",
     },
     {
-      icon: "🔒",
-      title: "Trustworthiness",
-      description: "Build confidence with verifiable attestations and versioning.",
+      icon: "🔍", // Supply Chain Transparency
+      title: "Supply Chain Transparency",
+      description:
+        "End users can see in detail where the system comes from, allowing them to make informed decisions on usage based on relative trust.",
     },
     {
-      icon: "⚙️",
-      title: "Customizable",
-      description: "Easily adapt TAIBOM to your project needs with flexibility.",
-    },
-    {
-      icon: "📈",
-      title: "Scalability",
-      description: "Track and manage complex AI systems across large-scale operations.",
-    },
-    {
-      icon: "⏱️",
-      title: "Efficiency",
-      description: "Save time with structured AI dependency management tools.",
-    },
-    {
-      icon: "🌐",
-      title: "Interoperability",
-      description: "Integrate seamlessly with existing AI frameworks and tools.",
+      icon: "📜", // IP and Licensing
+      title: "IP and Licensing",
+      description:
+        "Transparency and respectability of licensing and IP terms across the value chain increases, protecting both end users, data owners, and system developers.",
     },
   ];
 
   return (
     <Panel color={"light"} includePadding={true}>
       <div className={styles.container}>
-        <h1>Benefits of TAIBOM - [TO CHANGE]</h1>
+        <h1>Benefits</h1>
         <div className={styles.grid}>
           {benefits.map((benefit, index) => (
             <div key={index} className={styles.card}>

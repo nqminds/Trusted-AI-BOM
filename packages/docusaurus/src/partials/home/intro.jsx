@@ -13,12 +13,9 @@ export default function IntroToTaibom() {
         }}
       >
         <p style={{fontSize: 22}}>
-          TAIBOM (Trustworthy AI Bill of Materials) is a groundbreaking
-          framework designed to bring transparency and trust to the development
-          and deployment of AI systems. By addressing challenges in{" "}
-          <strong>versioning</strong> and
-          <strong> attestations</strong>, TAIBOM enables organizations to
-          define, track, and validate AI systems with precision and confidence.
+          TAIBOM is an emerging standard to describe and manage AI systems and AI system risk.
+          TAIBOM addresses the full AI supply chain, from training data through the results that AI systems produce. 
+
         </p>
         <a
           href="/docs"

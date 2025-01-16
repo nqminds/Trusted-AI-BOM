@@ -5,9 +5,12 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import Companies from '../partials/home/comapnies';
 import Intro from '../partials/home/intro';
-import HowItWorks from '../partials/home/how-it-works';
+import Why from '../partials/home/why';
 import BenefitsOfTaibom from '../partials/home/benefits';
 import TechnicalDetails from '../partials/home/technical-details';
+import Contributors from '../partials/home/contributors';
+import WhoCanUse from '../partials/home/who-can-use';
+import HowItWorks from '../partials/home/how-it-works';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -34,11 +37,17 @@ export default function Home() {
         <Companies/>
         <Intro/>
         <br/>
-        <HowItWorks/>
-        <br/>
-        <BenefitsOfTaibom/>
+        <Why/>
         <br/>
         <TechnicalDetails/>
+        <HowItWorks/>
+        <br/>
+        <WhoCanUse/>
+        <br/>
+        <BenefitsOfTaibom/>
+
+        <br/>
+        <Contributors/>
       </article>
     </Layout>
   );
