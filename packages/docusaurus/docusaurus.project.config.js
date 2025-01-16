@@ -90,6 +90,15 @@ const config = {
         editUrl,
       },
     ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "blogs",
+        path: "./docs/blogs",
+        routeBasePath: "blogs",
+        editUrl,
+      },
+    ],
   ],
 
   themeConfig:
@@ -131,6 +140,13 @@ const config = {
           docsPluginId: "sdk",
           position: 'left',
           label: 'SDK',
+        },
+        {
+          type: 'doc',
+          docId: 'blogs',
+          docsPluginId: "blogs",
+          position: 'left',
+          label: 'blogs',
         },
         ],
       },
