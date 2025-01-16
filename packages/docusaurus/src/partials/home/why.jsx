@@ -12,7 +12,8 @@ export default function Why() {
           maxWidth: "1200px",
           margin: "0 auto", // Center the content
           gap: "20px",
-          flexDirection: "row"
+          flexDirection: "row",
+          justifyContent: "center"
         }}
       >
         {/* Left: Image */}
