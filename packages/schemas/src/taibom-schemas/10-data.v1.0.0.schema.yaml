@@ -84,12 +84,12 @@ examples:
 context: |
   ## Introduction
 
-  The **TAIBOM Data Schema** is a JSON schema designed to describe and standardize the metadata associated with datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures datasets can be identified, located, and verified for integrity, enabling seamless and trustworthy AI operations.
+  The **TAIBOM Data Schema** is a JSON schema designed to describe and standardise the metadata associated with datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures datasets can be identified, located, and verified for integrity, enabling seamless and trustworthy AI operations.
 
   ### Description
   This schema captures essential metadata for datasets, including:
   - **Name**: A unique identifier for the dataset.
-  - **Label**: Categorization of the dataset (e.g., Training or Weights).
+  - **Label**: Categorisation of the dataset (e.g., Training or Weights).
   - **Location**: Specifies where the dataset is stored, either locally or remotely, along with the respective path or URL.
   - **Hash**: A cryptographic hash (e.g., SHA256) for verifying the integrity of the dataset.
   - **Hash Location**: The location (local or remote) where the hash is stored.
@@ -102,6 +102,6 @@ context: |
   2. **Ensure Data Integrity**: Support integrity verification through cryptographic hashes and their associated storage locations.
   3. **Streamline Operations**: Offer metadata for efficient handling of datasets in AI workflows, whether stored locally or remotely.
 
-  By adopting this schema, organisations can standardize how datasets are documented, retrieved, and verified, ensuring robust data handling in AI systems.
+  By adopting this schema, organisations can standardise how datasets are documented, retrieved, and verified, ensuring robust data handling in AI systems.
 
   ---

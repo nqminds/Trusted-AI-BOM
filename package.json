@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@nqminds/verifiable-schemas-toolchain": "^1.0.7"
+    "@nqminds/verifiable-schemas-toolchain": "^1.0.7",
+    "rimraf": "^6.0.1"
+
   }
 }

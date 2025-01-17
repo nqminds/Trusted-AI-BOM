@@ -1,0 +1,92 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/60-attestation.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2020-12/schema
+title: Attestations
+description: |
+  This schema defines a generic attestation to any component of an AI system.
+type: object
+properties:
+  component:
+    type: object
+    description: Component reference, including an ID and hash for the VC claim.
+    properties:
+      id:
+        type: string
+        description: The component ID (unique identifier) of the VC claim.
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.
+    required:
+      - id
+      - hash
+
+  attestation: 
+    type: object
+    description: Attestation made about the component.
+    required:
+      - type
+
+required:
+  - component
+  - attestation
+
+examples:
+  - component:
+      id: urn:uuid:222e3337-e89b-12d3-a456-426614174004
+      hash: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+    attestation:
+      type: Bias Assessment
+      claimant: AI Ethics Auditor Team
+      organisation: Ethical AI Oversight Board
+      date: 2024-11-28
+      description: >
+        The AI component's decision-making process was audited, and evidence of potential
+        gender bias was identified.
+      evidence:
+        - type: report
+          url: https://example.com/audit-reports/223e4567
+          checksum: sha256:123456abcdef123456abcdef123456abcdef123456abcdef123456abcdef123456
+      hash: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+  - component:
+      id: urn:uuid:333e4447-e89b-12d3-a456-426614174006
+      hash: f9e8d7c6b5a4d3c2b1a0e9f8d7c6b5a4d3c2b1a0
+    attestation:
+      type: Performance Evaluation
+      claimant: Jane Smith
+      organisation: AI Performance Testing Labs
+      date: 2024-11-28
+      description: >
+        The component was tested for throughput and latency under load, achieving 
+        performance targets outlined in the specifications.
+      evidence:
+        - type: log
+          url: https://example.com/performance-test-results/333e4567
+          checksum: sha256:abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef
+        - type: video
+          url: https://example.com/videos/performance-demo.mp4
+      hash: f9e8d7c6b5a4d3c2b1a0e9f8d7c6b5a4d3c2b1a0
+
+context: |
+  ## Introduction
+
+  The **Attestation Schema** is a JSON schema designed to define and standardise attestations made about components within an AI system. These attestations provide essential information about various claims, ranging from performance metrics to ethical reviews, supporting traceability and accountability within the Trusted AI BOM (TAIBOM) framework.
+
+  ### Description
+  This schema captures attestations with the following details:
+  - **Component**: The component being attested to, identified by a unique ID and its associated hash.
+  - **Attestation**: The claim made about the component, including its type, claimant, and supporting evidence.
+  - **Hash**: A cryptographic hash to verify the integrity of the attestation.
+
+  ### Types of Attestations
+  Attestations can take any form, such as:
+  - **Bias Claims**: Ethical audits identifying biases in AI components.
+  - **Performance Claims**: Testers documenting performance metrics.
+  - **Best Practice Claims**: Statements affirming adherence to industry best practices.
+
+  ## Use Case
+
+  The **Attestation Schema** is used to:
+  1. **Document Claims**: Provide a formal structure for recording attestations related to AI system components.
+  2. **Support Accountability**: Ensure claims about AI components are transparent and traceable.
+  3. **Enable Audits and Compliance**: Facilitate ethical and performance audits by linking components with attestations and evidence.
+
+  By employing this schema, organisations can ensure robust tracking and verification of claims made about AI system components, enhancing trust and accountability within AI ecosystems.

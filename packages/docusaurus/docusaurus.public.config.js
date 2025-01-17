@@ -75,6 +75,14 @@ const config = {
         routeBasePath: "sdk",
       },
     ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "blogs",
+        path: "./docs/blogs",
+        routeBasePath: "blogs",
+      },
+    ],
   ],
 
   themeConfig:
@@ -109,6 +117,13 @@ const config = {
           docsPluginId: "sdk",
           position: 'left',
           label: 'SDK',
+        },
+        {
+          type: 'doc',
+          docId: 'blogs',
+          docsPluginId: "blogs",
+          position: 'left',
+          label: 'blogs',
         },
         ],
       },

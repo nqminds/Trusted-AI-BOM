@@ -2,11 +2,11 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2"
   ],
-  "id": "urn:uuid:4df9f5f9-7c8e-4c8f-a9b4-47ca652b0c27",
+  "id": "urn:uuid:1b2984e0-7687-4463-9e9e-6bcb2589a2f1",
   "type": "VerifiableCredential",
   "name": null,
   "description": null,
-  "issuer": "urn:uuid:8603fd28-cec1-4b01-ba60-388cc0ccb866",
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
   "validFrom": null,
   "validUntil": null,
   "credentialStatus": null,
@@ -15,15 +15,45 @@
     "type": "JsonSchema"
   },
   "credentialSubject": {
-    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/20-data-pack.v1.0.0.schema.yaml",
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/20-data-pack.v1.0.1.schema.yaml",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "context": "## Introduction\n\nThe **TAIBOM Datapack Schema** is a JSON schema designed to describe and standardize collections of datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures that groups of datasets, whether used for raw data, training, or testing, are organized and verified for integrity.\n\n### Description\nThis schema captures essential metadata for datapacks, including:\n- **Name**: A unique identifier for the datapack.\n- **Datasets**: A collection of dataset IDs, ensuring traceability and uniqueness.\n\n## Use Case\n\nThe **TAIBOM Datapack Schema** is primarily used within the TAIBOM framework to:\n1. **Organize Dataset Collections**: Provide a standardized format for grouping datasets used in AI workflows.\n2. **Enable Traceability**: Ensure that each dataset in the collection is uniquely identified and linked to its source.\n3. **Streamline Dataset Verification**: Facilitate verification and management of multiple datasets within a single datapack.\n\nBy adopting this schema, organizations can effectively manage and document groups of datasets, ensuring integrity and ease of use in AI system development and deployment.\n\n---\n",
-    "description": "A datapack schema that describes a collection of datasets used for raw data, training data, and testing data.  Each collection has a hash and a hash location for verifying data integrity.\n",
+    "context": "## Introduction\n\nThe **TAIBOM Datapack Schema** is a JSON schema designed to describe and standardise collections of datasets within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures that groups of datasets, whether used for raw data, training, or testing, are organised and verified for integrity.\n\n### Description\nThis schema captures essential metadata for datapacks, including:\n- **Name**: A unique identifier for the datapack.\n- **Datasets**: A collection of dataset objects, each containing:\n  - A unique identifier (`id`) for traceability.\n  - A cryptographic hash (`hash`) to ensure data integrity.\n\n## Use Case\n\nThe **TAIBOM Datapack Schema** is primarily used within the TAIBOM framework to:\n1. **Organise Dataset Collections**: Provide a standardised format for grouping datasets used in AI workflows.\n2. **Enable Traceability**: Ensure that each dataset in the collection is uniquely identified and linked to its source.\n3. **Streamline Dataset Verification**: Facilitate verification and management of multiple datasets within a single datapack.\n\nBy adopting this schema, organisations can effectively manage and document groups of datasets, ensuring integrity and ease of use in AI system development and deployment.\n\n---\n",
+    "description": "A datapack schema that describes a collection of datasets used for raw data, training data, and testing data.  Each collection has a unique identifier and a cryptographic hash for verifying data integrity.\n",
+    "examples": [
+      {
+        "datasets": [
+          {
+            "hash": "3b74b7f0b762998774a97b2c4c648a0f8c51f04d6c74f2e7698f4d8b9",
+            "id": "urn:uuid:data-vc-1234"
+          },
+          {
+            "hash": "23d9f32cb1628925d3f048cf3eb8f1ea4f7e61f3f3426a0c33b5df5b5a",
+            "id": "urn:uuid:data-vc-4567"
+          }
+        ],
+        "name": "Raw collection"
+      }
+    ],
     "properties": {
       "datasets": {
-        "description": "A list of data IDs from a VC claim",
+        "description": "A list of dataset objects, each containing an ID and a cryptographic hash.\n",
         "items": {
-          "type": "string"
+          "properties": {
+            "hash": {
+              "description": "The cryptographic hash (e.g., SHA-256) of the dataset for data integrity.",
+              "type": "string"
+            },
+            "id": {
+              "description": "The unique identifier of the dataset, such as a VC ID or a DID.",
+              "format": "uri",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "hash"
+          ],
+          "type": "object"
         },
         "minItems": 1,
         "type": "array",
@@ -43,9 +73,9 @@
   },
   "proof": {
     "type": "DataIntegrityProof",
-    "created": "2024-11-22T14:01:04.586612187Z",
+    "created": "2024-12-05T11:49:59.078130589Z",
     "cryptosuite": "eddsa-rdfc-2022",
     "proofPurpose": "assertionMethod",
-    "proofValue": "glSQJ8cT7S2FUpCpeebw+gbTLqp0kyPVR3tYPbUM7Ni4T/DKMVtbeFyxu7G1M6aTv4iiD6Uc9P4wVsbxjIP2Bw=="
+    "proofValue": "rJ4owVDgekARilZP0yP9quhfEcBBWAPAj9nOZdDSlJI6I6ADqLjfKpBD77piVh1CFgiRgJnugPuofesaQWbEBQ=="
   }
 }

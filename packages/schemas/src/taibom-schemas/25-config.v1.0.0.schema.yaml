@@ -2,7 +2,8 @@ $id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/ta
 $schema: https://json-schema.org/draft/2019-09/schema
 title: Trained System Configs
 description: |
-  This schema defines an AI system which may be used for Training AI models or an inferencing system
+  This schema defines an AI system which may be used for Training AI models or an inferencing system, 
+  with added cryptographic hashes for integrity verification.
 type: object
 properties:
   name:
@@ -10,13 +11,30 @@ properties:
     type: string
   
   aiSystem:
-    type: string
-    description: ID of the AI system VC
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the AI system VC
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) of the AI system VC for verification
+    required:
+      - id
+      - hash
 
   data:
-    type: string
-    description: ID of the weights which have been produced
-
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID of the weights which have been produced
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) of the data weights for verification
+    required:
+      - id
+      - hash
 
 required:
   - name
@@ -25,8 +43,12 @@ required:
 
 examples:
   - name: "AI Model Training System"
-    aiSystem: "urn:uuid:1cdf9f5c-b62c-4493-868a-aiSystem-123"
-    data: "urn:uuid:1cdf9f5c-b62c-4493-868a-data-abcdefg"
+    aiSystem:
+      id: "urn:uuid:1cdf9f5c-b62c-4493-868a-aiSystem-123"
+      hash: "abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890"
+    data:
+      id: "urn:uuid:1cdf9f5c-b62c-4493-868a-data-abcdefg"
+      hash: "fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321"
 
 context: |
   ## Introduction
@@ -36,16 +58,21 @@ context: |
   ### Description
   This schema captures essential metadata for trained system configurations, including:
   - **Name**: A unique identifier for the system configuration.
-  - **AI System**: The ID of the AI system VC (Verifiable Credential) associated with the configuration.
-  - **Data**: The ID of the weights produced or used by the system.
+  - **AI System**: An object containing:
+    - The unique ID of the AI system VC (Verifiable Credential).
+    - A cryptographic hash (`hash`) to ensure the integrity of the referenced AI system VC.
+  - **Data**: An object containing:
+    - The unique ID of the weights produced or used by the system.
+    - A cryptographic hash (`hash`) to ensure the integrity of the referenced data weights.
 
   ## Use Case
 
   The **Trained System Configs Schema** is primarily used within the TAIBOM framework to:
   1. **Document AI Systems**: Provide a standardised format for identifying and describing AI systems involved in training or inferencing.
   2. **Ensure Traceability**: Link AI systems to specific datasets and outputs (e.g., weights) for robust provenance tracking.
-  3. **Support AI Lifecycle Management**: Enable seamless integration of system configurations into workflows for monitoring and validation.
+  3. **Verify Data Integrity**: Ensure the integrity of referenced AI systems and datasets through cryptographic hashes.
+  4. **Support AI Lifecycle Management**: Enable seamless integration of system configurations into workflows for monitoring and validation.
 
-  By adopting this schema, organisations can maintain clear and consistent documentation of their AI system configurations, supporting transparency and accountability in AI development and deployment.
+  By adopting this schema, organisations can maintain clear and consistent documentation of their AI system configurations, supporting transparency, integrity, and accountability in AI development and deployment.
 
   ---
