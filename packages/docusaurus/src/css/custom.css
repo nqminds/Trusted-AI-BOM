@@ -313,11 +313,15 @@ img {
 
 .container {
   background: rgba(255, 255, 255, 0.1); /* Translucent overlay */
-  backdrop-filter: blur(8px); /* Blur effect */
   border-radius: 15px;
   padding: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+div:has(.hero__title) {
+  backdrop-filter: blur(8px); /* Blur effect */
+  -webkit-backdrop-filter: blur(8px); /* For Safari */
 }
 
 
