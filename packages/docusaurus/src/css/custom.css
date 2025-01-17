@@ -185,7 +185,7 @@ img {
   }
 }
 
-.theme-edit-this-page {
+.theme-edit-this- {
   color: var(--ifm-color-f898f31) !important;
 }
 
@@ -208,7 +208,7 @@ img {
 .menu-select option {
   text-align: left; /* Reset text alignment for options */
   padding-left: 0 !important;
-  color: var(--ifm-color-f898f31) io !important;
+  color: var(--ifm-color-primary) !important;
 }
 
 .menu-select:hover {
