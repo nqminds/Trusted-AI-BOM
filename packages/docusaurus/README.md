@@ -4,22 +4,18 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 
 ### Setup 
 
-install nvm
-* curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-install node
-* nvm use 18
-install docusauus
-* npm instll
-run
-* npm start 
-
+* install nvm `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
+* install node `nvm use 18`
+* install docusauus `npm install`
+* run `npm start`
+  
 ### Make edits
 
 edit files
 
-- git add -A *
-- git commit
-- git push
+- `git add -A *`
+- `git commit`
+- `git push`
 
 ### Deploy to main
 https://taibom.org 
@@ -28,9 +24,9 @@ https://github.com/nqminds/Trusted-AI-BOM/actions/workflows/deploy-public.yaml
 OR
 
 first install gh
-- snap install gh
-- authenticate gh 'gh auth login' use token
-- list workflow 'gh workflow list'
+- `snap install gh`
+- authenticate gh `gh auth login` use token
+- list workflow`gh workflow list`
 - run 
 
 ### Installation
