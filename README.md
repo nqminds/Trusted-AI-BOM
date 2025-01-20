@@ -1,5 +1,7 @@
 # Trusted-AI-BOM
 
+To build website - go to packages/docusaurus
+
 ## Docusaurus
 
 There are two flavours of Trusted-AI-Bom docusaurus site. 
