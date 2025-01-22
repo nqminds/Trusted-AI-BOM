@@ -41,37 +41,94 @@
       "inference_packs": [
         {
           "path": "ai_system/ETS2SignDetection-release-4-pack",
-          "signing_key": "keys/tony.priv"
+          "signing_key": "keys/admin.priv"
         },
         {
           "path": "code/ETS2SignDetection-release-4-pack",
-          "signing_key": "keys/tony.priv"
+          "signing_key": "keys/admin.priv"
         },
         {
           "path": "config/ETS2SignDetection-release-4-pack",
-          "signing_key": "keys/tony.priv"
+          "signing_key": "keys/admin.priv"
         },
         {
           "path": "data/ETS2SignDetection-release-4-pack",
-          "signing_key": "keys/tony.priv"
+          "signing_key": "keys/admin.priv"
         },
         {
           "path": "datapack/ETS2SignDetection-release-4-pack",
-          "signing_key": "keys/tony.priv"
+          "signing_key": "keys/admin.priv"
         },
         {
           "path": "identity/ETS2SignDetection-release-4-pack",
-          "signing_key": "keys/tony.priv"
-        },
-        {
-          "path": "sbom/ETS2SignDetection-release-4-pack",
-          "signing_key": "keys/tony.priv"
+          "signing_key": "keys/admin.priv"
         }
       ],
       "inference_rules": [
         {
           "path": "ETS2SignDetection-release-4-pack",
-          "signing_key": "keys/tony.priv"
+          "signing_key": "keys/admin.priv"
+        }
+      ]
+    },
+    {
+      "reset": false,
+      "name": "Tonys",
+      "queries": [
+        {
+          "name": "Which Datapacks contain data with id: \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:datapacks_containing_data_id(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", VcIds)"
+        },
+        {
+          "name": "Which training sytems contain datapack with id: \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\"",
+          "query": "db:training_systems_containing_datapack_id(\"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\", VcIds)"
+        },
+        {
+          "name": "Which training systems have used the data with id: \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:training_systems_containing_data_id(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", TrainingSystems)"
+        },
+        {
+          "name": "Which System configs have been generated using training system with id: \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\"",
+          "query": "db:config_from_training_systems_id(\"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\", VcId)"
+        },
+        {
+          "name": "Which System configs have been generated using a datapack with id: \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\"",
+          "query": "db:configs_from_datapack_id(\"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\", VcId)"
+        },
+        {
+          "name": "Which System configs have been generated using data with id: \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:configs_from_data_id(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", VcId)"
+        },
+        {
+          "name": "Which weights data has been used in config with id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:weights_from_config_id(\"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\", VcIds)"
+        },
+        {
+          "name": "Which weights data has been used in training system with id: \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\"",
+          "query": "db:weights_from_training_system_id(\"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\", VcId)"
+        },
+        {
+          "name": "Which weights data has been used by datapack id: \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\"",
+          "query": "db:weights_from_datapack_id(\"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\", WeightsVcIds)"
+        },
+        {
+          "name": "Which weights data has been used by data id: \"urn:uuid:5f6dc5e9-002e-4ec9-80c4-cae7e1940c6c\"",
+          "query": "db:weights_from_data_id(\"urn:uuid:5f6dc5e9-002e-4ec9-80c4-cae7e1940c6c\", WeightsVcIds)"
+        },
+        {
+          "name": "Which Inferencing Systems has been used by config id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:inferencing_system_using_config_id(\"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\", InferencingSystemVcIds)"
+        }
+      ],
+      "policy_packs": [
+      ],
+      "inference_packs": [
+        
+      ],
+      "inference_rules": [
+        {
+          "path": "tonys-rules",
+          "signing_key": "keys/admin.priv"
         }
       ]
     }

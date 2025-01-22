@@ -1,60 +1,18 @@
 {
+  "reset": false,
   "scenarios": [
     {
       "name": "ETS2SignDetection",
       "queries": [
-        {
-          "name": "Get all taibom data statements",
-          "query": "db:get_all_taibom_data( _, _, _, _, _, _, _, MatchingData)"
-        }
       ],
       "policy_packs": [
-        {
-          "path": "group_membership/pack1",
-          "signing_key": "keys/admin.priv"
-        },
-        {
-          "path": "identity_bindings/pack1",
-          "signing_key": "keys/admin.priv"
-        }
       ],
       "inference_packs": [
-        {
-          "path": "ai_system/road-signs",
-          "signing_key": "keys/tony.priv"
-        },
-        {
-          "path": "code/road-signs",
-          "signing_key": "keys/tony.priv"
-        },
-        {
-          "path": "config/road-signs",
-          "signing_key": "keys/tony.priv"
-        },
-        {
-          "path": "data/road-signs",
-          "signing_key": "keys/tony.priv"
-        },
-        {
-          "path": "datapack/road-signs",
-          "signing_key": "keys/tony.priv"
-        },
-        {
-          "path": "identity/road-signs",
-          "signing_key": "keys/tony.priv"
-        },
-        {
-          "path": "sbom/road-signs",
-          "signing_key": "keys/tony.priv"
-        },
-        {
-          "path": "sbom/road-signs",
-          "signing_key": "keys/tony.priv"
-        }
+
       ],
       "inference_rules": [
         {
-          "path": "road-signs",
+          "path": "tonys-rules",
           "signing_key": "keys/tony.priv"
         }
       ]

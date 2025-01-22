@@ -80,9 +80,6 @@
         "type": "string"
       }
     },
-    "uniqueKeys": [
-      "id"
-    ],
     "required": [
       "name",
       "location",
