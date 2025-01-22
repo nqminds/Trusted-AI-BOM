@@ -1,13 +1,8 @@
 Some useful links to TAIBOM related presentations
 
 
-<span>
 <a href="/TAIBOM%20event%20Oxford%2024.pdf"> 
 
-TAIBOM presentation
+TAIBOM presentation from the recent Oxford workshop
 
 </a>
-
-from the recent Oxford workshop
-
-</span>
