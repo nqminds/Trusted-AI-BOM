@@ -76,6 +76,30 @@
       "name": "Tonys",
       "queries": [
         {
+          "name": "What training system belongs to the config with id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:training_system_in_config(SystemVcId, \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\")"
+        },
+        {
+          "name": "What datapack belongs to the config with id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:datapack_in_config(DatapackVcId, \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\")"
+        },
+        {
+          "name": "What datapack belongs to the ai_system with id: \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\"",
+          "query": "db:datapack_in_training_system(DatapackVcId, \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\")"
+        },
+        {
+          "name": "What data belongs to the config with id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:data_in_config(VcIds, \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\")"
+        },
+        {
+          "name": "What data belongs to the datapack with id: \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\"",
+          "query": "db:data_in_datapack(VcIds, \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\")"
+        },
+        {
+          "name": "What data belongs to the ai_system with id: \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\"",
+          "query": "db:data_in_training_system(VcIds, \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\")"
+        },
+        {
           "name": "Which Datapacks contain data with id: \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
           "query": "db:datapacks_containing_data_id(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", VcIds)"
         },
@@ -120,11 +144,8 @@
           "query": "db:inferencing_system_using_config_id(\"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\", InferencingSystemVcIds)"
         }
       ],
-      "policy_packs": [
-      ],
-      "inference_packs": [
-        
-      ],
+      "policy_packs": [],
+      "inference_packs": [],
       "inference_rules": [
         {
           "path": "tonys-rules",
