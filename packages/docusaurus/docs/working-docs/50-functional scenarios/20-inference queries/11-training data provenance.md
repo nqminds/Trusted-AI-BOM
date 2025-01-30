@@ -1,6 +1,6 @@
 ## Query use case
 
-Do we trust the providers/origin of all training data used - using exception list
+Do we trust the providers/origin of all training data used - using whitelist
 
 
 

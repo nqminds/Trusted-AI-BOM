@@ -1,8 +1,6 @@
 ## Query use case
 
-Do we trust the providers/origin of all training data used - using exception list
-
-
+Are their any known vulnerabilities on the inference code i am using 
 
 
 

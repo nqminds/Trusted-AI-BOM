@@ -1,8 +1,6 @@
 ## Query use case
 
-Do we trust the providers/origin of all training data used - using exception list
-
-
+Was best practice used in the system validation process. QA before release
 
 
 

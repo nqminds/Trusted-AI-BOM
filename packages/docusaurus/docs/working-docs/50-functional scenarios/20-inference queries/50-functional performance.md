@@ -1,8 +1,6 @@
 ## Query use case
 
-Do we trust the providers/origin of all training data used - using exception list
-
-
+Has the system based a functional test to the desired threshold level 
 
 
 

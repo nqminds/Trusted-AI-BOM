@@ -1,8 +1,6 @@
 ## Query use case
 
-Do we trust the providers/origin of all training data used - using exception list
-
-
+Has the training data code I am using been tampered with
 
 
 

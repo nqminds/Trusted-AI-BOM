@@ -1,6 +1,6 @@
 ## Query use case
 
-Has the infernce code I am using been tampererd with
+Have the inference weights I am using been tampered with
 
 
 
