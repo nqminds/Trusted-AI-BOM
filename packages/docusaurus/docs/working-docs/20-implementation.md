@@ -9,7 +9,7 @@ TAIBOM allows us to describe three things
 * **AI building blocks**: these are the atomic, cryptographically verifiable components from which AI systems are build - specifically 
   * code: a hash of the physical code used to build or run the AI system 
   * data: a hash of a data set. This can be the data on which the AI systems is build, but the weight/configuration data is also a large verifiable data set. 
-* **AI dependencies **: these claims describe critical relationships between AI components and AI systems. Examples of these relationships are:
+* **AI dependencies**: these claims describe critical relationships between AI components and AI systems. Examples of these relationships are:
   * aggregation: for example multiple individual (verifiable) data sets can eb combined into a larger training data set.
   * composition: we may describe a high level AI components from individual building blocks. For example  a local AI inference system is described as a combination of the software (hash) and the trained weights 
   * dependency: AI system can describe there logical and conceptual dependency on other components. For example trained weights are dependent on the SBOM of the training software and also the training data. 
@@ -34,9 +34,9 @@ When we have access to all of the descriptors we can reason about the security, 
 
 It allows us to write queries that can answer critical question like:
 
-* can I see the licenses of all the data on which my system was trained
-* are three any known (current or historical) software vulnerabilities present on the training system on which my system is trained.
-* I have discovered that some critical common training data has been compromised (intentionally poisoned); can i determine which deployed systems are impacted 
+* can I see the licenses of all the data on which my system was trained?
+* are three any known (current or historical) software vulnerabilities present on the training system on which my system is trained.?
+* I have discovered that some critical common training data has been compromised (intentionally poisoned); can i determine which deployed systems are impacted ?
 
 
 

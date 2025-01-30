@@ -33,21 +33,20 @@ The stakeholders also include the following interested parties:
 * **Providers of AI component repositories and AI component hosts and distributors.** Providers of AI system or component stores or repositories should make TAIBOMs available for each AI system or component that they provide. Ideally, they should also allow user to search for AI systems and components based on the contents of their TAIBOMs.
 
 
-# Use Cases
-
-A number of use cases for TAIBOM have been outlined in brief above where they relate to specific stakeholders. In the following sections, we will describe three use cases in more detail: downloading an AI model from a repository; using inferences performed by a third party AI system; and generating an inventory of an AI system.
 
 
 
+## Different AI system stakeholders
+
+Within the AI system development team the stakeholders can be further broken down
 
 
 
-# Different AI system stakeholders
+:::note
+
+TODO 
+
+:::
 
 
 
-## Algorithm developers
-
-
-
-#
