@@ -74,8 +74,7 @@ function getHash(dataDir) {
   return `find "${dataDir}" -type f -exec sha256sum {} + | sort | sha256sum | awk '{print $1}'`;
 }
 
-function processVulnerabilityReport(inputFilePath, outputDirectory) {
-  const fileContent = fs.readFileSync(inputFilePath, "utf8");
+function processVulnerabilityReport(fileContent, outputDirectory) {
   const lines = fileContent.split("\n").filter((line) => line.trim());
 
   lines.shift();

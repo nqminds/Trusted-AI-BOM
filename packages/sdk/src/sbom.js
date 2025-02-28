@@ -1,6 +1,13 @@
-import { spawn } from 'child_process';
+const { spawn } = require('child_process');
+const path = require("path");
+const os = require("os");
+const fs = require("fs");
 
-export async function generateVulnerabilityReport(directoryPath) {
+async function generateVulnerabilityReport(directoryPath) {
+  const tempDir = os.tmpdir();
+  const codeName = path.basename(directoryPath);
+  const sbomFilePath = path.join(tempDir, `sbom_${codeName}.json`);  // Save SBOM to file
+
   console.log('Running Syft to generate SBOM...');
 
   const dockSyftArgs = [
@@ -18,23 +25,28 @@ export async function generateVulnerabilityReport(directoryPath) {
     // Run Syft and get SBOM output
     const sbomOutput = await runDockerCommand('docker', dockSyftArgs);
 
+    // Save the SBOM to a file
+    fs.writeFileSync(sbomFilePath, sbomOutput);
     console.log('SBOM generation completed.');
-    console.log('Running Grype to generate vulnerability report...');
 
+    console.log('Running Grype to generate vulnerability report...');
+    
+    // Grype command: pass the file path of the SBOM
     const grypeArgs = [
       'run',
       '--rm',
-      '-i', // Read from stdin
+      '-v',
+      `${path.dirname(sbomFilePath)}:/vulnerability-reports`, // Mount the directory containing the SBOM file
       'anchore/grype',
-      '-', // Use "-" to indicate reading input from stdin
+      `/vulnerability-reports/${path.basename(sbomFilePath)}`, // Reference the SBOM file by its name inside the container
       '-o',
       'table',
     ];
 
-    // Run Grype with SBOM input
-    const vulnerabilityReport = await runDockerCommand('docker', grypeArgs, sbomOutput);
+    // Run Grype with the SBOM file
+    const vulnerabilityReport = await runDockerCommand('docker', grypeArgs);
 
-    return {sbom: sbomOutput,vulnerabilityReport};
+    return { sbom: JSON.parse(sbomOutput), vulnerabilityReport };
   } catch (error) {
     throw new Error(`Error generating report: ${error}`);
   }
@@ -67,5 +79,12 @@ function runDockerCommand(command, args, input = null) {
         reject(new Error(`Command failed with code ${code}: ${errorOutput}`));
       }
     });
+
+    process.on('error', (err) => {
+      console.error('Error with Docker process:', err);
+      reject(err);
+    });
   });
 }
+
+module.exports = { generateVulnerabilityReport };

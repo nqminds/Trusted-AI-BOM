@@ -5,7 +5,7 @@ const program = new Command();
 const path = require("path"); // Renamed to avoid conflict with 'path'
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
-const os = require("os");
+const {generateVulnerabilityReport} = require("../src/sbom")
 
 const {
   keypairDir,
@@ -153,60 +153,44 @@ program
   .option("--out <output_dir>", "Output directory")
   .action(async(identityEmail, codeDirectory, options) => {
     const { identity, privateKeyPath, publicKeyPath } =
-      await retrieveIdentity(identityEmail);
-    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
+    await retrieveIdentity(identityEmail);
+  let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    const tempDir = os.tmpdir();
-    const codeName = path.basename(codeDirectory);
-    // Verify the code directory exists
-    if (!directoryExists(codeDirectory)) {
-      console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
-      process.exit(1);
-    }
-    const escapedDir = `"${codeDirectory}"`;
-    console.log(`Code directory '${codeDirectory}' verified.`);
+  // Verify the code directory exists
+  if (!directoryExists(codeDirectory)) {
+    console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
+    process.exit(1);
+  }
+  console.log(`Code directory '${codeDirectory}' verified.`);
 
-    let cliCommand = "";
-    if (options.cpp) {
-      cliCommand += "generateCCPPReport";
-    } else {
-      cliCommand += "generateSbom";
-    }
+  // Generate SBOM and vulnerability report using Syft and Grype
+  try {
+    const { sbom, vulnerabilityReport } = await generateVulnerabilityReport(codeDirectory);
 
-    const bashCommand = `nqmvul -${cliCommand} ${escapedDir} "${codeName}" --out ${tempDir}`;
-    console.log("Creating the SBOM");
-
-    runBashCommand(bashCommand, async () => {
-      const sbomDir = path.join(tempDir, `${codeName}.json`);
-      if (!directoryExists(sbomDir)) {
-        console.error(`Error: SBOM directory '${sbomDir}' does not exist.`);
-        process.exit(1);
-      }
-      const credentialSubject = await getAndVerifyClaim(sbomDir, false);
-
-      const sbomTaibom = generateAndSignVC(
-        credentialSubject,
-        identity.credentialSubject.email,
-        "sbom.json",
-        privateKeyPath,
-        publicKeyPath
-      );
-      vcToFile(sbomTaibom, outputDir, "sbom.json");
-
-      const vulnerabilities = processVulnerabilityReport(
-        path.join(tempDir, `vulnerability_report_${codeName}`)
-      );
-      vulnerabilities.map((jsonVulnerability) =>
-        createAttestation(
-          { type: "vulnerability", vulnerability: jsonVulnerability },
-          { id: sbomTaibom.id, hash: sbomTaibom.proof.proofValue },
-          { identity, privateKeyPath, publicKeyPath },
-          "vulnerability-attestation.json",
-          outputDir
-        )
-      );
-    });
-  });
+    const sbomTaibom = generateAndSignVC(
+      sbom,
+      identity.credentialSubject.email,
+      "sbom.json",
+      privateKeyPath,
+      publicKeyPath
+    );
+    vcToFile(sbomTaibom, outputDir, "sbom.json");
+    // Process the vulnerabilities and create attestations
+    const vulnerabilities = processVulnerabilityReport(vulnerabilityReport);
+    vulnerabilities.map((jsonVulnerability) =>
+      createAttestation(
+        { type: "vulnerability", vulnerability: jsonVulnerability },
+        { id: sbomTaibom.id, hash: sbomTaibom.proof.proofValue },
+        { identity, privateKeyPath, publicKeyPath },
+        "vulnerability-attestation.json",
+        outputDir
+      )
+    );
+  } catch (error) {
+    console.error("Error generating SBOM or vulnerability report:", error);
+    process.exit(1);
+  }
+});
 
 program
   .command("code-taibom")

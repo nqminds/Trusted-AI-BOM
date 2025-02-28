@@ -113,7 +113,7 @@ function generateAndSignVC(
 
   const vc = createVC(
     credentialSubject,
-    { id: `https://example.com/issuers/`, email: issuer },
+    `http://localhost:3001/api/auth/identity?email=${issuer}`,
     schema.credentialSubject.$id
   );
 
