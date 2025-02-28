@@ -1,17 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const { exec } = require('child_process');
-const os = require('os');
-
+const fs = require("fs");
+const path = require("path");
+const { exec } = require("child_process");
+const os = require("os");
+const { verifyClaim } = require("./vc-tools");
 // Get the user's home directory
 const homeDir = os.homedir();
-const keypairDir = path.join(homeDir, '.taibom');
+const keypairDir = path.join(homeDir, ".taibom");
 
 function directoryExists(dirPath) {
-  return fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory() || fs.existsSync(dirPath) && fs.statSync(dirPath).isFile();
+  return (
+    (fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory()) ||
+    (fs.existsSync(dirPath) && fs.statSync(dirPath).isFile())
+  );
 }
 
-function getAndVerifyClaim(path, claim=true, silent=false) {
+async function getAndVerifyClaim(path) {
   try {
     // Check if the file exists
     if (!fs.existsSync(path)) {
@@ -19,14 +22,13 @@ function getAndVerifyClaim(path, claim=true, silent=false) {
     }
 
     // Read and parse the JSON file
-    const jsonFile = fs.readFileSync(path, 'utf8');
+    const jsonFile = fs.readFileSync(path, "utf8");
     const jsonVc = JSON.parse(jsonFile);
-    if(claim && !silent) {
-      // TODO: Verify the claim
-      console.log("Resolving issuer guid", jsonVc.issuer)
-
-      console.log("TAIBOM VC valid and verified. ID: ",jsonVc.id,)
+    const verified = await verifyClaim(jsonVc);
+    if (!verified) {
+      throw new Error(`Claim not verified at: ${path}`);
     }
+
     return jsonVc;
   } catch (error) {
     console.error(`Error retrieving claim JSON: ${error.message}`);
@@ -34,10 +36,10 @@ function getAndVerifyClaim(path, claim=true, silent=false) {
   }
 }
 
-function getIdentityJson(email) {
-  const homeDir = require('os').homedir(); // Get user's home directory
-  const identityPath = path.join(homeDir, '.taibom', `${email}-identity.json`);
-  return getAndVerifyClaim(identityPath, true, true)
+async function getIdentityJson(email) {
+  const homeDir = require("os").homedir(); // Get user's home directory
+  const identityPath = path.join(homeDir, ".taibom", `${email}-identity.json`);
+  return getAndVerifyClaim(identityPath, true, true);
 }
 
 function runBashCommand(bashCommand, callback) {
@@ -64,62 +66,66 @@ function ensureFilesExist(files) {
 
 function getHash(dataDir) {
   // Strip "file://" prefix if it exists
-  if (dataDir.startsWith('file://')) {
-    dataDir = dataDir.replace('file://', '');
+  if (dataDir.startsWith("file://")) {
+    dataDir = dataDir.replace("file://", "");
   }
 
   // Enclose the path in quotes to handle spaces
   return `find "${dataDir}" -type f -exec sha256sum {} + | sort | sha256sum | awk '{print $1}'`;
 }
 
-
 function processVulnerabilityReport(inputFilePath, outputDirectory) {
-  const fileContent = fs.readFileSync(inputFilePath, 'utf8');
-  const lines = fileContent.split('\n').filter(line => line.trim());
+  const fileContent = fs.readFileSync(inputFilePath, "utf8");
+  const lines = fileContent.split("\n").filter((line) => line.trim());
 
   lines.shift();
   const vulnerabilities = lines.map((line, index) => {
-      const parts = line.split(/\s{2,}/);
+    const parts = line.split(/\s{2,}/);
 
-      if (parts.length < 5) {
-          console.warn(`Could not parse line ${index + 1}: ${line}`);
-          return;
-      }
+    if (parts.length < 5) {
+      console.warn(`Could not parse line ${index + 1}: ${line}`);
+      return;
+    }
 
-      const name = parts[0];
-      const installed = parts[1] !== '-' ? parts[1] : null;
-      let fixedIn = null;
+    const name = parts[0];
+    const installed = parts[1] !== "-" ? parts[1] : null;
+    let fixedIn = null;
 
-      if (parts[2].match(/^(\d+(\.\d+)*)(,\s*\d+(\.\d+)*)*$/) || parts[2].match(/^\(.*\)$/)) {
-          fixedIn = parts[2].split(',').map(v => v.trim());
-      }
+    if (
+      parts[2].match(/^(\d+(\.\d+)*)(,\s*\d+(\.\d+)*)*$/) ||
+      parts[2].match(/^\(.*\)$/)
+    ) {
+      fixedIn = parts[2].split(",").map((v) => v.trim());
+    }
 
-      const type = fixedIn ? parts[3] : parts[2];
-      const vulnerability = fixedIn ? parts[4] : parts[3];
-      const rawSeverity = fixedIn ? parts[5] : parts[4];
-      const validSeverities = ['Medium', 'High', 'Critical', 'Low', 'Negligible'];
-      const severity = validSeverities.includes(rawSeverity) ? rawSeverity : 'Unknown';
+    const type = fixedIn ? parts[3] : parts[2];
+    const vulnerability = fixedIn ? parts[4] : parts[3];
+    const rawSeverity = fixedIn ? parts[5] : parts[4];
+    const validSeverities = ["Medium", "High", "Critical", "Low", "Negligible"];
+    const severity = validSeverities.includes(rawSeverity)
+      ? rawSeverity
+      : "Unknown";
 
-      return {
-          [name]: {
-              installed: installed,
-              'fixed-in': fixedIn,
-              type: type,
-              vulnerability: vulnerability,
-              severity: severity,
-          },
-      };
+    return {
+      [name]: {
+        installed: installed,
+        "fixed-in": fixedIn,
+        type: type,
+        vulnerability: vulnerability,
+        severity: severity,
+      },
+    };
   });
   return vulnerabilities;
 }
 
 module.exports = {
-  keypairDir, 
-  directoryExists, 
-  getIdentityJson, 
-  runBashCommand, 
-  ensureFilesExist, 
-  getAndVerifyClaim, 
+  keypairDir,
+  directoryExists,
+  getIdentityJson,
+  runBashCommand,
+  ensureFilesExist,
+  getAndVerifyClaim,
   getHash,
-  processVulnerabilityReport
-}
+  processVulnerabilityReport,
+};

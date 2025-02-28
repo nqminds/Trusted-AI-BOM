@@ -14,7 +14,14 @@
   "license": "UNLICENCED",
   "dependencies": {
     "@nqminds/verifiable-schemas-toolchain": "2.1.0-alpha.2",
+    "base58": "^2.0.1",
     "commander": "^12.1.0",
+    "flatted": "^3.3.3",
+    "fs": "^0.0.1-security",
+    "jsonify": "^0.0.1",
+    "map-to-object": "^1.0.0",
+    "path": "^0.12.7",
+    "tweetnacl": "^1.0.3",
     "uuid": "^11.0.3"
   },
   "devDependencies": {

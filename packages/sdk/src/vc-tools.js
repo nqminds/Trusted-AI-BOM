@@ -1,29 +1,85 @@
-const { v4: uuidv4 } = require('uuid'); // Importing UUID generator for the credential ID
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
+const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
+const path = require("path");
+const { loadKey, convertToUnit8 } = require("./keys");
 
-const {runBashCommand} = require("./utils")
-const getSchemaDetails = require("./schemas")
+const fetch = require("node-fetch");
 
-// Static VC template with placeholder values
+const getSchemaDetails = require("./schemas");
+const { sign, verify } = require("../pkg/verifiable_credential_toolkit");
+
 const staticVC = {
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2"
-  ],
-  "id": null, // To be generated dynamically
-  "type": "VerifiableCredential",
-  "name": null,
-  "description": null,
-  "validFrom": null,
-  "validUntil": null,
-  "credentialStatus": null,
-  "credentialSchema": {
-    "type": "JsonSchema",
-    "schema": "https://json-schema.org/draft/2020-12/schema"
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  id: null, // To be generated dynamically
+  type: "VerifiableCredential",
+  //"name": null,
+  //"description": null,
+  "validFrom": new Date().toISOString(),
+  //"validUntil": null,
+  //"credentialStatus": null,
+  credentialSchema: {
+    type: "JsonSchema",
+    schema: "https://json-schema.org/draft/2020-12/schema",
   },
-  "credentialSubject": {}
+  credentialSubject: {},
 };
+
+/**
+ * Verifies the claim in a Verifiable Credential (VC).
+ * @param {Object} vc - The Verifiable Credential object.
+ * @param {string} didRegistryUrl - The URL of the DID registry (e.g., did:example registry endpoint).
+ * @returns {boolean} - Whether the VC was successfully verified.
+ */
+async function verifyClaim(vc) {
+  try {
+    let didDocument;
+    const didUrl = vc.issuer;
+
+    try {
+      const response = await fetch(didUrl);
+      if (!response.ok) {
+        throw new Error(`DID registry lookup failed for ${didUrl}`);
+      }
+      didDocument = await response.json();
+    } catch (error) {
+      console.warn(
+        `Warning: Unable to fetch DID document from registry. Falling back to proof.verificationMethod. Error: ${error.message}`
+      );
+    }
+
+
+    let publicKey;
+    if (vc.proof && vc.proof.verificationMethod) {
+      // Use the public key from `proof.verificationMethod`
+      publicKey = vc.proof.verificationMethod;
+    } else {
+      console.error("No verification method found in the VC or DID document.");
+      return false;
+    }
+
+    const decodedPublicKey = convertToUnit8(publicKey);
+
+    const isVerified = verify(vc, decodedPublicKey);
+    return isVerified;
+  } catch (error) {
+    console.error("Error during claim verification:", error);
+    throw new error();
+  }
+}
+
+function deepMapToObject(input) {
+  if (input instanceof Map) {
+    const obj = {};
+    input.forEach((value, key) => {
+      obj[key] = deepMapToObject(value); // Recursively convert value
+    });
+    return obj;
+  }
+  if (Array.isArray(input)) {
+    return input.map(deepMapToObject); // Recursively handle arrays
+  }
+  return input; // If it's not a Map or Array, return the value as is
+}
 
 function createVC(credentialSubject, issuer, schema = "", variables = {}) {
   // Create a unique id for the VC
@@ -37,40 +93,50 @@ function createVC(credentialSubject, issuer, schema = "", variables = {}) {
     credentialSubject: {
       ...credentialSubject,
     },
-    credentialSchema: schema? {type: "JsonSchema", id: schema}: staticVC.credentialSchema,
-    ...variables
+    credentialSchema: schema
+      ? { type: "JsonSchema", id: schema }
+      : staticVC.credentialSchema,
+    ...variables,
   };
 
-  // Get the temporary directory path
-  const tempDir = os.tmpdir();
-  
-  // Define the path where the VC will be saved
-  const filePath = path.join(tempDir, `${vcId.replace("urn:uuid:", "")}.json`);
-
-  // Write the VC to the file
-  fs.writeFileSync(filePath, JSON.stringify(vc, null, 2));
-  return {filePath, vcId}; // Return the path for reference
+  return vc;
 }
 
-function generateAndSignVC(credentialSubject, issuer, schemaName, privateKeyPath, outputPath, callback = ()=>{}, appendVcId = true) {
-  const homeDir = os.homedir();
-  const schemaKeyPath = path.join(homeDir, '.taibom/schemas/tony-pub');
-  const {schema, schemaPath} = getSchemaDetails(schemaName);
+function generateAndSignVC(
+  credentialSubject,
+  issuer,
+  schemaName,
+  privateKeyPath,
+  publicKeyPath
+) {
+  const { schema } = getSchemaDetails(schemaName);
 
-  const {filePath, vcId} = createVC(credentialSubject, issuer, schema.credentialSubject.$id);
-  const guid = vcId.split(":")[2]
-  const output = appendVcId ? path.join(outputPath, `TAIBOM-${schemaName.split(".")[0]}-${guid}.json`) : outputPath;
+  const vc = createVC(
+    credentialSubject,
+    { id: `https://example.com/issuers/`, email: issuer },
+    schema.credentialSubject.$id
+  );
 
-  const signCommand = `vc_tools_cli sign-vc "${filePath}" ${schemaPath} ${privateKeyPath} ${schemaKeyPath} "${output}" json`;
-  runBashCommand(signCommand, (error) => {
-    if (error) {
-      console.error(`Error signing VC: ${error.message}`);
-      process.exit(1);
-    }
-    console.log(`VC signed and saved to ${output}`);
-    callback(output); 
-  });
+  // Use the private key to sign the VC (assuming the key is in PEM format)
+  const vcSigned = sign(vc, loadKey(privateKeyPath, "uint8"));
+
+  const jsonContent = deepMapToObject(vcSigned);
+  jsonContent.proof.verificationMethod = loadKey(publicKeyPath);
+
+  return jsonContent;
 }
 
+function vcToFile(jsonContent, outputPath, schemaName, appendVcId = true) {
+  const guid = jsonContent.id.split(":")[2];
+  const output = appendVcId
+    ? path.join(outputPath, `TAIBOM-${schemaName.split(".")[0]}-${guid}.json`)
+    : outputPath;
 
-module.exports = {createVC, generateAndSignVC};
+  // Write the JSON string to a file
+  fs.writeFileSync(output, JSON.stringify(jsonContent));
+
+  console.log(`VC Signed data has been written to ${output}`);
+  return output;
+}
+
+module.exports = { createVC, generateAndSignVC, vcToFile, verifyClaim };
