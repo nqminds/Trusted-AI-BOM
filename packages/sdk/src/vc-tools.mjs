@@ -1,12 +1,7 @@
-const { v4: uuidv4 } = require("uuid");
-const fs = require("fs");
-const path = require("path");
-const { loadKey, convertToUnit8 } = require("./keys");
-
-const fetch = require("node-fetch");
-
-const getSchemaDetails = require("./schemas");
-const { sign, verify } = require("../pkg/verifiable_credential_toolkit");
+import { v4 as uuidv4 } from "uuid";
+import fetch from "node-fetch";
+import { sign, verify } from "./pkg/verifiable_credential_toolkit.js";
+import {convertToUint8} from "./keys.mjs"
 
 const staticVC = {
   "@context": ["https://www.w3.org/ns/credentials/v2"],
@@ -14,7 +9,7 @@ const staticVC = {
   type: "VerifiableCredential",
   //"name": null,
   //"description": null,
-  "validFrom": new Date().toISOString(),
+  validFrom: new Date().toISOString(),
   //"validUntil": null,
   //"credentialStatus": null,
   credentialSchema: {
@@ -30,7 +25,7 @@ const staticVC = {
  * @param {string} didRegistryUrl - The URL of the DID registry (e.g., did:example registry endpoint).
  * @returns {boolean} - Whether the VC was successfully verified.
  */
-async function verifyClaim(vc) {
+export async function verifyClaim(vc) {
   try {
     let didDocument;
     const didUrl = vc.issuer;
@@ -47,7 +42,6 @@ async function verifyClaim(vc) {
       );
     }
 
-
     let publicKey;
     if (vc.proof && vc.proof.verificationMethod) {
       // Use the public key from `proof.verificationMethod`
@@ -57,16 +51,21 @@ async function verifyClaim(vc) {
       return false;
     }
 
-    const decodedPublicKey = convertToUnit8(publicKey);
+    const decodedPublicKey = convertToUint8(publicKey);
 
     const isVerified = verify(vc, decodedPublicKey);
     return isVerified;
   } catch (error) {
     console.error("Error during claim verification:", error);
-    throw new error();
+    throw new Error(error);
   }
 }
 
+/**
+ * Recursively maps a Map or Array to a plain object or array, respectively.
+ * @param {Map|Array} input - The input Map or Array to be transformed.
+ * @returns {Object|Array} The transformed object or array.
+ */
 function deepMapToObject(input) {
   if (input instanceof Map) {
     const obj = {};
@@ -81,7 +80,20 @@ function deepMapToObject(input) {
   return input; // If it's not a Map or Array, return the value as is
 }
 
-function createVC(credentialSubject, issuer, schema = "", variables = {}) {
+/**
+ * Creates a Verifiable Credential (VC) with the provided data.
+ * @param {Object} credentialSubject - The credential subject data.
+ * @param {string} issuer - The issuer of the VC.
+ * @param {string} schema - The schema for the VC.
+ * @param {Object} variables - Any additional variables to include in the VC.
+ * @returns {Object} The created Verifiable Credential (VC).
+ */
+export function createVC(
+  credentialSubject,
+  issuer,
+  schema = "",
+  variables = {}
+) {
   // Create a unique id for the VC
   const vcId = `urn:uuid:${uuidv4()}`;
 
@@ -102,41 +114,33 @@ function createVC(credentialSubject, issuer, schema = "", variables = {}) {
   return vc;
 }
 
-function generateAndSignVC(
+/**
+ * Generates and signs a Verifiable Credential (VC).
+ * @param {Object} credentialSubject - The credential subject data.
+ * @param {string} issuer - The issuer of the VC.
+ * @param {string} schema - The schema for the VC.
+ * @param {string} priv - The private key to sign the VC.
+ * @param {string} pub - The public key to verify the VC.
+ * @returns {Object} The signed Verifiable Credential (VC).
+ */
+export function generateAndSignVC(
   credentialSubject,
   issuer,
-  schemaName,
-  privateKeyPath,
-  publicKeyPath
+  schema,
+  priv,
+  pub
 ) {
-  const { schema } = getSchemaDetails(schemaName);
-
   const vc = createVC(
     credentialSubject,
     `http://localhost:3001/api/auth/identity?email=${issuer}`,
-    schema.credentialSubject.$id
+    schema
   );
 
   // Use the private key to sign the VC (assuming the key is in PEM format)
-  const vcSigned = sign(vc, loadKey(privateKeyPath, "uint8"));
+  const vcSigned = sign(vc, priv);
 
   const jsonContent = deepMapToObject(vcSigned);
-  jsonContent.proof.verificationMethod = loadKey(publicKeyPath);
+  jsonContent.proof.verificationMethod = pub;
 
   return jsonContent;
 }
-
-function vcToFile(jsonContent, outputPath, schemaName, appendVcId = true) {
-  const guid = jsonContent.id.split(":")[2];
-  const output = appendVcId
-    ? path.join(outputPath, `TAIBOM-${schemaName.split(".")[0]}-${guid}.json`)
-    : outputPath;
-
-  // Write the JSON string to a file
-  fs.writeFileSync(output, JSON.stringify(jsonContent));
-
-  console.log(`VC Signed data has been written to ${output}`);
-  return output;
-}
-
-module.exports = { createVC, generateAndSignVC, vcToFile, verifyClaim };

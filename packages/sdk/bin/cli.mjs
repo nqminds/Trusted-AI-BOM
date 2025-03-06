@@ -1,24 +1,41 @@
 #!/usr/bin/env node
 
-const { Command } = require("commander");
-const program = new Command();
-const path = require("path"); // Renamed to avoid conflict with 'path'
-const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
-const {generateVulnerabilityReport} = require("../src/sbom")
+import { Command } from "commander";
+import path from "path";
+import fs from "fs";
+import { exec } from "child_process";
+import { v4 as uuidv4 } from "uuid";
+import {
+  generateAndSignVC,
+  processVulnerabilityReport,
+  generateVulnerabilityReport,
+  generateKeyPair,
+} from "../src/index.mjs";
 
-const {
+import {
+  writeKeysToFile,
   keypairDir,
   directoryExists,
+  loadKey,
+  vcToFile,
   getIdentityJson,
-  runBashCommand,
-  generateAndSignVC,
   getAndVerifyClaim,
   getHash,
-} = require("../src");
-const { processVulnerabilityReport } = require("../src/utils");
-const { generateKeyPair } = require("../src/keys");
-const { vcToFile } = require("../src/vc-tools");
+} from "./file-utils.mjs";
+
+function runBashCommand(bashCommand, callback) {
+  exec(bashCommand, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Command failed: ${error.message}`);
+      return callback ? callback(error) : process.exit(1);
+    }
+    if (stderr) {
+      console.error(`Command error: ${stderr}`);
+      return callback ? callback(new Error(stderr)) : process.exit(1);
+    }
+    if (callback) callback(null, stdout.trim());
+  });
+}
 
 async function retrieveIdentity(identityEmail) {
   const privateKeyPath = path.join(keypairDir, identityEmail, "private.key");
@@ -36,10 +53,30 @@ async function retrieveIdentity(identityEmail) {
   return { identity, privateKeyPath, publicKeyPath };
 }
 
+const program = new Command();
+
 program
   .name("SDK for creating & verifying TAIBOMS")
   .description("CLI to create / document / sign & verify TAIBOM VC's")
   .version("0.0.1");
+
+// program
+//   .command("register-identity")
+//   .description("Register identity keypair with DID registry")
+//   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
+//   .option(
+//     "--registry <registry>",
+//     "Address of the did registry",
+//     "http://localhost:3001/api/auth/authenticate"
+//   )
+//   .action(async (identityEmail, options) => {
+//     const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
+//       identityEmail
+//     );
+//     const publicKey = loadKey(publicKeyPath);
+//     const privateKey = loadKey(privateKeyPath);
+//     await issueRequest(identityEmail, );
+//   });
 
 program
   .command("generate-identity")
@@ -58,15 +95,20 @@ program
       return;
     }
 
-    // Ensure the directory exists (create it if it doesn't)
-    if (!directoryExists(keypairDir)) {
-      fs.mkdirSync(keypairDir);
-    }
     const keypairPath = path.join(keypairDir, email);
 
+    // Ensure the directory exists (create it if it doesn\'t)
+    if (!directoryExists(keypairDir)) {
+      fs.mkdirSync(keypairDir, { recursive: true });
+    }
     console.log(`Generating keypair for email: ${email}...`);
 
-    const { pub, privateKeyPath, publicKeyPath } = generateKeyPair(keypairPath);
+    const { pub, priv } = generateKeyPair(keypairPath);
+    const { privateKeyPath, publicKeyPath } = writeKeysToFile(
+      keypairPath,
+      priv,
+      pub
+    );
 
     const uuid = options.uuid ?? `urn:uuid:${uuidv4()}`;
 
@@ -82,9 +124,9 @@ program
     const vc = generateAndSignVC(
       identity,
       email,
-      "identity.json",
-      privateKeyPath,
-      publicKeyPath
+      "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml",
+      loadKey(privateKeyPath, "uint8"),
+      loadKey(publicKeyPath)
     );
     vcToFile(vc, `${keypairPath}-identity.json`, "identity.json", false);
     vcToFile(vc, outputDir, "identity.json");
@@ -97,9 +139,10 @@ program
   .argument("<data_directory>", "The directory of the data")
   .option("--weights", "This data is AI weights", false)
   .option("--out <output_dir>", "Output directory")
-  .action(async(identityEmail, dataDir, options) => {
-    const { identity, privateKeyPath, publicKeyPath } =
-      await retrieveIdentity(identityEmail);
+  .action(async (identityEmail, dataDir, options) => {
+    const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
+      identityEmail
+    );
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     // Verify the data directory exists
@@ -136,9 +179,9 @@ program
       const vc = generateAndSignVC(
         credentialSubject,
         identity.credentialSubject.email,
-        "data.json",
-        privateKeyPath,
-        publicKeyPath
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+        loadKey(privateKeyPath, "uint8"),
+        loadKey(publicKeyPath)
       );
       vcToFile(vc, outputDir, "data.json");
     });
@@ -148,49 +191,52 @@ program
   .command("generate-sbom")
   .description("Generate and sign an SBOM of code")
   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-  .argument("<code_directory>", "The directory of the data")
+  .argument("<code_directory>", "The directory of the code")
   .option("--cpp", "[OPTIONAL] Generate a SBOM for C/C++ code", false)
   .option("--out <output_dir>", "Output directory")
-  .action(async(identityEmail, codeDirectory, options) => {
-    const { identity, privateKeyPath, publicKeyPath } =
-    await retrieveIdentity(identityEmail);
-  let outputDir = options.out ? path.resolve(options.out) : process.cwd();
-
-  // Verify the code directory exists
-  if (!directoryExists(codeDirectory)) {
-    console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
-    process.exit(1);
-  }
-  console.log(`Code directory '${codeDirectory}' verified.`);
-
-  // Generate SBOM and vulnerability report using Syft and Grype
-  try {
-    const { sbom, vulnerabilityReport } = await generateVulnerabilityReport(codeDirectory);
-
-    const sbomTaibom = generateAndSignVC(
-      sbom,
-      identity.credentialSubject.email,
-      "sbom.json",
-      privateKeyPath,
-      publicKeyPath
+  .action(async (identityEmail, codeDirectory, options) => {
+    const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
+      identityEmail
     );
-    vcToFile(sbomTaibom, outputDir, "sbom.json");
-    // Process the vulnerabilities and create attestations
-    const vulnerabilities = processVulnerabilityReport(vulnerabilityReport);
-    vulnerabilities.map((jsonVulnerability) =>
-      createAttestation(
-        { type: "vulnerability", vulnerability: jsonVulnerability },
-        { id: sbomTaibom.id, hash: sbomTaibom.proof.proofValue },
-        { identity, privateKeyPath, publicKeyPath },
-        "vulnerability-attestation.json",
-        outputDir
-      )
-    );
-  } catch (error) {
-    console.error("Error generating SBOM or vulnerability report:", error);
-    process.exit(1);
-  }
-});
+    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
+
+    // Verify the code directory exists
+    if (!directoryExists(codeDirectory)) {
+      console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
+      process.exit(1);
+    }
+    console.log(`Code directory '${codeDirectory}' verified.`);
+
+    // Generate SBOM and vulnerability report using Syft and Grype
+    try {
+      const { sbom, vulnerabilityReport } = await generateVulnerabilityReport(
+        codeDirectory
+      );
+
+      const sbomTaibom = generateAndSignVC(
+        sbom,
+        identity.credentialSubject.email,
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/30-sbom.v1.0.0.schema.yaml",
+        loadKey(privateKeyPath, "uint8"),
+        loadKey(publicKeyPath)
+      );
+      vcToFile(sbomTaibom, outputDir, "sbom.json");
+      // Process the vulnerabilities and create attestations
+      const vulnerabilities = processVulnerabilityReport(vulnerabilityReport);
+      vulnerabilities.map((jsonVulnerability) =>
+        createAttestation(
+          { type: "vulnerability", vulnerability: jsonVulnerability },
+          { id: sbomTaibom.id, hash: sbomTaibom.proof.proofValue },
+          { identity, privateKeyPath, publicKeyPath },
+          "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/63-vulnerability-attestation.v1.0.0.schema.yaml",
+          outputDir
+        )
+      );
+    } catch (error) {
+      console.error("Error generating SBOM or vulnerability report:", error);
+      process.exit(1);
+    }
+  });
 
 program
   .command("code-taibom")
@@ -202,8 +248,9 @@ program
   .option("--name <code_name>", "[OPTIONAL] Name of code or package", false)
   .option("--out <output_dir>", "Output directory")
   .action(async (identityEmail, codeDirectory, version, options) => {
-    const { identity, privateKeyPath, publicKeyPath } =
-      await retrieveIdentity(identityEmail);
+    const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
+      identityEmail
+    );
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     const codeName = path.basename(codeDirectory);
@@ -242,9 +289,9 @@ program
       const vc = generateAndSignVC(
         credentialSubject,
         identity.credentialSubject.email,
-        "code.json",
-        privateKeyPath,
-        publicKeyPath
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml",
+        loadKey(privateKeyPath, "uint8"),
+        loadKey(publicKeyPath)
       );
       vcToFile(vc, outputDir, "code.json");
     });
@@ -260,8 +307,9 @@ program
   .option("--inferencing", "Label this AI system as inferencing")
   .option("--out <output_dir>", "Output directory")
   .action(async (identityEmail, codeTaibomPath, dataTaibomPath, options) => {
-    const { identity, privateKeyPath, publicKeyPath } =
-      await retrieveIdentity(identityEmail);
+    const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
+      identityEmail
+    );
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     const codeTaibom = await getAndVerifyClaim(codeTaibomPath);
@@ -278,9 +326,9 @@ program
     const vc = generateAndSignVC(
       credentialSubject,
       identity.credentialSubject.email,
-      "ai-system.json",
-      privateKeyPath,
-      publicKeyPath
+      "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml",
+      loadKey(privateKeyPath, "uint8"),
+      loadKey(publicKeyPath)
     );
     vcToFile(vc, outputDir, "ai-system.json");
   });
@@ -296,14 +344,17 @@ program
   )
   .option("--out <output_dir>", "Output directory")
   .action(async (identityEmail, name, dataTaibomPaths, options) => {
-    const { identity, privateKeyPath, publicKeyPath } =
-      await retrieveIdentity(identityEmail);
+    const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
+      identityEmail
+    );
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    const datasets = await Promise.all(dataTaibomPaths.map(async(path) => {
-      dataTaibom = await getAndVerifyClaim(path);
-      return { id: dataTaibom.id, hash: dataTaibom.proof.proofValue };
-    }));
+    const datasets = await Promise.all(
+      dataTaibomPaths.map(async (p) => {
+        const dataTaibom = await getAndVerifyClaim(p);
+        return { id: dataTaibom.id, hash: dataTaibom.proof.proofValue };
+      })
+    );
 
     const credentialSubject = {
       name,
@@ -313,9 +364,9 @@ program
     const vc = generateAndSignVC(
       credentialSubject,
       identity.credentialSubject.email,
-      "datapack.json",
-      privateKeyPath,
-      publicKeyPath
+      "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/20-data-pack.v1.0.0.schema.yaml",
+      loadKey(privateKeyPath, "uint8"),
+      loadKey(publicKeyPath)
     );
     vcToFile(vc, outputDir, "datapack.json");
   });
@@ -328,29 +379,31 @@ program
   .argument("<data_taibom>", "Path to data configs")
   .option("--name <config_name>", "[OPTIONAL] Name of configs", false)
   .option("--out <output_dir>", "Output directory")
-  .action(async(identityEmail, aiSystemTaibomPath, dataTaibomPath, options) => {
-    const { identity, privateKeyPath, publicKeyPath } =
-      await retrieveIdentity(identityEmail);
-    let outputDir = options.out ? path.resolve(options.out) : process.cwd();
+  .action(
+    async (identityEmail, aiSystemTaibomPath, dataTaibomPath, options) => {
+      const { identity, privateKeyPath, publicKeyPath } =
+        await retrieveIdentity(identityEmail);
+      let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    const aiSystem = await getAndVerifyClaim(aiSystemTaibomPath);
-    const data = await getAndVerifyClaim(dataTaibomPath);
+      const aiSystem = await getAndVerifyClaim(aiSystemTaibomPath);
+      const data = await getAndVerifyClaim(dataTaibomPath);
 
-    const credentialSubject = {
-      aiSystem: { id: aiSystem.id, hash: aiSystem.proof.proofValue },
-      data: { id: data.id, hash: data.proof.proofValue },
-      name: options.name || data.credentialSubject.name,
-    };
+      const credentialSubject = {
+        aiSystem: { id: aiSystem.id, hash: aiSystem.proof.proofValue },
+        data: { id: data.id, hash: data.proof.proofValue },
+        name: options.name || data.credentialSubject.name,
+      };
 
-    const vc = generateAndSignVC(
-      credentialSubject,
-      identity.credentialSubject.email,
-      "config.json",
-      privateKeyPath,
-      publicKeyPath
-    );
-    vcToFile(vc, outputDir, "config.json");
-  });
+      const vc = generateAndSignVC(
+        credentialSubject,
+        identity.credentialSubject.email,
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/25-config.v1.0.0.schema.yaml",
+        loadKey(privateKeyPath, "uint8"),
+        loadKey(publicKeyPath)
+      );
+      vcToFile(vc, outputDir, "config.json");
+    }
+  );
 
 function validateLocationHash(claim) {
   const file_location = claim.credentialSubject.location.path;
@@ -376,14 +429,14 @@ program
   .command("validate")
   .description("Validate a TAIBOM claim")
   .argument("<taibom>", "Path to TAIBOM data claim")
-  .action(async(taibom) => {
+  .action(async (taibom) => {
     const dataClaim = await getAndVerifyClaim(taibom);
-    if(dataClaim) {
-      console.log("Claim successfully verified")
+    if (dataClaim) {
+      console.log("Claim successfully verified");
     } else {
-      console.log("Claim cannot be verified")
+      console.log("Claim cannot be verified");
     }
-  })
+  });
 
 // Validation functions
 program
@@ -391,7 +444,7 @@ program
   .description("Validate a TAIBOM data claim")
   .argument("<data_taibom>", "Path to TAIBOM data claim")
   .option("--out <output_dir>", "Output directory")
-  .action(async(taibom, options) => {
+  .action(async (taibom, options) => {
     try {
       const dataClaim = await getAndVerifyClaim(taibom);
 
@@ -414,17 +467,17 @@ program
   .description("Validate a TAIBOM code claim")
   .argument("<data_taibom>", "Path to TAIBOM code claim")
   .option("--out <output_dir>", "Output directory")
-  .action(async(taibom, options) => {
+  .action(async (taibom, options) => {
     try {
       const codeClaim = await getAndVerifyClaim(taibom);
-      if(!codeClaim){
+      if (!codeClaim) {
         throw new Error("Claim cannot be retrieved or verified");
       }
 
       // Verify it is a data vc
       if (
         codeClaim.credentialSchema.id !==
-        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.1.schema.yaml"
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml"
       )
         throw new Error("This is not a TAIBOM code claim");
 
@@ -454,7 +507,7 @@ function createAttestation(
   attestation,
   taibom,
   identity,
-  schemaName = "attestation.json",
+  schemaName = "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/60-attestation.v1.0.0.schema.yaml",
   outputDir
 ) {
   const { identity: identityJson, privateKeyPath, publicKeyPath } = identity;
@@ -467,10 +520,10 @@ function createAttestation(
     credentialSubject,
     identityJson.credentialSubject.email,
     schemaName,
-    privateKeyPath,
-    publicKeyPath
+    loadKey(privateKeyPath, "uint8"),
+    loadKey(publicKeyPath)
   );
-  vcToFile(vc, outputDir, schemaName);
+  vcToFile(vc, outputDir, "attestation.json");
 }
 
 program
@@ -495,11 +548,11 @@ program
           `Invalid type. Allowed values are: ${allowedValues.join(", ")}`
         );
       }
-      return val;
+      return type;
     },
     null
   )
-  .action(async(identityEmail, taibomVc, attestationPath, options) => {
+  .action(async (identityEmail, taibomVc, attestationPath, options) => {
     const identity = await retrieveIdentity(identityEmail);
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
@@ -507,11 +560,22 @@ program
     const attestation = await getAndVerifyClaim(attestationPath, false);
 
     if (options.type) {
+      let val =
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/63-vulnerability-attestation.v1.0.0.schema.yaml";
+
+      if (options.type === "sbom") {
+        val =
+          "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/62-sbom-attestation.v1.0.0.schema.yaml";
+      } else if (options.type === "licence") {
+        val =
+          "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/61-license-attestation.v1.0.0.schema.yaml";
+      }
+
       createAttestation(
         { type: options.type, ...attestation },
         { id: taibom.id, hash: taibom.proof.proofValue },
         identity,
-        (schemaName = `${options.type}-attestation.json`),
+        val,
         outputDir
       );
     } else {
@@ -519,7 +583,7 @@ program
         attestation,
         { id: taibom.id, hash: taibom.proof.proofValue },
         identity,
-        (schemaName = "attestation.json"),
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/60-attestation.v1.0.0.schema.yaml",
         outputDir
       );
     }
