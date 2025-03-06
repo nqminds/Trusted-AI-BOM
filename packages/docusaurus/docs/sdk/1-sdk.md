@@ -6,6 +6,9 @@
     Download the SDK here!
   </a>
 
+### Prerequisites
+
+Docker is required to generate SBOMS & Vulnerability reports
 ---
 
 ## Overview
