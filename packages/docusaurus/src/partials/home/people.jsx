@@ -373,35 +373,6 @@ export default [
     can_access_timesheet: false,
   },
   {
-    id: 46231092,
-    attachable_sgid:
-      "eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxuYVdRNkx5OWlZek12VUdWeWMyOXVMelEyTWpNeE1Ea3lQMlY0Y0dseVpYTmZhVzRHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImF0dGFjaGFibGUifX0=--f1d5100f1340ec8baaad168f7ebe902be1d1f03f",
-    name: "Frederic Taylor",
-    email_address: "frederic.taylor@baesystems.com",
-    personable_type: "User",
-    title: "",
-    bio: null,
-    location: null,
-    created_at: "2024-06-19T10:54:35.438Z",
-    updated_at: "2024-06-19T10:54:35.438Z",
-    admin: false,
-    owner: false,
-    client: false,
-    employee: false,
-    time_zone: "Etc/UTC",
-    avatar_url:
-      "https://bc3-production-assets-cdn.basecamp-static.com/3346817/people/BAhpBDRuwQI=--f3557fbf591f7e812dea5f17a5547be9211a2371/avatar?v=1",
-    avatar_kind: "default",
-    company: {
-      id: 3674556,
-      name: "BAE",
-    },
-    can_ping: true,
-    can_manage_projects: true,
-    can_manage_people: true,
-    can_access_timesheet: false,
-  },
-  {
     id: 46231118,
     attachable_sgid:
       "eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaEpJaWxuYVdRNkx5OWlZek12VUdWeWMyOXVMelEyTWpNeE1URTRQMlY0Y0dseVpYTmZhVzRHT2daRlZBPT0iLCJleHAiOm51bGwsInB1ciI6ImF0dGFjaGFibGUifX0=--63007a7ce699c65dba16b4831bed41413ef1e05a",
