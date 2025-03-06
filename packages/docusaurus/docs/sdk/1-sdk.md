@@ -1,11 +1,5 @@
 # SDK for Creating & Verifying TAIBOMs
 
-### Downloads & Prerequisites
-
-- [SBOM-GAP tool](https://sbom-gap.nqminds.com/cli/) - Not essential unless you are wanting to create SBOMS: `taibom generate-sbom`
-- Verifiable-Credential-Tools: [see docs](./2-vc-tool.md)
-
-
 ### Download the TAIBOM SDK
 
   <a href="/nqminds-taibom-sdk-0.0.1.tgz">
@@ -29,9 +23,6 @@ This SDK provides a command-line interface (CLI) for creating, documenting, sign
 To use this SDK, ensure the following dependencies are installed:
 
 1. **Node.js**: Version 14 or higher.
-2. **VC Tools CLI**: Required for generating keypairs.
-3. **NQMVUL CLI**: For SBOM generation.
-4. **Other tools**: `bash`, `uuid`.
 
 Install the SDK as a global CLI:
 ```bash
