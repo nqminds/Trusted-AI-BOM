@@ -12,15 +12,6 @@
     "$id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "Core and Validation specifications meta-schema",
-    "allOf": [
-      { "$ref": "meta/core" },
-      { "$ref": "meta/applicator" },
-      { "$ref": "meta/unevaluated" },
-      { "$ref": "meta/validation" },
-      { "$ref": "meta/meta-data" },
-      { "$ref": "meta/format-annotation" },
-      { "$ref": "meta/content" }
-    ],
     "type": ["object", "boolean"],
     "properties": {
       "title": {
