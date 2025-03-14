@@ -142,6 +142,10 @@
         {
           "name": "Which Inferencing Systems has been used by config id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
           "query": "db:inferencing_system_using_config_id(\"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\", InferencingSystemVcIds)"
+        },
+        {
+          "name": "Get all datas in weight for urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01",
+          "query": "db:data_in_weight(DataVcIds, \"urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01\")"
         }
       ],
       "policy_packs": [],
