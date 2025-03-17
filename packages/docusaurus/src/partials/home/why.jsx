@@ -42,6 +42,10 @@ export default function Why() {
           <p>
             TAIBOM addresses the technical challenge of providing formal descriptions of AI systems and dependencies. It additionally provides a method of describing and validating subjective claims about the qualities of these systems
           </p>
+          <h1>Why the <b>"T"</b> ?</h1>
+          <p>
+            The "T" standards for "trustable". The necessary but insufficent basis of for trust. TAIBOM is designed to interoprate with other AI trust measures such as vanilla AIBOM and model cards. TAIBOM adds the critial foundations needed to make trusworthines assessments. 
+          </p>
         </div>
       </div>
     </Panel>
