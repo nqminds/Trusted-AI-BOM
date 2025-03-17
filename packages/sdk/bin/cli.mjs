@@ -416,11 +416,10 @@ function validateLocationHash(claim) {
       process.exit(1);
     }
     if (
-      claim.credentialSubject.hash?.value &&
-      claim.credentialSubject.hash.value !== hash &&
-      claim.credentialSubject.hash !== hash
+      (!!claim.credentialSubject.hash.value && claim.credentialSubject.hash.value !== hash) ||
+      (!claim.credentialSubject.hash.value && claim.credentialSubject.hash !== hash)
     )
-      throw new Error("Hash is not validated");
+      throw new Error(`Hash is not validated, ${claim.credentialSubject.hash} does not equal ${hash}! have you changed anything?`);
     else console.log("TAIBOM claim", claim.id, "VALIDATED");
   });
 }
@@ -465,7 +464,7 @@ program
 program
   .command("validate-code")
   .description("Validate a TAIBOM code claim")
-  .argument("<data_taibom>", "Path to TAIBOM code claim")
+  .argument("<code_taibom>", "Path to TAIBOM code claim")
   .option("--out <output_dir>", "Output directory")
   .action(async (taibom, options) => {
     try {
