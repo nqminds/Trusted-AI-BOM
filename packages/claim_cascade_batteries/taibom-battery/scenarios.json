@@ -154,6 +154,10 @@
         {
           "name": "Get all datapacks in weight urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01",
           "query": "db:datapacks_in_weight(DatapackVcIds, \"urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01\")"
+        },
+        {
+          "name": "Get all datapacks in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:datapacks_in_inferencing_system(DatapackVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
         }
       ],
       "policy_packs": [],
