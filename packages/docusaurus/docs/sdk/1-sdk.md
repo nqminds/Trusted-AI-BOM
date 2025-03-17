@@ -9,6 +9,7 @@
 ### Prerequisites
 
 [Docker](https://www.docker.com/) is required to generate SBOMS & Vulnerability reports
+
 ---
 
 ## Overview
