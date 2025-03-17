@@ -263,7 +263,7 @@ program
 
     const bashCommand = getHash(codeDirectory);
 
-    let sbom = undefined;
+    let sbom = null;
 
     if (options.sbomTaibom) {
       const sbomVc = await getAndVerifyClaim(options.sbomTaibom);
@@ -276,16 +276,26 @@ program
         process.exit(1);
       }
 
-      const credentialSubject = {
-        hash: { value: hash },
-        location: {
-          path: `file://${codeDirectory}`,
-          type: "local",
-        },
-        name: options.name ? options.name : codeName,
-        version,
-        sbom,
-      };
+      const credentialSubject = !!sbom
+        ? {
+            hash: { value: hash },
+            location: {
+              path: `file://${codeDirectory}`,
+              type: "local",
+            },
+            name: options.name ? options.name : codeName,
+            version,
+            sbom: sbom,
+          }
+        : {
+            hash: { value: hash },
+            location: {
+              path: `file://${codeDirectory}`,
+              type: "local",
+            },
+            name: options.name ? options.name : codeName,
+            version,
+          };
       const vc = generateAndSignVC(
         credentialSubject,
         identity.credentialSubject.email,
@@ -416,10 +426,14 @@ function validateLocationHash(claim) {
       process.exit(1);
     }
     if (
-      (!!claim.credentialSubject.hash.value && claim.credentialSubject.hash.value !== hash) ||
-      (!claim.credentialSubject.hash.value && claim.credentialSubject.hash !== hash)
+      (!!claim.credentialSubject.hash.value &&
+        claim.credentialSubject.hash.value !== hash) ||
+      (!claim.credentialSubject.hash.value &&
+        claim.credentialSubject.hash !== hash)
     )
-      throw new Error(`Hash is not validated, ${claim.credentialSubject.hash} does not equal ${hash}! have you changed anything?`);
+      throw new Error(
+        `Hash is not validated, ${claim.credentialSubject.hash} does not equal ${hash}! have you changed anything?`
+      );
     else console.log("TAIBOM claim", claim.id, "VALIDATED");
   });
 }
