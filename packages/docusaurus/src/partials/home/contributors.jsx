@@ -29,8 +29,8 @@ const Contributors = () => {
       </div>
       <div style={{ textAlign: "center" }}>
         <h1>Get Involved</h1>
-        <p>Email: <a href={`mailto:example@example.com`} target="_blank" rel="noopener noreferrer">
-          example@example.com
+        <p>Email: <a href={`mailto:info@techworks.org.uk`} target="_blank" rel="noopener noreferrer">
+            info@techworks.org.uk
         </a>
         &nbsp;to get involved</p>
 

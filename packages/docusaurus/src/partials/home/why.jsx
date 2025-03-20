@@ -44,7 +44,7 @@ export default function Why() {
           </p>
           <h1>Why the "T" ?</h1>
           <p>
-            The "T" standards for "trustable". The necessary but insufficent basis of for trust. TAIBOM is designed to interoprate with other AI trust measures such as vanilla AIBOM and model cards. TAIBOM adds the critial foundations needed to make trusworthines assessments. 
+            The "T" standards for "trustable" (not trustworthy). Trustable implies necessary but insufficent basis of for trust. TAIBOM is designed to interoprate with other AI trust measures such as vanilla AIBOM and model cards. TAIBOM adds the critial foundations needed to make trusworthines assessments. 
           </p>
         </div>
       </div>
