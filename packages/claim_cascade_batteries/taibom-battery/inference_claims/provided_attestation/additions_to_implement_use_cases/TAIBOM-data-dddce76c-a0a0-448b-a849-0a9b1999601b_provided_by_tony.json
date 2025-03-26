@@ -2,7 +2,7 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2"
   ],
-  "id": "urn:uuid:2eb4eb22-0a4f-11f0-8580-8f79a09d0ce8",
+  "id": "urn:uuid:43c86f34-0a4f-11f0-9e71-cf44bde4c2af",
   "type": "VerifiableCredential",
   "name": null,
   "description": null,
@@ -11,13 +11,13 @@
   "validUntil": null,
   "credentialStatus": null,
   "credentialSchema": {
-    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/64-provided-attestation.v1.0.0.schema.yaml",
     "type": "JsonSchema"
   },
   "credentialSubject": {
     "component": {
-      "hash": "8024d0b6f45b7547e1aae4511887520594c6038bf7d89bc44f154f2002a75b04",
-      "id": "urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01"
+      "hash": "a335083401e68ae86ef8c7382d6bb82ee143eb9b239b6994299e596cb2543539",
+      "id": "urn:uuid:dddce76c-a0a0-448b-a849-0a9b1999601b"
     },
     "attestation": {
       "type": "provided",

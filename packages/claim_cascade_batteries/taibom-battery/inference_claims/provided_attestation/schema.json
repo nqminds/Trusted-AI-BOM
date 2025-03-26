@@ -48,22 +48,22 @@
             "enum": [
               "provided"
             ],
-            "description": "Type of attestation, set to \"Provided\" for this schema.",
-            "provider": {
-              "type": "object",
-              "description": "identity of the provider of the particular component",
-              "properties": {
-                "uuid": {
-                  "type": "string",
-                  "description": "The UUID of the identity"
-                }
-              },
+            "description": "Type of attestation, set to \"Provided\" for this schema."
+          },
+          "provider": {
+            "type": "object",
+            "description": "identity of the provider of the particular component",
+            "properties": {
+              "uuid": {
+                "type": "string",
+                "description": "The UUID of the identity"
+              }
+            },
               "required": [
                 "uuid"
               ]
             }
-          }
-        },
+          },
         "required": [
           "type",
           "provider"
