@@ -169,25 +169,18 @@
         }
       ],
       "policy_packs": [],
-      "inference_packs": [],
-      "inference_rules": [
-        {
-          "path": "tonys-rules",
-          "signing_key": "keys/admin.priv"
-        }
-      ]
-    },
-    {
-      "reset": false,
-      "name": "Additions to implement Use Cases",
-      "queries": [],
       "inference_packs": [
         {
           "path": "provided_attestation/additions_to_implement_use_cases",
           "signing_key": "keys/admin.priv"
         }
       ],
-      "inference_rules": []
+      "inference_rules": [
+        {
+          "path": "tonys-rules",
+          "signing_key": "keys/admin.priv"
+        }
+      ]
     },
     {
       "reset": false,
