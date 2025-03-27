@@ -17,7 +17,7 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
-        <h1 className="hero__title" style={{fontSize: 70}}>Trustworthy AI Bill of Materials</h1>
+        <h1 className="hero__title" style={{fontSize: 70}}>Trustable AI Bill of Materials</h1>
         <h2 className="hero__subtitle">{siteConfig.tagline}</h2>
         <div className={styles.buttons}>
         </div>

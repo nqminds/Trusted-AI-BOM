@@ -1,0 +1,1 @@
+In this section we will explain the typical information flows and sources 

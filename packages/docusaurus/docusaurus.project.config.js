@@ -9,7 +9,7 @@ import {resolve} from "url"
 import 'dotenv/config';
 
 // @ts-ignore
-const {TITLE, TAGLINE, DOCUSAURUS_URL, PROJECT_NAME, HEDGEDOC_SERVER, GITHUB_OWNER, GITHUB_REPO} = configs;
+const {TITLE, TAGLINE, PUBLIC_DOCUSAURUS_URL, PROJECT_NAME, HEDGEDOC_SERVER, GITHUB_OWNER, GITHUB_REPO} = configs;
 const documentGithubPath = `git/${GITHUB_OWNER}/${GITHUB_REPO}/contents/packages/docusaurus/`;
 const editUrl = resolve(HEDGEDOC_SERVER, documentGithubPath)
 
@@ -21,7 +21,7 @@ const config = {
     // Put your custom environment here
     octokitToken: process.env.OCTOKIT_TOKEN,
   },
-  url: DOCUSAURUS_URL,
+  url: PUBLIC_DOCUSAURUS_URL,
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
   organizationName: 'nqminds',
@@ -29,7 +29,6 @@ const config = {
   trailingSlash: true,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -58,15 +57,6 @@ const config = {
     [
       "@docusaurus/plugin-content-docs",
       {
-        id: "project-management",
-        path: "./docs/project-management",
-        routeBasePath: "project-management",
-        editUrl,
-      },
-    ],
-    [
-      "@docusaurus/plugin-content-docs",
-      {
         id: "docs",
         path: "./docs/working-docs",
         routeBasePath: "docs",
@@ -81,7 +71,7 @@ const config = {
         routeBasePath: "schemas",
       },
     ],
-    [
+     [
       "@docusaurus/plugin-content-docs",
       {
         id: "sdk",
@@ -96,7 +86,7 @@ const config = {
         id: "blogs",
         path: "./docs/blogs",
         routeBasePath: "blogs",
-        editUrl,
+        editUrl
       },
     ],
   ],
@@ -113,13 +103,6 @@ const config = {
           width: "500px !important"
         },
         items: [
-        {
-          type: 'doc',
-          docId: 'project-management',
-          docsPluginId: "project-management",
-          position: 'left',
-          label: 'Project Management',
-        },
         {
           type: 'doc',
           docId: 'intro',
@@ -156,10 +139,6 @@ const config = {
           {
             title: 'Docs',
             items: [
-              {
-                label: 'Project Management',
-                to: '/project-management',
-              },
               {
                 label: 'Working Docs',
                 to: '/docs',

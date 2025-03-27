@@ -1,0 +1,29 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:37fcbae8-0a4f-11f0-ae30-87a44cfaa484",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/64-provided-attestation.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "component": {
+      "hash": "156a17c84d424c0649d574e60ef8106b06761da44efbfb918e08e5336cc98ee0",
+      "id": "urn:uuid:87af45cd-27a8-4815-9b26-1f0de5a43ced"
+    },
+    "attestation": {
+      "type": "provided",
+      "provider": {
+        "uuid": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d"
+      }
+    }
+  }
+}

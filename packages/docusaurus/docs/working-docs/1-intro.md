@@ -3,9 +3,9 @@ slug: /
 title: TAIBOM
 ---
 
-# Trusted AI Bill of Materials
+# Trustable AI Bill of Materials
 
-TAIBOM (Trusted AI Bill of Materials) (formally T-CHAIN) addresses two fundamental challenges that impact the development and deployment of trustworthy AI systems.
+TAIBOM (Trustable AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI systems.
 - Versioning: How do we refer to an AI system in a stable way? How do we produce an AI inventory of dependent components? How can we use these references to make statements about a system’s trustworthiness or its legal standing; and
 - Attestations: How do we make attestations of trustworthiness about an AI. Whether these claims are about bias, security, right through to the strong legal contractual assertions: how do we make these claims in an interoperable way? How can we assemble the claims from the dependent parts (compositionality)? How do we reason about or validate these claims, factoring in context of use and subjectivity?
 

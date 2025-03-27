@@ -1,0 +1,20 @@
+{
+  "name": "verifiable-credential-toolkit",
+  "collaborators": [
+    "Henry Pearson <henry@nquiringminds.com>"
+  ],
+  "description": "Provides methods for handling, constructing and signing Verifiable Credentials",
+  "version": "0.3.1",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nqminds/verifiable-credential-toolkit"
+  },
+  "files": [
+    "verifiable_credential_toolkit_bg.wasm",
+    "verifiable_credential_toolkit.js",
+    "verifiable_credential_toolkit.d.ts"
+  ],
+  "main": "verifiable_credential_toolkit.js",
+  "types": "verifiable_credential_toolkit.d.ts"
+}

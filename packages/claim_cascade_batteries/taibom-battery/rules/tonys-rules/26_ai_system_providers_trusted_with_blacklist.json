@@ -1,0 +1,22 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "id": "urn:uuid:00000000-0000-0000-0000-00000000026",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "issuer": "https://nqminds.example.com/issuer/1",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/rule.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "type": "rule",
+    "rule": [
+      "% Blacklist rule: Succeeds if none of the providers of the AI system has an email in the blacklist.",
+      "ai_system_providers_trusted_with_blacklist(AISystemId, BlacklistEmails) :-",
+      "    providers_of_data_in_ai_system(AISystemId, ProviderUUIDs),",
+      "    maplist(provider_identity_email, ProviderUUIDs, ProviderEmails),",
+      "    intersection(ProviderEmails, BlacklistEmails, Matches),",
+      "    Matches == []."
+    ]
+  }
+}

@@ -93,20 +93,6 @@ export default function Companies() {
           style={{ padding: 25 }}
         />
       </a>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="BAE"
-        href={"https://www.baesystems.com/en/home"}
-      >
-        <img
-          loading="lazy"
-          src="/img/logos/bae.svg"
-          alt="BAE Logo"
-          height={height - 25}
-          style={{ padding: 25 }}
-        />
-      </a>
     </Marquee>
   );
 }

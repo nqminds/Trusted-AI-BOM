@@ -45,7 +45,7 @@ export default function WhoCanUse() {
           }}
         >
           <h1>Who can use use TAIBOM</h1>
-          <p>TAIBOM is distributed by nature, to reflect the complex supply chain of AI systems</p>
+          <p>TAIBOM is distributed by nature, to reflect the complex supply chain of AI systems. Likewise the technology can be used by many stakeholders.</p>
           <ul>
             <li>
               Data owners: owners of the data on which AI systems are trained can version and annotate their data with things like copyright licenses

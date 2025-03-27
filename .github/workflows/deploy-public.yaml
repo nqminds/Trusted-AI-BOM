@@ -1,8 +1,14 @@
 name: Public site deploy 
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/docusaurus/**'  # Adjust the path as needed
+      - 'packages/schemas/**'  # Adjust the path as needed
   workflow_dispatch:
-
+  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
