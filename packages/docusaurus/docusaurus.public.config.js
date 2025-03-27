@@ -5,10 +5,13 @@
 // See: https://docusaurus.io/docs/api/docusaurus-config
 
 import configs from "../../config.json";
+import {resolve} from "url"
 import 'dotenv/config';
 
 // @ts-ignore
-const {TITLE, PUBLIC_DOCUSAURUS_URL, TAGLINE, PROJECT_NAME, GITHUB_OWNER, GITHUB_REPO} = configs;
+const {TITLE, TAGLINE, PUBLIC_DOCUSAURUS_URL, PROJECT_NAME, HEDGEDOC_SERVER, GITHUB_OWNER, GITHUB_REPO} = configs;
+const documentGithubPath = `git/${GITHUB_OWNER}/${GITHUB_REPO}/contents/packages/docusaurus/`;
+const editUrl = resolve(HEDGEDOC_SERVER, documentGithubPath)
 
 const config = {
   title: TITLE,
@@ -57,6 +60,7 @@ const config = {
         id: "docs",
         path: "./docs/working-docs",
         routeBasePath: "docs",
+        editUrl,
       },
     ],
     [
@@ -73,6 +77,7 @@ const config = {
         id: "sdk",
         path: "./docs/sdk",
         routeBasePath: "sdk",
+        editUrl,
       },
     ],
     [
@@ -81,6 +86,7 @@ const config = {
         id: "blogs",
         path: "./docs/blogs",
         routeBasePath: "blogs",
+        editUrl
       },
     ],
   ],

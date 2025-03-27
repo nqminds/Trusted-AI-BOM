@@ -2,19 +2,27 @@
   "name": "@nqminds/taibom-sdk",
   "version": "0.0.1",
   "description": "SDK for creating & verifying TAIBOMS",
-  "main": "index.js",
+  "main": "src/index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "node ./scripts/copySchemas.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "taibom": "./bin/cli.js"
+    "taibom": "./bin/cli.mjs"
   },
+  "type": "module",
   "author": "nqminds",
   "license": "UNLICENCED",
   "dependencies": {
     "@nqminds/verifiable-schemas-toolchain": "2.1.0-alpha.2",
+    "base58": "^2.0.1",
     "commander": "^12.1.0",
+    "flatted": "^3.3.3",
+    "fs": "^0.0.1-security",
+    "jsonify": "^0.0.1",
+    "map-to-object": "^1.0.0",
+    "node-fetch": "^3.3.2",
+    "path": "^0.12.7",
+    "tweetnacl": "^1.0.3",
     "uuid": "^11.0.3"
   },
   "devDependencies": {
