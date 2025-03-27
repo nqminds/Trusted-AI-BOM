@@ -166,6 +166,10 @@
         {
           "name": "Get all training systems in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
           "query": "db:training_system_in_inferencing_system(TrainingSystemVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
+        },
+        {
+          "name": "Get providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "providers_of_data_in_ai_system(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Providers)"
         }
       ],
       "policy_packs": [],
@@ -191,12 +195,12 @@
           "query": "db:data_in_inferencing_system(DataVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
         },
         {
-          "name": "Using whitelist, do we trust the providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
-          "query": ""
+          "name": "Using whitelist, ['tony@nqminds.com'], do we trust the providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:ai_system_providers_trusted_with_whitelist(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"tony@nqminds.com\"])"
         },
         {
-          "name": "Using blacklist, do we trust the providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
-          "query": ""
+          "name": "Using blacklist, ['tony@nqminds.com'], do we trust the providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:ai_system_providers_trusted_with_blacklist(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"tony@nqminds.com\"])"
         }
       ]
     }
