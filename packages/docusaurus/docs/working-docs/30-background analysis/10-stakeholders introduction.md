@@ -1,4 +1,4 @@
-# Stakeholders
+# Stakeholder overview
 
 There are a large number of parties that may be affected by, or involved in, the development, deployment and use of AI systems or AI system components and hence who might benefit from TAIBOM. They include the following:
 
@@ -34,19 +34,7 @@ The stakeholders also include the following interested parties:
 
 
 
-
-
-## Different AI system stakeholders
-
-Within the AI system development team the stakeholders can be further broken down
-
-
-
-:::note
-
-TODO 
-
-:::
+Although all of these disparate stakeholders can produce and consume TAIBOM claims, it is primarily the AI end user that consumes the claims. And the primary purpose of this claim consumption is to evaluate the risk currently posed by the system. 
 
 
 

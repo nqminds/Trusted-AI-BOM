@@ -1,5 +1,4 @@
-# OWASP LLM_AI_Security_and_Governance_Checklist
-
+# OWASP 
 
 
 The OWASP "LLM AI Security and Governance Checklist" v1 is a comprehensive document aimed at ensuring the secure and ethical deployment of Large Language Models (LLMs). Here's an extensive summary of its content:
