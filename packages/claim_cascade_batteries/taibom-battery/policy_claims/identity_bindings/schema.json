@@ -1,0 +1,34 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/identity.json",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "issuer": "https://nqminds.example.com/issuer/ash",
+  "validFrom": "2024-11-05T17:41:33+00:00",
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/identity.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "identity",
+    "description": "Statement of an email and public key binding",
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "const": "identity",
+        "description": "Which type of claim is being made"
+      },
+      "identifier": {
+        "type": "string",
+        "description": "identifier to bind to public key, typically email address"
+      },
+      "publicKey": {
+        "type": "string",
+        "description": "public key to bind to identifier"
+      }
+    },
+    "required": ["type", "identifier", "publicKey"]
+  }
+}

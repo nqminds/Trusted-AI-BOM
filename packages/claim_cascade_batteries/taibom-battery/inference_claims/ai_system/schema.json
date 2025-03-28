@@ -1,0 +1,79 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:06d97c32-0df6-40c4-a10f-2b3445e7d765",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
+  "validFrom": "2024-12-18T17:22:33+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "context": "## Introduction\n\nThe **AI System Schema** is a JSON schema designed to define and standardise the representation of AI systems within the Trusted AI BOM (TAIBOM) ecosystem. This schema is applicable for systems used in both training AI models and inferencing, ensuring clarity and traceability of the underlying code and data.\n\n### Description\nThis schema captures essential metadata for an AI system, including:\n- **Name**: The name of the AI system.\n- **Label**: Indicates the system type, such as *Training* or *Inferencing*.\n- **Code**: A reference to the code VC utilised within the system, with an optional cryptographic hash for verification.\n- **Data**: A reference to the data VC, datapack, or weights used by the system, with an optional cryptographic hash for verification.\n\n## Use Case\n\nThe **AI System Schema** is primarily used within the TAIBOM framework to:\n1. **Define AI Systems**: Provide a standardised representation of systems used for AI training or inferencing.\n2. **Track Dependencies**: Ensure traceability by linking the system to its underlying code and data, along with optional integrity verification.\n3. **Enable Lifecycle Management**: Support the management of AI systems across development, deployment, and maintenance phases.\n\nBy adopting this schema, organisations can ensure consistent documentation and robust lifecycle management of AI systems, contributing to transparency and accountability in AI ecosystems.\n\n---\n",
+    "description": "This schema defines an AI system which may be used for training AI models or as an inferencing system.\n",
+    "properties": {
+      "code": {
+        "description": "Reference to the code used in the system, with optional integrity verification.",
+        "properties": {
+          "hash": {
+            "description": "The cryptographic hash (e.g., SHA-256) of the code VC for integrity verification.",
+            "type": "string"
+          },
+          "id": {
+            "description": "ID of the code VC.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "data": {
+        "description": "Reference to the datapack, data, or weights used on the system, with optional integrity verification.",
+        "properties": {
+          "hash": {
+            "description": "The cryptographic hash (e.g., SHA-256) of the data VC for integrity verification.",
+            "type": "string"
+          },
+          "id": {
+            "description": "ID of the data VC.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "type": "object"
+      },
+      "label": {
+        "description": "Label of the system.",
+        "enum": [
+          "Training",
+          "Inferencing"
+        ],
+        "type": "string"
+      },
+      "name": {
+        "description": "Name of the software system.",
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "label",
+      "code",
+      "data"
+    ],
+    "title": "AI System",
+    "type": "object"
+  }
+}

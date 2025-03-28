@@ -1,0 +1,15 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/blob/main/packages/claim_cascade/src/policy_engine_bootstrap_claims/schemas/group_membership_schema.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "group_name": "Admin",
+    "identifier": "tony@example.com"
+  },
+  "id": "urn:uuid:47fb2640-eb40-4b6d-bc29-076262a01ac5",
+  "issuer": "https://nqminds.example.com/issuer/1",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "validFrom": "2024-10-29T09:30:59.241438994Z"
+}
