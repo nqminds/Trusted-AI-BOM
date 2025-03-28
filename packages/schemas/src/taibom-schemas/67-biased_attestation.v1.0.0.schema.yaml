@@ -1,0 +1,92 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/67-biased-attestation.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Biased Attestation
+description: |
+  This schema extends the generic Attestation Schema to define an attestation that a component is biased
+type: object
+properties:
+  component:
+    type: object
+    description: Component reference, including an ID and hash for the VC claim.
+    properties:
+      id:
+        type: string
+        description: The component ID (unique identifier) of the VC claim.
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.
+    required:
+      - id
+      - hash
+
+  attestation:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - biased
+        description: Type of attestation, set to "Biased" for this schema.
+      bias:
+        type: object
+        description: The bias that applies to the particular component
+        properties:
+          types:
+            type: array
+            items:
+              type: string
+              description: The type of bias (e.g. selection bias, label bias, measurement bias, historical bias, exclusion bias)
+          severity:
+            type: string
+            description: Severity of the bias (e.g., minor annoyance vs. critical ethical concern).
+          context:
+            type: string
+            description: where and how the bias was observed (e.g., a specific AI-driven hiring system, chatbot, facial recognition software).
+          impact:
+            type: string
+            description: The real-world consequences of the bias (e.g., unfair loan denials, inaccurate medical predictions).
+          description:
+            type: string
+            description: Description of the bias
+        required:
+          - types
+    required:
+      - type
+      - bias
+
+required:
+  - component
+  - attestation
+
+examples:
+  - component:
+      id: urn:uuid:222e3337-e89b-12d3-a456-426614174004
+      hash: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+    attestation:
+      type: biased
+      bias:
+        types: ["algorithmic bias", "measurement bias", "historical bias"]
+        impact: Black defendants were more likely to be classified as high-risk falsely (false positives) and white defendants were more likely to be classified as low-risk falsely (false negatives).
+        severity: high
+        context: The COMPAS algorithm was used in U.S. courts to assist in bail, sentencing, and parole decisions.
+        description: The COMPAS algorithm disproportionately labels Black defendants as higher risk than White defendants, despite similar actual recidivism rates. 
+
+
+context: |
+  ## Introduction
+
+  The **Biased Attestation Schema** extends the generic Attestation Schema to enable attestations related to bias. By referencing bias details such as the types of bias (e.g.  selection bias, label bias, measurement bias, historical bias, exclusion bias, etc.), severity, context, impact and description, this schema ensures a structured way to document and track reported cases of bias events.
+
+  ### Description
+  This schema includes:
+  - **Type**: The attestation type, set to "Bias".
+  - **Bias Details**: Provides details of the bias, including types, severity, context, impact and description.
+
+  ## Use Case
+
+  The **Bias Attestation Schema** is used to:
+  1. **Document Bias**: Attach details of reported bias to attestations for components.
+  2. **Track Bias**: Keep track of components which have been reported to exhibit bias and trace which other components this affects.
+  3. **Support Compliance**: Ensure that biased components are tracked and managed in line with ethical, procedural and compliance standards.
+
+  This schema promotes transparency and accountability, ensuring that reports of bias are communicated clearly across software supply chains.

@@ -1,0 +1,95 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/66-polluted-attestation.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Poisoned Attestation
+description: |
+  This schema extends the generic Attestation Schema to define an attestation that a component is polluted
+type: object
+properties:
+  component:
+    type: object
+    description: Component reference, including an ID and hash for the VC claim.
+    properties:
+      id:
+        type: string
+        description: The component ID (unique identifier) of the VC claim.
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.
+    required:
+      - id
+      - hash
+
+  attestation:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - polluted
+        description: Type of attestation, set to "Polluted" for this schema.
+      pollution:
+        type: object
+        description: Data pollution event that applies to the particular component.
+        properties:
+          date:
+            type: string
+            description: The date when the data pollution event was identified.
+          type:
+            type: string
+            description: The type of data pollution (e.g., label noise, bias amplification, concept drift, distribution shift).
+          severity:
+            type: string
+            description: Severity of the data pollution issue.
+          description:
+            type: string
+            description: Detailed description of the data pollution event.
+          observed_impact:
+            type: string
+            description: How the pollution manifests in predictions or decisions.
+          detection_method:
+            type: string
+            description: How the issue was detected (e.g., dataset audit, fairness metric analysis).
+        required:
+          - date
+          - type
+    required:
+      - type
+      - pollution
+
+required:
+  - component
+  - attestation
+
+examples:
+  - component:
+      id: urn:uuid:123e4567-e89b-12d3-a456-426614174000
+      hash: f1e2d3c4b5a697887766554433221100
+    attestation:
+      type: polluted
+      pollution:
+        date: "2024-02-15"
+        type: "Bias Amplification"
+        severity: medium
+        description: "Training data contained an overrepresentation of negative sentiment from specific demographics, leading to biased sentiment analysis results."
+        observed_impact: "Negative sentiment was disproportionately assigned to reviews from certain user groups."
+        detection_method: "Fairness analysis detected a higher false-negative rate for positive reviews from affected groups."
+
+
+context: |
+  ## Introduction
+
+  The **Polluted Attestation Schema** extends the generic Attestation Schema to enable attestations related to data pollution. By referencing pollution event details such as the type of pollution (e.g., label noise, bias amplification, concept drift, distribution shift, etc.), the date, and severity, this schema ensures a structured way to document and track reported data pollution events.
+
+  ### Description
+  This schema includes:
+  - **Type**: The attestation type, set to "Polluted".
+  - **Pollution Details**: Provides details of the data pollution event, including pollution type, date, severity and observed impact.
+
+  ## Use Case
+
+  The **Pollution Attestation Schema** is used to:
+  1. **Document Pollution Events**: Attach details of pollution events to attestations for components.
+  2. **Track Data Integrity Issues**: Keep track of components affected by polluted data and trace the impact on downstream models or decisions.
+  3. **Support Compliance & Fairness**: Ensure that polluted components are monitored and addressed in line with ethical AI and regulatory standards.
+
+  This schema promotes transparency and accountability, ensuring that data pollution issues are communicated clearly across software supply chains. It also helps organizations trace how polluted data may have impacted AI model behavior and mitigate potential risks.
