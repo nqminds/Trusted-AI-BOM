@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:1aad938e-0e11-11f0-8502-2b4f75e5ab13",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/65-poisoned-attestation.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "component": {
+      "id": "urn:uuid:5f6dc5e9-002e-4ec9-80c4-cae7e1940c6c",
+      "hash": "9cb2cfd169166958a6f036eeb554fc72c4df43417b4d7a84e2a06a80eb4e0f97"
+    },
+    "attestation": {
+      "type": "poisoned",
+      "poisoning": {
+        "date": "31-03-2025",
+        "type": "data injection",
+        "severity": "high",
+        "description": "injection of malicious data"
+      }
+    }
+  }
+}

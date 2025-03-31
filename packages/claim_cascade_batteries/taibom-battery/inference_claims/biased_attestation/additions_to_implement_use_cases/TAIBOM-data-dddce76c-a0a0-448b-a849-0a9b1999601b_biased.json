@@ -1,0 +1,33 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:d96a8014-0e3b-11f0-84d0-e7892e9f232e",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/67-biased-attestation.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "component": {
+      "hash": "8024d0b6f45b7547e1aae4511887520594c6038bf7d89bc44f154f2002a75b04",
+      "id": "urn:uuid:dddce76c-a0a0-448b-a849-0a9b1999601b"
+    },
+    "attestation": {
+      "type": "biased",
+      "bias": {
+        "types": ["selection bias"],
+        "severity": "low",
+        "description": "Road signs were taken predominantly from the North",
+        "context": "In road sign recognition system",
+        "impact": "Road sign recognition works worse in the South"
+      }
+    }
+  }
+}
