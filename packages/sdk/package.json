@@ -1,6 +1,6 @@
 {
   "name": "@nqminds/taibom-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "SDK for creating & verifying TAIBOMS",
   "main": "src/index.mjs",
   "scripts": {

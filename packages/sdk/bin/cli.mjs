@@ -58,25 +58,7 @@ const program = new Command();
 program
   .name("SDK for creating & verifying TAIBOMS")
   .description("CLI to create / document / sign & verify TAIBOM VC's")
-  .version("0.0.1");
-
-// program
-//   .command("register-identity")
-//   .description("Register identity keypair with DID registry")
-//   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-//   .option(
-//     "--registry <registry>",
-//     "Address of the did registry",
-//     "http://localhost:3001/api/auth/authenticate"
-//   )
-//   .action(async (identityEmail, options) => {
-//     const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
-//       identityEmail
-//     );
-//     const publicKey = loadKey(publicKeyPath);
-//     const privateKey = loadKey(privateKeyPath);
-//     await issueRequest(identityEmail, );
-//   });
+  .version("0.0.3");
 
 program
   .command("generate-identity")
@@ -130,6 +112,9 @@ program
     );
     vcToFile(vc, `${keypairPath}-identity.json`, "identity.json", false);
     vcToFile(vc, outputDir, "identity.json");
+
+
+    
   });
 
 program
