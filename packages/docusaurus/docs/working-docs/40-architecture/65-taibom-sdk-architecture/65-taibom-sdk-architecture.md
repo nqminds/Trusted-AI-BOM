@@ -51,7 +51,7 @@ This database serves as a hash resolution mechanism for TAIBOM, ensuring that ha
 - taibom_guid acts as a unique identifier for an entity in the system.
 - vc_hash is the hash value derived from a Verifiable Credential (VC).
 - vc_filepath stores a reference to the physical Verifiable Credential (VC).
-- resolvable indicates whether the stored hash can be resolved or not. A file-watcher agent can be used to determine if the directory has been moved / deleted - and potentially attempt to resolve this.
+- resolvable indicates whether the stored hash can be resolved or not. A file-watcher agent can be used to determine if the directory has been moved / deleted - and potentially attempt to resolve this, it can also be used if the VC has become detatched from the component it is referencing.
 - resolve_data_hash() and resolve_code_hash() provide methods to verify or retrieve information linked to the stored hash, these functions are likely to be identical - so consider a single method resolve_taibom_hash()
 
 #### Resolving data 
