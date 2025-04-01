@@ -1,0 +1,90 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:cd3e7d42-0bfa-11f0-bd10-872f8a0f50cf",
+  "type": "VerifiableCredential",
+  "name": null,
+  "description": null,
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/65-poisoning-attestation.v1.0.0.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "title": "Poisoning Attestation",
+    "description": "This schema extends the generic Attestation Schema to define an attestation that a component is poisoning\n",
+    "type": "object",
+    "properties": {
+      "component": {
+        "type": "object",
+        "description": "Component reference, including an ID and hash for the VC claim.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The component ID (unique identifier) of the VC claim."
+          },
+          "hash": {
+            "type": "string",
+            "description": "Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim."
+          }
+        },
+        "required": [
+          "id",
+          "hash"
+        ]
+      },
+      "attestation": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "poisoning"
+            ],
+            "description": "Type of attestation, set to \"Poisoning\" for this schema."
+          },
+          "poisoninging": {
+            "type": "object",
+            "description": "poisoninging event that applies to the particular component",
+            "properties": {
+              "date": {
+                "type": "string",
+                "description": "The date of the data poisoninging event"
+              },
+              "type": {
+                "type": "string",
+                "description": "The type of data poisoninging event (e.g. mislabelling attack, data injection, data manipulation)"
+              },
+              "severity": {
+                "type": "string",
+                "description": "Severity of data poisoninging"
+              },
+              "description": {
+                "type": "string",
+                "description": "description of data poisoninging event"
+              }
+            },
+            "required": [
+              "date"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "poisoninging"
+        ]
+      }
+    },
+    "required": [
+      "component",
+      "attestation"
+    ],
+    "context": "## Introduction\n\nThe **Poisoning Attestation Schema** extends the generic Attestation Schema to enable attestations related to data poisoninging. By referencing poisoninging event details such as the type of poisoninging (e.g. mislabelling attack, data injection, data manipulation, etc.), the date and severity, this schema ensures a structured way to document and track reported data poisoninging events.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"Poisoninging\".\n- **Poisoninging Details**: Provides details of the data poisoninging event, including poisoninging type, date, severity & description.\n\n## Use Case\n\nThe **Poisoninging Attestation Schema** is used to:\n1. **Document Poisoninging events**: Attach details of poisoninging events to attestations for components.\n2. **Track Poisoninging**: Keep track of components which have been poisoning and trace which other components this affects.\n3. **Support Compliance**: Ensure that poisoning components are tracked and managed in line with security standards.\n\nThis schema promotes transparency and accountability, ensuring that data poisoninging event information is communicated clearly across software supply chains and trace if a data poisoninging event compromises any components in that supply chain.\n"
+  }
+}

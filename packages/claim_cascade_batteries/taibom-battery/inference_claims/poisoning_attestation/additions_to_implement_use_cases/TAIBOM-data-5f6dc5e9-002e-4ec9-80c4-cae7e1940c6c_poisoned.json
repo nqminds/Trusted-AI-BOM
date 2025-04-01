@@ -11,7 +11,7 @@
   "validUntil": null,
   "credentialStatus": null,
   "credentialSchema": {
-    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/65-poisoned-attestation.v1.0.0.schema.yaml",
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/65-poisoning-attestation.v1.0.0.schema.yaml",
     "type": "JsonSchema"
   },
   "credentialSubject": {
@@ -20,8 +20,8 @@
       "hash": "9cb2cfd169166958a6f036eeb554fc72c4df43417b4d7a84e2a06a80eb4e0f97"
     },
     "attestation": {
-      "type": "poisoned",
-      "poisoning": {
+      "type": "poisoning",
+      "poisoninging": {
         "date": "31-03-2025",
         "type": "data injection",
         "severity": "high",

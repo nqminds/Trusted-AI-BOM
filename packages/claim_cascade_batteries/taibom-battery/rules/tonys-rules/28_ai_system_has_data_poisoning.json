@@ -11,13 +11,13 @@
   "credentialSubject": {
     "type": "rule",
     "rule": [
-      "% Retrieve all poisoning attestations for an AI system",
-      "ai_system_has_poisoned_data(AISystemId, Attestations) :-",
+      "% Retrieve all poisoninging attestations for an AI system",
+      "ai_system_has_data_poisoning(AISystemId, Attestations) :-",
       "    findall(",
-      "        (component(ComponentHash, DataVcId), PoisoningDetails),",
+      "        (component(ComponentHash, DataVcId), PoisoningingDetails),",
       "        (data_in_inferencing_system(DataVcIds, AISystemId),",
       "         member(DataVcId, DataVcIds),",
-      "         poisoned_attestation(_, attestation(PoisoningDetails, \"poisoned\"), component(ComponentHash, DataVcId))),",
+      "         poisoning_attestation(_, attestation(PoisoningingDetails, \"poisoning\"), component(ComponentHash, DataVcId))),",
       "        Attestations",
       "    )."
     ]

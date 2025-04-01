@@ -11,7 +11,7 @@ Is there evidence that training data on which this system has been trained has b
 * [config](https://github.com/nqminds/Trusted-AI-BOM/blob/training-data-provenance/packages/schemas/src/taibom-schemas/25-config.v1.0.0.schema.yaml) 
 * [identity](https://github.com/nqminds/Trusted-AI-BOM/blob/training-data-provenance/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml)
 * [ai system](https://github.com/nqminds/Trusted-AI-BOM/blob/training-data-provenance/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml)
-* [poisoned attestation](https://github.com/nqminds/Trusted-AI-BOM/blob/training-data-provenance/packages/schemas/src/taibom-schemas/66-polluted_attestation.v1.0.0.schema.yaml)
+* [poisoning attestation](https://github.com/nqminds/Trusted-AI-BOM/blob/training-data-provenance/packages/schemas/src/taibom-schemas/66-polluted_attestation.v1.0.0.schema.yaml)
 
 
 
@@ -81,7 +81,7 @@ This function detects whether **polluted data** exists within an AI system by tr
 
 ## Query
 
-- `ai_system_has_polluted_data(AiSystemId, Attestations)` [link to query](https://github.com/nqminds/Trusted-AI-BOM/blob/poisening%2Cpollution%26bias/packages/claim_cascade_batteries/taibom-battery/scenarios.json#L221-L224)
+- `ai_system_has_polluted_data(AiSystemId, Attestations)` [link to query](https://github.com/nqminds/Trusted-AI-BOM/blob/poisoninging%2Cpollution%26bias/packages/claim_cascade_batteries/taibom-battery/scenarios.json#L221-L224)
 - link to simulator 
 
 

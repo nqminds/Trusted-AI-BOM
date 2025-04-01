@@ -183,7 +183,7 @@
           "signing_key": "keys/admin.priv"
         },
         {
-          "path": "poisoned_attestation/additions_to_implement_use_cases",
+          "path": "poisoning_attestation/additions_to_implement_use_cases",
           "signing_key": "keys/admin.priv"
         },
         {
@@ -215,8 +215,8 @@
           "query": "db:ai_system_providers_trusted_with_blacklist(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"tony@nqminds.com\"])"
         },
         {
-          "name": "Get any attestations of data poisoning in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
-          "query": "ai_system_has_poisoned_data(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
+          "name": "Get any attestations of data poisoninging in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
+          "query": "ai_system_has_data_poisoning(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
         },
         {
           "name": "Get any attestations of data pollution in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",

@@ -66,7 +66,7 @@ END FUNCTION
 
 ## Query
 
-- `ai_system_has_data_bias(AiSystemId, Attestations)` [link to query](https://github.com/nqminds/Trusted-AI-BOM/blob/poisening%2Cpollution%26bias/packages/claim_cascade_batteries/taibom-battery/scenarios.json#L225-L228)
+- `ai_system_has_data_bias(AiSystemId, Attestations)` [link to query](https://github.com/nqminds/Trusted-AI-BOM/blob/poisoninging%2Cpollution%26bias/packages/claim_cascade_batteries/taibom-battery/scenarios.json#L225-L228)
 - link to simulator 
 
 
