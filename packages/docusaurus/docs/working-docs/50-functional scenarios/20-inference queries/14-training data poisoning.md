@@ -16,34 +16,39 @@ Is there evidence that any of the training data on which this system has been tr
 
 ## Pseudo code 
 
-```python
-def ai_system_has_poisoned_data(AISystemId):
-    Attestations = []
+```
+FUNCTION ai_system_has_poisoned_data(AI_System_ID)
+    CREATE empty list Attestations
 
-    # Step 1: Find all Data Verification Credentials (DataVcIds) linked to the AI System
-    ConfigVcId = db_get_ai_system(AISystemId).config_vc_id
-    WeightsVcId = get_trained_weights(ConfigVcId)
+    // Step 1: Retrieve the AI system's configuration and trained weights
+    SET Config_VC_ID = get configuration verification credential of AI_System_ID
+    SET Weights_VC_ID = get trained weights using Config_VC_ID
 
-    if not is_weights_data(WeightsVcId):
-        return []  # No poisoned attestations if weights data is invalid
+    // If the weights data is invalid, return an empty list
+    IF Weights_VC_ID is not valid THEN
+        RETURN empty list
 
-    TrainingSystemVcId = get_training_system_for_weights(WeightsVcId)
-    DatapackVcId = get_datapack_for_training_system(TrainingSystemVcId)
+    // Retrieve the training system and associated datapack
+    SET Training_System_VC_ID = get training system linked to Weights_VC_ID
+    SET Datapack_VC_ID = get datapack linked to Training_System_VC_ID
 
-    # Step 2: Extract all dataset verification credentials (DataVcIds) from the datapack
-    DataVcIds = extract_data_vcs_from_datapack(DatapackVcId)
+    // Step 2: Extract dataset verification credentials from the datapack
+    SET Data_VC_IDs = extract dataset verification credentials from Datapack_VC_ID
 
-    # Step 3: Identify poisoned attestations for each DataVcId
-    for DataVcId in DataVcIds:
-        attestations = get_poisoned_attestations_for_data(DataVcId)
-        for attestation in attestations:
-            if attestation.type == "poisoned":
-                ComponentHash = attestation.component_hash
-                PoisoningDetails = attestation.details
-                Attestations.append(({"component": ComponentHash, "data_vc_id": DataVcId}, PoisoningDetails))
+    // Step 3: Check for poisoned attestations in each dataset verification credential
+    FOR EACH Data_VC_ID in Data_VC_IDs DO
+        SET Attestations_List = get poisoned attestations linked to Data_VC_ID
 
-    # Step 4: Return all poisoned attestations found
-    return Attestations
+        FOR EACH Attestation in Attestations_List DO
+            IF Attestation is of type "poisoned" THEN
+                SET Component_Hash = Attestation's component hash
+                SET Poisoning_Details = Attestation's details
+                
+                ADD ({"component": Component_Hash, "data_vc_id": Data_VC_ID}, Poisoning_Details) TO Attestations
+
+    // Step 4: Return all poisoned attestations found
+    RETURN Attestations
+END FUNCTION
 ```
 
 ---

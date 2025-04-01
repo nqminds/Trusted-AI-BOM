@@ -16,34 +16,28 @@ Is there evidence that training data on which this system has (or is free of) bi
 
 ## Pseudo code 
 
-```python
-def ai_system_has_biased_data(AISystemId):
-    Attestations = []
+```
+FUNCTION ai_system_has_biased_data(AI_System_ID)
+    CREATE empty list Attestations
 
-    # Step 1: Find all Data Verification Credentials (DataVcIds) linked to the AI System
-    ConfigVcId = db_get_ai_system(AISystemId).config_vc_id
-    WeightsVcId = get_trained_weights(ConfigVcId)
+    // Step 1: Retrieve dataset verification credentials linked to the AI system
+    SET Data_VC_IDs = get dataset verification credentials associated with AI_System_ID
 
-    if not is_weights_data(WeightsVcId):
-        return []  # No biased attestations if weights data is invalid
+    // Step 2: Identify biased attestations in each dataset verification credential
+    FOR EACH Data_VC_ID in Data_VC_IDs DO
+        SET Attestations_List = get biased attestations linked to Data_VC_ID
 
-    TrainingSystemVcId = get_training_system_for_weights(WeightsVcId)
-    DatapackVcId = get_datapack_for_training_system(TrainingSystemVcId)
+        FOR EACH Attestation in Attestations_List DO
+            IF Attestation is of type "biased" THEN
+                SET Component_Hash = Attestation's component hash
+                SET Bias_Details = Attestation's details
+                
+                ADD ({"component": Component_Hash, "data_vc_id": Data_VC_ID}, Bias_Details) TO Attestations
 
-    # Step 2: Extract all dataset verification credentials (DataVcIds) from the datapack
-    DataVcIds = extract_data_vcs_from_datapack(DatapackVcId)
+    // Step 3: Return all biased attestations found
+    RETURN Attestations
+END FUNCTION
 
-    # Step 3: Identify biased attestations for each DataVcId
-    for DataVcId in DataVcIds:
-        attestations = get_biased_attestations_for_data(DataVcId)
-        for attestation in attestations:
-            if attestation.type == "biased":
-                ComponentHash = attestation.component_hash
-                BiasDetails = attestation.details
-                Attestations.append(({"component": ComponentHash, "data_vc_id": DataVcId}, BiasDetails))
-
-    # Step 4: Return all biased attestations found
-    return Attestations
 ```
 
 ---
