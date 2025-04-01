@@ -59,8 +59,11 @@ This database serves as a hash resolution mechanism for TAIBOM, ensuring that ha
 
 Each time a taibom is created (using the SDK), the [GUID, HASH table](#GUID-HASH-table) should be updated to include these TAIBOMS. 
 
-> [!NOTE]
-> There should be scope to provide a method of adding TAIBOMS which were not generated using the SDK. 
+:::note
+
+There should be scope to provide a method of adding TAIBOMS which were not generated using the SDK. 
+
+:::
 
 #### Resolving data 
 
