@@ -116,7 +116,7 @@ Aggregation claims can also be used to define larger units for example binding [
 
 Dependency claims may at a later date come in different flavours, but in abstract a dependency claim implies that certain attestations will have a transitive property.
 
-For example, if there is bias in one of training data sets, then we can infer that the trained system will be potentially biased.
+For example, if there is bias in one of training data sets, then we can infer that the trained system will be potentially bias.
 
 Some examples of dependency claims:
 

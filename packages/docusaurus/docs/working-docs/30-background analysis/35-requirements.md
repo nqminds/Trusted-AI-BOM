@@ -89,7 +89,7 @@ We have so far focused on the inference behaviour and legal status of a system a
 
 Combining entities is common in the AI space. For example, datasets are frequently remixed into different combinations, or built upon; and model weights are combined with adaptors; etc. TAIBOM needs to be able to approximate the effects of forming such combinations so that we can efficiently infer the likely properties of the combined entity from its components. We use the word "approximate" here because the effects of combination may be complex and depend on what are being combined.
 
-For example, combining a base model with an adaptor does not necessarily preserve the properties of either the base model or the adaptor. Similarly, combining datasets is compositional in terms of some properties, such as whether the combined dataset is poisoned, but not necessarily in terms of others, such as whether the combined dataset is statistically biased in some particular way. We therefore need to be clear as to which combinations produce composition and which produce modulation with respect to which properties. 
+For example, combining a base model with an adaptor does not necessarily preserve the properties of either the base model or the adaptor. Similarly, combining datasets is compositional in terms of some properties, such as whether the combined dataset is poisoned, but not necessarily in terms of others, such as whether the combined dataset is statistically bias in some particular way. We therefore need to be clear as to which combinations produce composition and which produce modulation with respect to which properties. 
 
 In other words:
 

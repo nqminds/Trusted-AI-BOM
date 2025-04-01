@@ -15,10 +15,10 @@
     "type": "JsonSchema"
   },
   "credentialSubject": {
-    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/67-biased-attestation.v1.0.0.schema.yaml",
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/67-bias-attestation.v1.0.0.schema.yaml",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "title": "Biased Attestation",
-    "description": "This schema extends the generic Attestation Schema to define an attestation that a component is biased\n",
+    "title": "Bias Attestation",
+    "description": "This schema extends the generic Attestation Schema to define an attestation that a component is bias\n",
     "type": "object",
     "properties": {
       "component": {
@@ -45,9 +45,9 @@
           "type": {
             "type": "string",
             "enum": [
-              "biased"
+              "bias"
             ],
-            "description": "Type of attestation, set to \"Biased\" for this schema."
+            "description": "Type of attestation, set to \"Bias\" for this schema."
           },
           "bias": {
             "type": "object",
@@ -92,6 +92,6 @@
       "component",
       "attestation"
     ],
-    "context": "## Introduction\n\nThe **Biased Attestation Schema** extends the generic Attestation Schema to enable attestations related to bias. By referencing bias details such as the types of bias (e.g.  selection bias, label bias, measurement bias, historical bias, exclusion bias, etc.), severity, context, impact and description, this schema ensures a structured way to document and track reported cases of bias events.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"Bias\".\n- **Bias Details**: Provides details of the bias, including types, severity, context, impact and description.\n\n## Use Case\n\nThe **Bias Attestation Schema** is used to:\n1. **Document Bias**: Attach details of reported bias to attestations for components.\n2. **Track Bias**: Keep track of components which have been reported to exhibit bias and trace which other components this affects.\n3. **Support Compliance**: Ensure that biased components are tracked and managed in line with ethical, procedural and compliance standards.\n\nThis schema promotes transparency and accountability, ensuring that reports of bias are communicated clearly across software supply chains.\n"
+    "context": "## Introduction\n\nThe **Bias Attestation Schema** extends the generic Attestation Schema to enable attestations related to bias. By referencing bias details such as the types of bias (e.g.  selection bias, label bias, measurement bias, historical bias, exclusion bias, etc.), severity, context, impact and description, this schema ensures a structured way to document and track reported cases of bias events.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"Bias\".\n- **Bias Details**: Provides details of the bias, including types, severity, context, impact and description.\n\n## Use Case\n\nThe **Bias Attestation Schema** is used to:\n1. **Document Bias**: Attach details of reported bias to attestations for components.\n2. **Track Bias**: Keep track of components which have been reported to exhibit bias and trace which other components this affects.\n3. **Support Compliance**: Ensure that bias components are tracked and managed in line with ethical, procedural and compliance standards.\n\nThis schema promotes transparency and accountability, ensuring that reports of bias are communicated clearly across software supply chains.\n"
   }
 }

@@ -70,7 +70,7 @@ examples:
         date: "2024-02-15"
         type: "Bias Amplification"
         severity: medium
-        description: "Training data contained an overrepresentation of negative sentiment from specific demographics, leading to biased sentiment analysis results."
+        description: "Training data contained an overrepresentation of negative sentiment from specific demographics, leading to bias sentiment analysis results."
         observed_impact: "Negative sentiment was disproportionately assigned to reviews from certain user groups."
         detection_method: "Fairness analysis detected a higher false-negative rate for positive reviews from affected groups."
 

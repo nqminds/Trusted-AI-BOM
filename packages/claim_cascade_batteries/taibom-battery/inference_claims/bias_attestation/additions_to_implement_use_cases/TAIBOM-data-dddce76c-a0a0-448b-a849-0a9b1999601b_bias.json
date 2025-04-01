@@ -2,27 +2,27 @@
   "@context": [
     "https://www.w3.org/ns/credentials/v2"
   ],
-  "id": "urn:uuid:069584fa-0e17-11f0-bd98-377fb3fd2477",
+  "id": "urn:uuid:d96a8014-0e3b-11f0-84d0-e7892e9f232e",
   "type": "VerifiableCredential",
   "name": null,
   "description": null,
-  "issuer": "urn:uuid:11edd022-0e3b-11f0-bfbd-6baffcee8fdb",
+  "issuer": "urn:uuid:57338930-b10c-43b6-8106-6c00cce3600d",
   "validFrom": "2025-03-26T12:50:00+00:00",
   "validUntil": null,
   "credentialStatus": null,
   "credentialSchema": {
-    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/67-biased-attestation.v1.0.0.schema.yaml",
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/67-bias-attestation.v1.0.0.schema.yaml",
     "type": "JsonSchema"
   },
   "credentialSubject": {
     "component": {
-      "hash": "0ea4133d796cf4c6c444d7ca1a94343798fc974c1fcca9cf168345b02a526a51",
-      "id": "urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad"
+      "hash": "8024d0b6f45b7547e1aae4511887520594c6038bf7d89bc44f154f2002a75b04",
+      "id": "urn:uuid:dddce76c-a0a0-448b-a849-0a9b1999601b"
     },
     "attestation": {
-      "type": "biased",
+      "type": "bias",
       "bias": {
-        "types": ["selection bias", "exclusion bias"],
+        "types": ["selection bias"],
         "severity": "low",
         "description": "Road signs were taken predominantly from the North",
         "context": "In road sign recognition system",

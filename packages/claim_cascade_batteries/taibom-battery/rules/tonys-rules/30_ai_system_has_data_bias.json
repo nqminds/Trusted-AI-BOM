@@ -12,12 +12,12 @@
     "type": "rule",
     "rule": [
       "% Retrieve all bias attestations for an AI system",
-      "ai_system_has_biased_data(AISystemId, Attestations) :-",
+      "ai_system_has_data_bias(AISystemId, Attestations) :-",
       "    findall(",
       "        (component(ComponentHash, DataVcId), BiasDetails),",
       "        (data_in_inferencing_system(DataVcIds, AISystemId),",
       "         member(DataVcId, DataVcIds),",
-      "         biased_attestation(_, attestation(BiasDetails, \"biased\"), component(ComponentHash, DataVcId))),",
+      "         bias_attestation(_, attestation(BiasDetails, \"bias\"), component(ComponentHash, DataVcId))),",
       "        Attestations",
       "    )."
     ]

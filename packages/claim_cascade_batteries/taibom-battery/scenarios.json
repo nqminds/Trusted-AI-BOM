@@ -179,7 +179,7 @@
           "signing_key": "keys/admin.priv"
         },
         {
-          "path": "biased_attestation/additions_to_implement_use_cases",
+          "path": "bias_attestation/additions_to_implement_use_cases",
           "signing_key": "keys/admin.priv"
         },
         {
@@ -224,7 +224,7 @@
         },
         {
           "name": "Get any attestations of data bias in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
-          "query": "ai_system_has_biased_data(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
+          "query": "ai_system_has_data_bias(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
         }
       ]
     }
