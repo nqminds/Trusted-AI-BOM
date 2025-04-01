@@ -102,3 +102,8 @@ sequenceDiagram
     Note over Client: Client verifies signature of returned hash
 
 ```
+
+### Integration with an Inferencing Engine
+
+Integration with an inferencing system should be as straighforward as the current implementation model used in [TrustNetz](https://cahn.nqminds.com/cahn/demonstration/trustnetz_agent_interface)
+
