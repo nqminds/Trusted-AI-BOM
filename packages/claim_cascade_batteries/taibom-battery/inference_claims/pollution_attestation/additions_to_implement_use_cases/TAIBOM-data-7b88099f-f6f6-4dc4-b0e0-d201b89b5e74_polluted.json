@@ -11,7 +11,7 @@
   "validUntil": null,
   "credentialStatus": null,
   "credentialSchema": {
-    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/66-polluted-attestation.v1.0.0.schema.yaml",
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/66-pollution-attestation.v1.0.0.schema.yaml",
     "type": "JsonSchema"
   },
   "credentialSubject": {
@@ -20,7 +20,7 @@
       "hash": "2fe24dae2b47899e5b33922702b3eb30e8c217d61b64128b7094f6485a1cce3d"
     },
     "attestation": {
-      "type": "polluted",
+      "type": "pollution",
       "pollution": {
         "date": "31-03-2025",
         "type": "mislabelled data",

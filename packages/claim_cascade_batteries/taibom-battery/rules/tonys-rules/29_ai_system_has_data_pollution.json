@@ -12,12 +12,12 @@
     "type": "rule",
     "rule": [
       "% Retrieve all pollution attestations for an AI system",
-      "ai_system_has_polluted_data(AISystemId, Attestations) :-",
+      "ai_system_has_data_pollution(AISystemId, Attestations) :-",
       "    findall(",
       "        (component(ComponentHash, DataVcId), PollutionDetails),",
       "        (data_in_inferencing_system(DataVcIds, AISystemId),",
       "         member(DataVcId, DataVcIds),",
-      "         polluted_attestation(_, attestation(PollutionDetails, \"polluted\"), component(ComponentHash, DataVcId))),",
+      "         pollution_attestation(_, attestation(PollutionDetails, \"pollution\"), component(ComponentHash, DataVcId))),",
       "        Attestations",
       "    )."
     ]

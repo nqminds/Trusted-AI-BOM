@@ -15,10 +15,10 @@
     "type": "JsonSchema"
   },
   "credentialSubject": {
-    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/66-polluted-attestation.v1.0.0.schema.yaml",
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/66-pollution-attestation.v1.0.0.schema.yaml",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "title": "Polluted Attestation",
-    "description": "This schema extends the generic Attestation Schema to define an attestation that a component is polluted\n",
+    "title": "Pollution Attestation",
+    "description": "This schema extends the generic Attestation Schema to define an attestation that a component is pollution\n",
     "type": "object",
     "properties": {
       "component": {
@@ -45,9 +45,9 @@
           "type": {
             "type": "string",
             "enum": [
-              "polluted"
+              "pollution"
             ],
-            "description": "Type of attestation, set to \"Polluted\" for this schema."
+            "description": "Type of attestation, set to \"Pollution\" for this schema."
           },
           "pollution": {
             "type": "object",
@@ -94,6 +94,6 @@
       "component",
       "attestation"
     ],
-    "context": "## Introduction\n\nThe **Polluted Attestation Schema** extends the generic Attestation Schema to enable attestations related to data pollution. By referencing pollution event details such as the type of pollution (e.g., label noise, bias amplification, concept drift, distribution shift, etc.), the date, and severity, this schema ensures a structured way to document and track reported data pollution events.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"Polluted\".\n- **Pollution Details**: Provides details of the data pollution event, including pollution type, date, severity and observed impact.\n\n## Use Case\n\nThe **Pollution Attestation Schema** is used to:\n1. **Document Pollution Events**: Attach details of pollution events to attestations for components.\n2. **Track Data Integrity Issues**: Keep track of components affected by polluted data and trace the impact on downstream models or decisions.\n3. **Support Compliance & Fairness**: Ensure that polluted components are monitored and addressed in line with ethical AI and regulatory standards.\n\nThis schema promotes transparency and accountability, ensuring that data pollution issues are communicated clearly across software supply chains. It also helps organizations trace how polluted data may have impacted AI model behavior and mitigate potential risks.\n"
+    "context": "## Introduction\n\nThe **Pollution Attestation Schema** extends the generic Attestation Schema to enable attestations related to data pollution. By referencing pollution event details such as the type of pollution (e.g., label noise, bias amplification, concept drift, distribution shift, etc.), the date, and severity, this schema ensures a structured way to document and track reported data pollution events.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"Pollution\".\n- **Pollution Details**: Provides details of the data pollution event, including pollution type, date, severity and observed impact.\n\n## Use Case\n\nThe **Pollution Attestation Schema** is used to:\n1. **Document Pollution Events**: Attach details of pollution events to attestations for components.\n2. **Track Data Integrity Issues**: Keep track of components affected by pollution data and trace the impact on downstream models or decisions.\n3. **Support Compliance & Fairness**: Ensure that pollution components are monitored and addressed in line with ethical AI and regulatory standards.\n\nThis schema promotes transparency and accountability, ensuring that data pollution issues are communicated clearly across software supply chains. It also helps organizations trace how pollution data may have impacted AI model behavior and mitigate potential risks.\n"
   }
 }
