@@ -54,5 +54,51 @@ This database serves as a hash resolution mechanism for TAIBOM, ensuring that ha
 - resolvable indicates whether the stored hash can be resolved or not. A file-watcher agent can be used to determine if the directory has been moved / deleted - and potentially attempt to resolve this.
 - resolve_data_hash() and resolve_code_hash() provide methods to verify or retrieve information linked to the stored hash, these functions are likely to be identical - so consider a single method resolve_taibom_hash()
 
-#### Resolving data hashes
+#### Resolving data 
 
+```mermaid
+sequenceDiagram
+    participant Client
+    participant TAIBOM_Server
+    participant VC_Signing_Key
+    participant GUID_Hash_Table
+    participant Subject_Storage
+    participant Hash_Resolver
+
+    Note over Client: Step 1: Retrieve server details from DID Registry (not shown)
+    
+    Client->>TAIBOM_Server: Step 2: Initiate handshake (send challenge)
+    TAIBOM_Server->>Client: Step 2: Respond with signed challenge
+    Client->>VC_Signing_Key: Step 2: Verify signature with public key
+    VC_Signing_Key-->>Client: Step 2: Signature valid
+    
+    Note over Client,TAIBOM_Server: Step 3: Two methods for hash resolution
+    
+    alt "Trusted" Mode
+        Client->>TAIBOM_Server: Step 3a: Submit full Verifiable Credential (VC)
+        TAIBOM_Server->>GUID_Hash_Table: Query for subject location
+        GUID_Hash_Table-->>TAIBOM_Server: Return subject file path
+        TAIBOM_Server->>Subject_Storage: Retrieve stored subject data
+        Subject_Storage-->>TAIBOM_Server: Return data
+        TAIBOM_Server->>Hash_Resolver: Compute hash from retrieved data
+        Hash_Resolver-->>TAIBOM_Server: Return computed hash
+    end
+    
+    alt "Untrusted" Mode
+        Client->>TAIBOM_Server: Step 3b: Submit GUID / MINIMAL required infomration (only)
+        TAIBOM_Server->>GUID_Hash_Table: Lookup subject location
+        GUID_Hash_Table-->>TAIBOM_Server: Return subject file path
+        TAIBOM_Server->>Subject_Storage: Retrieve stored subject data
+        Subject_Storage-->>TAIBOM_Server: Return data
+        TAIBOM_Server->>Hash_Resolver: Compute hash from retrieved data
+        Hash_Resolver-->>TAIBOM_Server: Return computed hash
+    end
+
+    TAIBOM_Server->>VC_Signing_Key: Sign resolved hash
+    VC_Signing_Key-->>TAIBOM_Server: Return signed hash
+    
+    TAIBOM_Server->>Client: Step 4: Return signed hash proof
+    
+    Note over Client: Client verifies signature of returned hash
+
+```
