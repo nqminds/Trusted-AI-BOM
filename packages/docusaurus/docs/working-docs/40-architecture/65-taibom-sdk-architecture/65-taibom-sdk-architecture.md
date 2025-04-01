@@ -65,7 +65,7 @@ There should be scope to provide a method of adding TAIBOMS which were not gener
 
 :::
 
-#### Resolving data 
+#### Resolving hashes (universal function) 
 
 ```mermaid
 sequenceDiagram
