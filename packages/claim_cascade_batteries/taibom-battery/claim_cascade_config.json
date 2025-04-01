@@ -1,7 +1,0 @@
-{
-  "claim_cascade_root_keys_path": "/home/ash/Documents/ClaimCascade/packages/claim_cascade//unprocessed/keys",
-  "busy_timeout": 3,
-  "unprocessed_inference_verifiable_credentials_path": "/home/ash/Documents/ClaimCascade/packages/claim_cascade/unprocessed/inference_verifiable_credentials",
-  "unprocessed_policy_verifiable_credentials_path": "/home/ash/Documents/ClaimCascade/packages/claim_cascade/unprocessed/policy_verifiable_credentials",
-  "unprocessed_keys_path": "/home/ash/Documents/ClaimCascade/packages/claim_cascade/unprocessed/keys"
-}
