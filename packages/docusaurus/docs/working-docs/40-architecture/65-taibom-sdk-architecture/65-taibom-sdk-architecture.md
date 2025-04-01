@@ -25,7 +25,7 @@ title: SDK Architecture
 - The TAIBOM SDK MUST register the key / email pair with a TAIBOM specific DID registry 
     - NquiringMinds will host a DID registry for identities to be registered to
     - Any DID registry can be created and used if you do not wish to explicitly trust the NquirirngMinds TAIBOM did registry
-    - There is scope to extend this DID registry to provide a public address to a [TAIBOM SDK API endpoint](#SDK-API)
+    - There is scope to extend this DID registry to provide a public address to a [TAIBOM SDK API endpoint](#sdk-api)
 
 ## SDK API
 The TAIBOM SDK API should provide an API endpoint for resolving hashes created by a TAIBOM Identity.
