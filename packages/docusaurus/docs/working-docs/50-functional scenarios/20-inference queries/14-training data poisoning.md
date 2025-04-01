@@ -42,9 +42,9 @@ FUNCTION ai_system_has_data_poisoning(AI_System_ID)
         FOR EACH Attestation in Attestations_List DO
             IF Attestation is of type "poisoning" THEN
                 SET Component_Hash = Attestation's component hash
-                SET Poisoninging_Details = Attestation's details
+                SET Poisoning_Details = Attestation's details
                 
-                ADD ({"component": Component_Hash, "data_vc_id": Data_VC_ID}, Poisoninging_Details) TO Attestations
+                ADD ({"component": Component_Hash, "data_vc_id": Data_VC_ID}, Poisoning_Details) TO Attestations
 
     // Step 4: Return all poisoning attestations found
     RETURN Attestations
@@ -63,20 +63,20 @@ END FUNCTION
 
 2. **Extract the list of Data Verification Credentials (`DataVcIds`)** used in training from the datapack.  
 
-3. **Identify attestations that indicate data poisoninging**:  
+3. **Identify attestations that indicate data poisoning**:  
    - For each `DataVcId`, retrieve its **poisoning attestations**.  
-   - If an attestation is labeled as `"poisoning"`, extract its `component_hash` and `PoisoningingDetails`.  
+   - If an attestation is labeled as `"poisoning"`, extract its `component_hash` and `PoisoningDetails`.  
 
 4. **Return a list of poisoning attestations**:  
    - Each entry consists of a tuple:  
      - **Component information** (`component hash` and `DataVcId`).  
-     - **Poisoninging details** describing how the data was compromised.  
+     - **Poisoning details** describing how the data was compromised.  
 
 
 
 ## Query
 
-- `ai_system_has_data_poisoning(AiSystemId, Attestations)` [link to query](https://github.com/nqminds/Trusted-AI-BOM/blob/poisoninging%2Cpollution%26bias/packages/claim_cascade_batteries/taibom-battery/scenarios.json#L217-L220)
+- `ai_system_has_data_poisoning(AiSystemId, Attestations)` [link to query](https://github.com/nqminds/Trusted-AI-BOM/blob/poisoning%2Cpollution%26bias/packages/claim_cascade_batteries/taibom-battery/scenarios.json#L217-L220)
 - link to simulator 
 
 

@@ -49,25 +49,25 @@
             ],
             "description": "Type of attestation, set to \"Poisoning\" for this schema."
           },
-          "poisoninging": {
+          "poisoning": {
             "type": "object",
-            "description": "poisoninging event that applies to the particular component",
+            "description": "poisoning event that applies to the particular component",
             "properties": {
               "date": {
                 "type": "string",
-                "description": "The date of the data poisoninging event"
+                "description": "The date of the data poisoning event"
               },
               "type": {
                 "type": "string",
-                "description": "The type of data poisoninging event (e.g. mislabelling attack, data injection, data manipulation)"
+                "description": "The type of data poisoning event (e.g. mislabelling attack, data injection, data manipulation)"
               },
               "severity": {
                 "type": "string",
-                "description": "Severity of data poisoninging"
+                "description": "Severity of data poisoning"
               },
               "description": {
                 "type": "string",
-                "description": "description of data poisoninging event"
+                "description": "description of data poisoning event"
               }
             },
             "required": [
@@ -77,7 +77,7 @@
         },
         "required": [
           "type",
-          "poisoninging"
+          "poisoning"
         ]
       }
     },
@@ -85,6 +85,6 @@
       "component",
       "attestation"
     ],
-    "context": "## Introduction\n\nThe **Poisoning Attestation Schema** extends the generic Attestation Schema to enable attestations related to data poisoninging. By referencing poisoninging event details such as the type of poisoninging (e.g. mislabelling attack, data injection, data manipulation, etc.), the date and severity, this schema ensures a structured way to document and track reported data poisoninging events.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"Poisoninging\".\n- **Poisoninging Details**: Provides details of the data poisoninging event, including poisoninging type, date, severity & description.\n\n## Use Case\n\nThe **Poisoninging Attestation Schema** is used to:\n1. **Document Poisoninging events**: Attach details of poisoninging events to attestations for components.\n2. **Track Poisoninging**: Keep track of components which have been poisoning and trace which other components this affects.\n3. **Support Compliance**: Ensure that poisoning components are tracked and managed in line with security standards.\n\nThis schema promotes transparency and accountability, ensuring that data poisoninging event information is communicated clearly across software supply chains and trace if a data poisoninging event compromises any components in that supply chain.\n"
+    "context": "## Introduction\n\nThe **Poisoning Attestation Schema** extends the generic Attestation Schema to enable attestations related to data poisoning. By referencing poisoning event details such as the type of poisoning (e.g. mislabelling attack, data injection, data manipulation, etc.), the date and severity, this schema ensures a structured way to document and track reported data poisoning events.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"Poisoning\".\n- **Poisoning Details**: Provides details of the data poisoning event, including poisoning type, date, severity & description.\n\n## Use Case\n\nThe **Poisoning Attestation Schema** is used to:\n1. **Document Poisoning events**: Attach details of poisoning events to attestations for components.\n2. **Track Poisoning**: Keep track of components which have been poisoning and trace which other components this affects.\n3. **Support Compliance**: Ensure that poisoning components are tracked and managed in line with security standards.\n\nThis schema promotes transparency and accountability, ensuring that data poisoning event information is communicated clearly across software supply chains and trace if a data poisoning event compromises any components in that supply chain.\n"
   }
 }

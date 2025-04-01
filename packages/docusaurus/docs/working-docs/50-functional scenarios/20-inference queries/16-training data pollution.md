@@ -81,7 +81,7 @@ This function detects whether **pollution data** exists within an AI system by t
 
 ## Query
 
-- `ai_system_has_data_pollution(AiSystemId, Attestations)` [link to query](https://github.com/nqminds/Trusted-AI-BOM/blob/poisoninging%2Cpollution%26bias/packages/claim_cascade_batteries/taibom-battery/scenarios.json#L221-L224)
+- `ai_system_has_data_pollution(AiSystemId, Attestations)` [link to query](https://github.com/nqminds/Trusted-AI-BOM/blob/poisoning%2Cpollution%26bias/packages/claim_cascade_batteries/taibom-battery/scenarios.json#L221-L224)
 - link to simulator 
 
 

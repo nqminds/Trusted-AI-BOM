@@ -21,7 +21,7 @@
     },
     "attestation": {
       "type": "poisoning",
-      "poisoninging": {
+      "poisoning": {
         "date": "31-03-2025",
         "type": "data injection",
         "severity": "high",
