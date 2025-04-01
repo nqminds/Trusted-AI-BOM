@@ -85,7 +85,7 @@ sequenceDiagram
     end
     
     alt "Untrusted" Mode
-        Client->>TAIBOM_Server: Step 3b: Submit GUID / MINIMAL required infomration (only)
+        Client->>TAIBOM_Server: Step 3b: Submit GUID / MINIMAL required information (only)
         TAIBOM_Server->>GUID_Hash_Table: Lookup subject location
         GUID_Hash_Table-->>TAIBOM_Server: Return subject file path
         TAIBOM_Server->>Subject_Storage: Retrieve stored subject data
