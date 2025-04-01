@@ -15,34 +15,20 @@ Do we trust the providers/origin of all training data used - using whitelist
 
 ## Pseudo code 
 
-```python
-def ai_system_providers_trusted_with_whitelist(AISystemId, WhitelistEmails):
-    # Step 1: Find all Data Verification Credentials (DataVcIds) linked to the AI System
-    ConfigVcId = db_get_ai_system(AISystemId).config_vc_id
-    WeightsVcId = get_trained_weights(ConfigVcId)
+```
+FUNCTION ai_system_providers_trusted_with_whitelist(AI_System_ID, Whitelist_Emails)
+    // Step 1: Retrieve provider UUIDs associated with the AI system
+    SET Provider_UUIDs = get list of providers contributing data to AI_System_ID
 
-    if not is_weights_data(WeightsVcId):
-        return False  # Ensure WeightsVcId is valid
+    // Step 2: Retrieve provider email addresses
+    SET Provider_Emails = map provider UUIDs to their identity email addresses
 
-    TrainingSystemVcId = get_training_system_for_weights(WeightsVcId)
-    DatapackVcId = get_datapack_for_training_system(TrainingSystemVcId)
-
-    # Step 2: Extract all dataset verification credentials (DataVcIds) from the datapack
-    DataVcIds = extract_data_vcs_from_datapack(DatapackVcId)
-
-    # Step 3: Identify the providers of each DataVcId
-    ProviderUUIDs = set()
-    for DataVcId in DataVcIds:
-        attestations = get_attestations_for_data(DataVcId)
-        for attestation in attestations:
-            if attestation.type == "provided":
-                ProviderUUIDs.add(attestation.provider_uuid)
-
-    # Step 4: Convert Provider UUIDs to Emails
-    ProviderEmails = {get_provider_email(uuid) for uuid in ProviderUUIDs}
-
-    # Step 5: Verify if all providers are in the whitelist
-    return ProviderEmails.issubset(set(WhitelistEmails))
+    // Step 3: Check if all provider emails are in the whitelist
+    IF Provider_Emails is a subset of Whitelist_Emails THEN
+        RETURN True
+    ELSE
+        RETURN False
+END FUNCTION
 ```
 
 ### **Explanation of the Full Functionality**

@@ -25,7 +25,7 @@ To describe and manage the trustworthiness attributes of the system, we first ne
 AI Adoption: AI component developers, AI system assemblers, AI training data providers, AI system integrators and AI system users will have the tools to deterministically describe the AI component and assembled AI. Without this innovation, it is almost impossible to make any stable, reliable claim about any facet of an AI system.
 
 ## Attestation
-Many organisations (e.g. Turing Institute, NIST, EU, Microsoft and Google) are defining process or metrics to define trustworthiness and the distinct parameters envisioned (e.g. Microsoft's version: fairness, reliability/safety, privacy/security, inclusiveness, transparency and accountability). Most of these approaches neglect two important facts: a) the statements are inherently biased by the organisation making the statement; and b) the interpretation of the claim is inherently subjective.
+Many organisations (e.g. Turing Institute, NIST, EU, Microsoft and Google) are defining process or metrics to define trustworthiness and the distinct parameters envisioned (e.g. Microsoft's version: fairness, reliability/safety, privacy/security, inclusiveness, transparency and accountability). Most of these approaches neglect two important facts: a) the statements are inherently bias by the organisation making the statement; and b) the interpretation of the claim is inherently subjective.
 
 Even when we consider basic system (non-AI) trustworthiness, it is clear that subjectivity is an integral part of the evaluation. Take a telecom system example: Does "China Mobile" trust Huawei telecommunication software? Does Vodafone trust Cisco telecommunication software? But does Vodafone trust Huawei kit and does China mobile trust Cisco kit?
 

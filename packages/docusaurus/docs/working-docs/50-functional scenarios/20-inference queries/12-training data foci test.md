@@ -15,37 +15,24 @@ Do we trust the providers/origin of all training data used - using exception lis
 
 ## Pseudo code 
 
-```python
-def ai_system_providers_trusted_with_blacklist(AISystemId, BlacklistEmails):
-    # Step 1: Find all Data Verification Credentials (DataVcIds) linked to the AI System
-    ConfigVcId = db_get_ai_system(AISystemId).config_vc_id
-    WeightsVcId = get_trained_weights(ConfigVcId)
+```
+FUNCTION ai_system_providers_trusted_with_blacklist(AI_System_ID, Blacklist_Emails)
+    // Step 1: Retrieve provider UUIDs associated with the AI system
+    SET Provider_UUIDs = get list of providers contributing data to AI_System_ID
 
-    if not is_weights_data(WeightsVcId):
-        return False  # Ensure WeightsVcId is valid
+    // Step 2: Retrieve provider email addresses
+    SET Provider_Emails = map provider UUIDs to their identity email addresses
 
-    TrainingSystemVcId = get_training_system_for_weights(WeightsVcId)
-    DatapackVcId = get_datapack_for_training_system(TrainingSystemVcId)
+    // Step 3: Check if any provider email appears in the blacklist
+    SET Matches = intersection of Provider_Emails and Blacklist_Emails
 
-    # Step 2: Extract all dataset verification credentials (DataVcIds) from the datapack
-    DataVcIds = extract_data_vcs_from_datapack(DatapackVcId)
+    // If there are no matches, the AI system providers are trusted
+    IF Matches is empty THEN
+        RETURN True
+    ELSE
+        RETURN False
+END FUNCTION
 
-    # Step 3: Identify the providers of each DataVcId
-    ProviderUUIDs = set()
-    for DataVcId in DataVcIds:
-        attestations = get_attestations_for_data(DataVcId)
-        for attestation in attestations:
-            if attestation.type == "provided":
-                ProviderUUIDs.add(attestation.provider_uuid)
-
-    # Step 4: Convert Provider UUIDs to Emails
-    ProviderEmails = {get_provider_email(uuid) for uuid in ProviderUUIDs}
-
-    # Step 5: Check if any provider email is in the blacklist
-    Matches = ProviderEmails.intersection(set(BlacklistEmails))
-
-    # Step 6: Return True if there are no matches (i.e., no blacklisted providers)
-    return len(Matches) == 0
 ```
 
 ### **Explanation of the Full Functionality**
