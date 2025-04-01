@@ -28,7 +28,7 @@ title: SDK Architecture
     - There is scope to extend this DID registry to provide a public address to a [TAIBOM SDK API endpoint](#sdk-api)
 
 ## SDK API
-The TAIBOM SDK API should provide an API endpoint for resolving hashes created by a TAIBOM Identity.
+The TAIBOM SDK API should provide an API endpoint for resolving hashes created by a TAIBOM Identity. When the SDK is installed on a user's machine to be used to create TAIBOMs it exposes this API endpoint on the user's machine.
 
 ### Proposed Architecture
 
