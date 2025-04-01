@@ -5,10 +5,10 @@ title: SDK Architecture
 # TAIBOM SDK Architecture
 
 ### Conventions: 
-- TAIBOMS ALWAYS use relative paths or PUBLIC (and resolvable) uris
+- TAIBOMS MUST ALWAYS use relative paths or PUBLIC (and resolvable) uris
     - Although the paths will resolve, where this breaks is if the data / code / system is moved, we then lose "sight" of where the TAIBOM is referencing the subject.
     - Schemas will need updating to add this rule
-- TAIBOMS MUST have a folder in the parent directory of the system
+- TAIBOMS SHOULD have a folder in the parent directory of the system
     - Therefore if the subject is moved, the taiboms should move with them, and hence the relative paths should resolve
 ```
     - /SYSTEM_OR_DB/
