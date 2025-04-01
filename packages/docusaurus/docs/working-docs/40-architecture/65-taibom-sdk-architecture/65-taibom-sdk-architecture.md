@@ -4,21 +4,6 @@ title: SDK Architecture
 
 # TAIBOM SDK Architecture
 
-## SDK API Endpoint
-
-
-```mermaid
-classDiagram
-    class GUID_HASH_KEYPAIR_DB{
-      + taibom_guid
-      + vc_hash
-      vc_filepath
-      resolvable
-      resolve_data_hash()
-      resolve_code_hash()
-    }
-```
-
 ### Conventions: 
 - TAIBOMS ALWAYS use relative paths or PUBLIC (and resolvable) uris
     - Although the paths will resolve, where this breaks is if the data / code / system is moved, we then lose "sight" of where the TAIBOM is referencing the subject.
@@ -43,4 +28,29 @@ classDiagram
     - There is scope to extend this DID registry to provide a public address to a [TAIBOM SDK API endpoint](#SDK-API)
 
 ## SDK API
-The TAIBOM SDK API should provide an API endpoint for resolving hashes 
+The TAIBOM SDK API should provide an API endpoint for resolving hashes created by a TAIBOM Identity.
+
+### Proposed Architecture
+
+#### GUID, HASH table
+
+```mermaid
+classDiagram
+    class GUID_HASH_TABLE{
+      + taibom_guid
+      + vc_hash
+      vc_filepath
+      resolvable
+      resolve_data_hash()
+      resolve_code_hash()
+    }
+```
+
+This database serves as a hash resolution mechanism for TAIBOM, ensuring that hashes linked to specific GUIDs can be looked up efficiently.
+
+- taibom_guid acts as a unique identifier for an entity in the system.
+- vc_hash is the hash value derived from a Verifiable Credential (VC).
+- vc_filepath stores a reference to the physical Verifiable Credential (VC).
+- resolvable indicates whether the stored hash can be resolved or not. A file-watcher agent can be used to determine if the directory has been moved / deleted - and potentially attempt to resolve this.
+- resolve_data_hash() and resolve_code_hash() provide methods to verify or retrieve information linked to the stored hash, these functions are likely to be identical - so consider a single method resolve_taibom_hash()
+
