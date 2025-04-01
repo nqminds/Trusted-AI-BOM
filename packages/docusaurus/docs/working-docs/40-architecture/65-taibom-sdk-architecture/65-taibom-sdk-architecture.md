@@ -19,3 +19,6 @@ classDiagram
     }
 ```
 
+### Conventions: 
+- TAIBOMS ALWAYS use relative paths
+    - Alt
