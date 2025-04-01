@@ -84,7 +84,7 @@ sequenceDiagram
         Hash_Resolver-->>TAIBOM_Server: Return computed hash
     end
     
-    alt "Untrusted" Mode
+    alt "Less-Trusted" Mode
         Client->>TAIBOM_Server: Step 3b: Submit GUID / MINIMAL required information (only)
         TAIBOM_Server->>GUID_Hash_Table: Lookup subject location
         GUID_Hash_Table-->>TAIBOM_Server: Return subject file path
