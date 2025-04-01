@@ -41,6 +41,7 @@ classDiagram
       + vc_hash
       vc_filepath
       resolvable
+      created_at
       resolve_data_hash()
       resolve_code_hash()
     }
