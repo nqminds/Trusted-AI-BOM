@@ -54,3 +54,5 @@ This database serves as a hash resolution mechanism for TAIBOM, ensuring that ha
 - resolvable indicates whether the stored hash can be resolved or not. A file-watcher agent can be used to determine if the directory has been moved / deleted - and potentially attempt to resolve this.
 - resolve_data_hash() and resolve_code_hash() provide methods to verify or retrieve information linked to the stored hash, these functions are likely to be identical - so consider a single method resolve_taibom_hash()
 
+#### Resolving data hashes
+
