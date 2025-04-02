@@ -5,6 +5,14 @@ import path from "path";
 import fs from "fs";
 import { exec } from "child_process";
 import { v4 as uuidv4 } from "uuid";
+import { CookieJar } from 'tough-cookie';
+import got from 'got';
+import os from "os";
+import {voltUtils} from '@tdxvolt/volt-client-web/js';
+import forge from 'node-forge';
+import readline from 'readline';
+
+
 import {
   generateAndSignVC,
   processVulnerabilityReport,
@@ -22,6 +30,69 @@ import {
   getAndVerifyClaim,
   getHash,
 } from "./file-utils.mjs";
+import { get } from "https";
+
+// Create cookie jar with file persistence
+let cookieString = '';
+
+const cookiePath = path.join(os.homedir(), '.taibom-cookies.json');
+let jar;
+
+try {
+  const cookieData = fs.existsSync(cookiePath) ? 
+    JSON.parse(fs.readFileSync(cookiePath, 'utf8')) : {};
+  jar = CookieJar.fromJSON(cookieData);
+  
+  // Initialize the reference cookie string after loading
+  cookieString = JSON.stringify(jar.toJSON());
+} catch (error) {
+  console.log("Creating new cookie jar");
+  jar = new CookieJar();
+  
+  // Initialize with empty cookie jar string
+  cookieString = JSON.stringify(jar.toJSON());
+}
+
+const saveCookies = () => {
+  // Serialize current cookie jar state
+  const newCookieString = JSON.stringify(jar.toJSON());
+  
+  // Only write to disk if cookies have actually changed
+  if (newCookieString !== cookieString) {
+    // Log when changes occur (optional, can be removed in production)
+    // console.log("Cookie changes detected, saving to disk");
+    
+    // Write updated cookies to disk
+    fs.writeFileSync(cookiePath, newCookieString, 'utf8');
+    
+    // Update the reference cookie string
+    cookieString = newCookieString;
+  }
+};
+
+
+// Define API endpoints
+export const URI = "http://localhost:3001"; // Replace with your actual base URL 
+export const BASE_PATH = "/api/auth";
+export const ENDPOINTS = {
+  CHALLENGE: "challenge",
+  AUTHENTICATE: "authenticate"
+};
+
+// Create API client with cookie support
+const apiClient = got.extend({
+  prefixUrl: URI.replace(/\/$/, '')+BASE_PATH, // Remove trailing slash if present
+  cookieJar: jar,
+  responseType: 'json',
+  hooks: {
+    afterResponse: [
+      (response) => {
+        saveCookies(); // Save cookies after each request
+        return response;
+      }
+    ]
+  }
+});
 
 function runBashCommand(bashCommand, callback) {
   exec(bashCommand, (error, stdout, stderr) => {
@@ -51,6 +122,243 @@ async function retrieveIdentity(identityEmail) {
 
   console.log(`Identity keys for '${identityEmail}' found.`);
   return { identity, privateKeyPath, publicKeyPath };
+}
+
+async function getChallenge() {
+  try {
+    const response = await apiClient.get(ENDPOINTS.CHALLENGE, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response.body; // Return just the parsed JSON body
+  } catch (error) {
+    console.error('Error getting challenge:', error.message);
+    throw error;
+  }
+}
+
+
+async function authenticate(signature, idVC, signedData) {
+  try {
+    const response = await apiClient.post(ENDPOINTS.AUTHENTICATE, {
+      json: { signature, idVC, signedData },
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    return response; // got automatically parses JSON responses
+  } catch (error) {
+    console.error('Authentication error:', error.message);
+    if (error.response) {
+      // Handle response error (e.g., 401, 403)
+      console.error('Status code:', error.response.statusCode);
+      console.error('Response body:', error.response.body);
+    }
+    throw error;
+  }
+}
+
+export async function hashNonce(nonce) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(nonce);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  return new Uint8Array(hashBuffer);
+}
+
+
+/**
+ * Converts a base64 ED25519 key directly to PEM format without using node-forge's ASN.1 encoder
+ * @param {string} base64Key - The base64-encoded key
+ * @param {string} keyType - The type of key ("PRIVATE KEY" or "PUBLIC KEY") 
+ * @returns {string} - PEM formatted key
+ */
+function getPemFromKey(base64Key, keyType = "PRIVATE KEY") {
+  // Pre-encoded ASN.1 DER structures for ED25519 keys
+  // These templates follow the RFC 8032 format
+  
+  // Templates contain placeholder for the actual key bytes
+  const PRIV_KEY_PREFIX = Buffer.from([
+    // SEQUENCE
+    0x30, 0x2e, 
+      // INTEGER (version)
+      0x02, 0x01, 0x00,
+      // SEQUENCE (algorithm)
+      0x30, 0x05,
+        // OID (Ed25519)
+        0x06, 0x03, 0x2B, 0x65, 0x70,
+      // OCTET STRING (contains the key)
+      0x04, 0x22, 
+        // OCTET STRING (key bytes)
+        0x04, 0x20
+  ]);
+  
+  const PUB_KEY_PREFIX = Buffer.from([
+    // SEQUENCE
+    0x30, 0x2a,
+      // SEQUENCE (algorithm)
+      0x30, 0x05,
+        // OID (Ed25519)
+        0x06, 0x03, 0x2B, 0x65, 0x70,
+      // BIT STRING (contains the key)
+      0x03, 0x21, 0x00
+  ]);
+  
+  // Get the raw key bytes
+  const keyBytes = Buffer.from(base64Key, 'base64');
+  
+  // Choose the correct prefix based on key type
+  const prefix = keyType === "PRIVATE KEY" ? PRIV_KEY_PREFIX : PUB_KEY_PREFIX;
+  
+  // Combine prefix and key bytes
+  const derBytes = Buffer.concat([prefix, keyBytes]);
+  
+  // Convert to base64
+  const base64Der = derBytes.toString('base64');
+  
+  // Format as PEM
+  return formatAsPem(base64Der, keyType);
+}
+
+/**
+ * Format base64-encoded DER data as a PEM string
+ */
+function formatAsPem(base64Der, keyType) {
+  const pemHeader = `-----BEGIN ${keyType}-----`;
+  const pemFooter = `-----END ${keyType}-----`;
+  
+  // Split base64 into lines of 64 characters
+  const formattedKey = base64Der.match(/.{1,64}/g).join('\n');
+  
+  return `${pemHeader}\n${formattedKey}\n${pemFooter}`;
+}
+
+async function signNonce(nonce, priv) {
+  // get the key from memory and convert it to a usable format
+  const clientKey = getPemFromKey(priv, "PRIVATE KEY");
+  // Convert nonce to ArrayBuffer for signing
+  const encoder = new TextEncoder();
+  const data = encoder.encode(nonce);
+  const {signBase64,ed25519} = voltUtils;
+  const signature1 = signBase64(clientKey, data,ed25519,"raw");
+  const signatureArray = Buffer.from(signature1,'base64');
+  const sigArray2 = new Uint8Array(signatureArray);
+  console.log("Signature:", signature1);
+  console.log("Signature Array:", sigArray2);
+  return { "signature": sigArray2, "data": data };
+}  
+
+function convertNonce(nonceObj) {
+  // Get all keys and sort them numerically
+  const keys = Object.keys(nonceObj).sort((a, b) => parseInt(a) - parseInt(b));
+  
+  // Create a new Uint8Array of the correct length
+  const bytes = new Uint8Array(keys.length);
+  
+  // Fill the array with values from the nonce object
+  keys.forEach((key, index) => {
+    bytes[index] = nonceObj[key];
+  });
+  
+  return bytes;
+}
+
+/**
+ * Function to get user input (equivalent to Python's input())
+ * @param {string} prompt - The message to display to the user
+ * @returns {Promise<string>} - The user's input
+ */
+function getUserInput(prompt) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) => {
+    rl.question(prompt, (answer) => {
+      rl.close();
+      resolve(answer);
+    });
+  });
+}
+
+async function verify_email(email, pub, priv) {
+  const {
+    signBase64, signingPublicKeyFromPem, stripPemHeaders, toBase64Url, randomBytes
+
+  } = voltUtils;
+  console.log("public ley", pub);
+  const pub_pem = getPemFromKey(pub, "PUBLIC KEY");
+  const priv_pem = getPemFromKey(priv, "PRIVATE KEY");
+  const nonce = toBase64Url(randomBytes(16));
+  const signature = signBase64(priv_pem, email + nonce);
+  const send_key = stripPemHeaders(pub_pem);
+
+  const postData = {
+    "email": email,
+    "key": send_key,
+    "signature": signature,
+    "nonce": nonce,
+    "returnUrl": "https://taibom.org/"
+  };
+  
+  console.log("Post data:", postData);
+  const authUrlCheckResponse = await apiClient.post("generateBinding", {
+    json: postData,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  console.log("Auth URL Check Response:", authUrlCheckResponse.body);
+  const authStatusUrl = authUrlCheckResponse.body.authStatusUrl;
+  console.log("Auth Status URL:", authStatusUrl);
+  var idVC;
+  let text_input = await getUserInput("Press enter when verified, type back to abort verification");
+  while (text_input !== "back") {
+    // check the idVC is verified
+    // get request to authStatusUrl, if pending then next loop else return the json body, this is an absolute new url not part of the api so shouldnt use apiclient
+
+    const authStatusResponse = await fetch(authStatusUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!authStatusResponse.ok) {
+      console.error('Error fetching auth status:', authStatusResponse.statusText);
+      break;
+    }
+    console.log("Auth Status Response:", authStatusResponse);
+    const authStatusData = await authStatusResponse.json();
+    console.log("Auth Status Data:", authStatusData);
+    if (authStatusData.status === "pending") {
+      console.log("Auth Status: pending");
+      text_input = await getUserInput("Press enter when verified, type back to abort verification");
+    } else{
+      console.log("Auth Status: verified");
+      idVC = authStatusData;
+      console.log("ID VC:", idVC);
+      break;
+    }
+    
+  }
+  if (text_input === "back") {
+    console.log("Verification aborted");
+    return;
+  }
+  // TODO: do my authentication for an auth cookie or leave it or update the auth library to allocate cookies on pass through binding calls.
+  
+  // return the idVC or an error if escaped using endpoint /identity + ?email=<email>
+  const idVCresponse = await apiClient.get(`${ENDPOINTS.IDENTITY}?email=${email}`, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  console.log("ID VC response:", idVCresponse.body);
+  return idVCresponse.body;
+
+
 }
 
 const program = new Command();
@@ -112,7 +420,8 @@ program
     );
     vcToFile(vc, `${keypairPath}-identity.json`, "identity.json", false);
     vcToFile(vc, outputDir, "identity.json");
-
+    // TODO: 
+    const key_email_binding = verify_email(email, pub, priv);
 
     
   });
@@ -370,7 +679,7 @@ program
   .command("config-taibom")
   .description("Generate and sign a TAIBOM of an AI systems config")
   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-  .argument("<ai_system_taibom>", "AI system TAIOBOM path")
+  .argument("<ai_system_taibom>", "AI system TAIBOM path")
   .argument("<data_taibom>", "Path to data configs")
   .option("--name <config_name>", "[OPTIONAL] Name of configs", false)
   .option("--out <output_dir>", "Output directory")
