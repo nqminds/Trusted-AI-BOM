@@ -40,7 +40,7 @@
             "type": "string"
           },
           "value": {
-            "description": "The cryptographic hash (e.g., SHA-256) of the code.",
+            "description": "The cryptographic hash (e.g., SHA-256) of the directory containing the code.",
             "type": "string"
           }
         },

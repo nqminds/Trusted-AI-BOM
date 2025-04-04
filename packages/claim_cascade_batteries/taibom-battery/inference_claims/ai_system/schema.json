@@ -24,7 +24,7 @@
         "description": "Reference to the code used in the system, with optional integrity verification.",
         "properties": {
           "hash": {
-            "description": "The cryptographic hash (e.g., SHA-256) of the code VC for integrity verification.",
+            "description": " The cryptographic hash (e.g., SHA-256) of the Verifiable Credential representing the code for integrity verification, represents the signature of the Verifiable Credential, not the hash of the code itself.",
             "type": "string"
           },
           "id": {
