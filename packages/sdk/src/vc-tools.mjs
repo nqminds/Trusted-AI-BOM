@@ -144,3 +144,21 @@ export function generateAndSignVC(
 
   return jsonContent;
 }
+
+export function extractSchemaName(vc) {
+  const url = getVcSchemaId(vc)
+  const basePath = "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/";
+  
+  if (!url.startsWith(basePath)) {
+    return null; // URL does not match
+  }
+  
+  const regex = /\/(\d+)-((identity|data|data-pack|config|sbom|code|ai-system|attestation|[a-zA-Z0-9]+-attestation))\.v\d+\.\d+\.\d+\.schema\.yaml$/;
+  const match = url.match(regex);
+  
+  return match ? match[2] : null;
+}
+
+export function getVcSchemaId(vc) {
+  return vc?.credentialSchema?.id || "";
+}
