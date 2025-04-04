@@ -85,7 +85,7 @@ async function verifyHasValidExpiration(vc) {
  * 
  * @param {Object} VC
  * @param {string} email
- * @returns 
+ * @returns {boolean}
  */
 async function verifyAgainstEmail(vc, email) {
   const keys = (await getKeys(email)).keys;
@@ -103,13 +103,14 @@ async function verifyAgainstEmail(vc, email) {
     const key = keys[keyIndex];
     valid = await verifyVerifiableCredential(vc, key);
     if (valid && checkExpiration && await verifyHasValidExpiration(vc)) {
-      validVCs.push(vc);
-      break;
+      return true;
+      
     } else if (valid && !checkExpiration) {
-      validVCs.push(vc);
-      break;
+      return true;
     }
   }
+  return false;
+
 
 }
 
@@ -121,36 +122,15 @@ async function verifyAgainstEmail(vc, email) {
  */
 export async function verifyClaim(vc) {
   try {
-    let didDocument;
-    const didUrl = vc.issuer;
 
-    try {
-      // new stuff goes here TODO: Verify that the signing key of the incoming vc is the same one associated with the issuer
-      verifyAgainstEmail(vc, vc.issuer);
+      const isValid = verifyAgainstEmail(vc, vc.issuer);
+      console.log("isValid", isValid);
       const response = await fetch(didUrl);
       if (!response.ok) {
         throw new Error(`DID registry lookup failed for ${didUrl}`);
       }
-      didDocument = await response.json();
-    } catch (error) {
-      console.warn(
-        `Warning: Unable to fetch DID document from registry. Falling back to proof.verificationMethod. Error: ${error.message}`
-      );
-    }
 
-    let publicKey;
-    if (vc.proof && vc.proof.verificationMethod) {
-      // Use the public key from `proof.verificationMethod`
-      publicKey = vc.proof.verificationMethod;
-    } else {
-      console.error("No verification method found in the VC or DID document.");
-      return false;
-    }
 
-    const decodedPublicKey = convertToUint8(publicKey);
-
-    const isVerified = verify(vc, decodedPublicKey);
-    return isVerified;
   } catch (error) {
     console.error("Error during claim verification:", error);
     throw new Error(error);

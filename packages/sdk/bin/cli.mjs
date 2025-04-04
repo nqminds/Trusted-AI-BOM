@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import got from 'got';
 import {voltUtils} from '@tdxvolt/volt-client-web/js';
 import readline from 'readline';
-import { cookieJar, URI, BASE_PATH, ENDPOINTS, saveCookies } from "../src/api-tools.mjs";
+import { cookieJar, URI, BASE_PATH, ENDPOINTS, saveCookies, verifyAndFetchIdentity, getPemFromKey } from "../src/api-tools.mjs";
 
 import {
   generateAndSignVC,
@@ -73,158 +73,8 @@ async function retrieveIdentity(identityEmail) {
   return { identity, privateKeyPath, publicKeyPath };
 }
 
-async function getChallenge() {
-  try {
-    const response = await apiClient.get(ENDPOINTS.CHALLENGE, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    return response.body; // Return just the parsed JSON body
-  } catch (error) {
-    console.error('Error getting challenge:', error.message);
-    throw error;
-  }
-}
 
 
-async function verifyWithChallenge(idVC,priv) {//keys is from useKeys
-  const nonce = getChallenge();
-  const hashedNonce = await hashNonce(nonce);
-  const { signature, data } = await signNonce(hashedNonce, priv);
-  const response = await authenticate(signature, idVC, data);
-
-  return response;
-}
-
-
-
-
-async function authenticate(signature, idVC, signedData) {
-  //TODO: implement cookie functionality into this 
-
-  try {
-    const response = await apiClient.post(ENDPOINTS.AUTHENTICATE, {
-      json: { signature, idVC, signedData },
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    return response; // got automatically parses JSON responses
-  } catch (error) {
-    console.error('Authentication error:', error.message);
-    if (error.response) {
-      // Handle response error (e.g., 401, 403)
-      console.error('Status code:', error.response.statusCode);
-      console.error('Response body:', error.response.body);
-    }
-    throw error;
-  }
-}
-
-export async function hashNonce(nonce) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(nonce);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  return new Uint8Array(hashBuffer);
-}
-
-
-/**
- * Converts a base64 ED25519 key directly to PEM format without using node-forge's ASN.1 encoder
- * @param {string} base64Key - The base64-encoded key
- * @param {string} keyType - The type of key ("PRIVATE KEY" or "PUBLIC KEY") 
- * @returns {string} - PEM formatted key
- */
-function getPemFromKey(base64Key, keyType = "PRIVATE KEY") {
-  // Pre-encoded ASN.1 DER structures for ED25519 keys
-  // These templates follow the RFC 8032 format
-  
-  // Templates contain placeholder for the actual key bytes
-  const PRIV_KEY_PREFIX = Buffer.from([
-    // SEQUENCE
-    0x30, 0x2e, 
-      // INTEGER (version)
-      0x02, 0x01, 0x00,
-      // SEQUENCE (algorithm)
-      0x30, 0x05,
-        // OID (Ed25519)
-        0x06, 0x03, 0x2B, 0x65, 0x70,
-      // OCTET STRING (contains the key)
-      0x04, 0x22, 
-        // OCTET STRING (key bytes)
-        0x04, 0x20
-  ]);
-  
-  const PUB_KEY_PREFIX = Buffer.from([
-    // SEQUENCE
-    0x30, 0x2a,
-      // SEQUENCE (algorithm)
-      0x30, 0x05,
-        // OID (Ed25519)
-        0x06, 0x03, 0x2B, 0x65, 0x70,
-      // BIT STRING (contains the key)
-      0x03, 0x21, 0x00
-  ]);
-  
-  // Get the raw key bytes
-  const keyBytes = Buffer.from(base64Key, 'base64');
-  
-  // Choose the correct prefix based on key type
-  const prefix = keyType === "PRIVATE KEY" ? PRIV_KEY_PREFIX : PUB_KEY_PREFIX;
-  
-  // Combine prefix and key bytes
-  const derBytes = Buffer.concat([prefix, keyBytes]);
-  
-  // Convert to base64
-  const base64Der = derBytes.toString('base64');
-  
-  // Format as PEM
-  return formatAsPem(base64Der, keyType);
-}
-
-/**
- * Format base64-encoded DER data as a PEM string
- */
-function formatAsPem(base64Der, keyType) {
-  const pemHeader = `-----BEGIN ${keyType}-----`;
-  const pemFooter = `-----END ${keyType}-----`;
-  
-  // Split base64 into lines of 64 characters
-  const formattedKey = base64Der.match(/.{1,64}/g).join('\n');
-  
-  return `${pemHeader}\n${formattedKey}\n${pemFooter}`;
-}
-
-async function signNonce(nonce, priv) {
-  // get the key from memory and convert it to a usable format
-  const clientKey = getPemFromKey(priv, "PRIVATE KEY");
-  // Convert nonce to ArrayBuffer for signing
-  const encoder = new TextEncoder();
-  const data = encoder.encode(nonce);
-  const {signBase64,ed25519} = voltUtils;
-  const signature1 = signBase64(clientKey, data,ed25519,"raw");
-  const signatureArray = Buffer.from(signature1,'base64');
-  const sigArray2 = new Uint8Array(signatureArray);
-  console.log("Signature:", signature1);
-  console.log("Signature Array:", sigArray2);
-  return { "signature": sigArray2, "data": data };
-}  
-
-function convertNonce(nonceObj) {
-  // Get all keys and sort them numerically
-  const keys = Object.keys(nonceObj).sort((a, b) => parseInt(a) - parseInt(b));
-  
-  // Create a new Uint8Array of the correct length
-  const bytes = new Uint8Array(keys.length);
-  
-  // Fill the array with values from the nonce object
-  keys.forEach((key, index) => {
-    bytes[index] = nonceObj[key];
-  });
-  
-  return bytes;
-}
 
 /**
  * Function to get user input (equivalent to Python's input())
@@ -247,10 +97,9 @@ function getUserInput(prompt) {
 
 async function verify_email(email, pub, priv) {
   const {
-    signBase64, signingPublicKeyFromPem, stripPemHeaders, toBase64Url, randomBytes
+    signBase64, stripPemHeaders, toBase64Url, randomBytes
 
   } = voltUtils;
-  console.log("public ley", pub);
   const pub_pem = getPemFromKey(pub, "PUBLIC KEY");
   const priv_pem = getPemFromKey(priv, "PRIVATE KEY");
   const nonce = toBase64Url(randomBytes(16));
@@ -265,7 +114,6 @@ async function verify_email(email, pub, priv) {
     "returnUrl": "https://taibom.org/"
   };
   
-  console.log("Post data:", postData);
   const authUrlCheckResponse = await apiClient.post("generateBinding", {
     json: postData,
     headers: {
@@ -273,11 +121,11 @@ async function verify_email(email, pub, priv) {
     }
   });
 
-  console.log("Auth URL Check Response:", authUrlCheckResponse.body);
   const authStatusUrl = authUrlCheckResponse.body.authStatusUrl;
-  console.log("Auth Status URL:", authStatusUrl);
   var idVC;
-  let text_input = await getUserInput("Press enter when verified, type back to abort verification");
+  let text_input = await getUserInput("Press enter when verified, type back to postpone verification: ");
+
+
   while (text_input !== "back") {
     // check the idVC is verified
     // get request to authStatusUrl, if pending then next loop else return the json body, this is an absolute new url not part of the api so shouldnt use apiclient
@@ -293,38 +141,21 @@ async function verify_email(email, pub, priv) {
       break;
     }
     const authStatusData = await authStatusResponse.json();
-    console.log("Auth Status Data:", authStatusData);
     if (authStatusData.status === "pending") {
       console.log("Auth Status: pending");
       text_input = await getUserInput("Press enter when verified, type back to abort verification");
     } else{
       console.log("Auth Status: verified");
       idVC = authStatusData;
-      console.log("ID VC:", idVC);
       break;
     }
-    
   }
+
   if (text_input === "back") {
-    console.log("Verification aborted");
+    console.log("Verification postponed");
     return;
   }
-  const localToken = await verifyWithChallenge(idVC,priv)
-  console.log("Local Token:", localToken);
-  // return the idVC or an error if escaped using endpoint /identity + ?email=<email>
-  const idVCresponse = await fetch(`${URI}${BASE_PATH}/${ENDPOINTS.IDENTITY}?email=${email}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-  
-  // Parse the JSON response
-  const idVCBody = await idVCresponse.json();
-  console.log("ID VC response:",idVCBody);
-  return idVCBody;
-
-
+  return await verifyAndFetchIdentity(idVC, priv_pem, apiClient, email);
 }
 
 const program = new Command();
@@ -342,7 +173,7 @@ program
   .argument("<role>", "The role of the person")
   .option("--uuid <uuid>", "UUID")
   .option("--out <output_dir>", "Output directory")
-  .action((name, email, role, options) => {
+  .action(async (name, email, role, options) => {
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     // Validate email format (basic check)
@@ -386,9 +217,8 @@ program
     );
     vcToFile(vc, `${keypairPath}-identity.json`, "identity.json", false);
     vcToFile(vc, outputDir, "identity.json");
-    // TODO: 
-    const key_email_binding = verify_email(email, pub, priv);
-
+    const key_email_binding = await verify_email(email, pub, priv);
+    console.log("Key email binding:", key_email_binding);
     
   });
 
