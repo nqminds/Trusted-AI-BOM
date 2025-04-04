@@ -25,7 +25,7 @@ properties:
         description: ID of the code VC.
       hash:
         type: string
-        description: The cryptographic hash (e.g., SHA-256) of the code VC for integrity verification.
+        description: The cryptographic hash (e.g., SHA-256) of the Verifiable Credential representing the code for integrity verification, represents the signature of the Verifiable Credential, not the hash of the code itself.
     required:
       - id
 
