@@ -1,0 +1,74 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/64-provided-attestation.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Provided Attestation
+description: |
+  This schema extends the generic Attestation Schema to define an attestation that an identity provided a particular TAIBOM component
+type: object
+properties:
+  component:
+    type: object
+    description: Component reference, including an ID and hash for the VC claim.
+    properties:
+      id:
+        type: string
+        description: The component ID (unique identifier) of the VC claim.
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.
+    required:
+      - id
+      - hash
+
+  attestation:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - provided
+        description: Type of attestation, set to "Provided" for this schema.
+      provider:
+        type: object
+        description: identity of the provider of the particular component
+        properties:
+          uuid:
+            type: string
+            description: The UUID of the identity
+        required:
+          - uuid
+    required:
+      - type
+      - provider
+
+required:
+  - component
+  - attestation
+
+examples:
+  - component:
+      id: urn:uuid:222e3337-e89b-12d3-a456-426614174004
+      hash: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+    attestation:
+      type: provided
+      provider:
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+
+context: |
+  ## Introduction
+
+  The **Provided Attestation Schema** is a JSON schema designed to describe and standardise the relationship between the identity who provided a particular TAIBOM component and the associated component within the Trusted AI BOM (TAIBOM) ecosystem. This schema ensures the provider of a component can be identified and used to establish the provenance of components.
+
+  ### Description
+  This schema captures essential information for the provided` relationship, including:
+  - **Component**: The component being attested to as being provided by the associated identity, identified by a unique ID and its associated hash.
+  - **provider**: The provider being attested to as being the provider of the component
+
+  ## Use Case
+
+  The **Provided Attestation Schema** is primarily used within the TAIBOM framework to:
+  1. **Enable Provenance Traceability**: Provide a clear and standardised method to establish which identities were involved in providing TAIBOM components
+  2. **Enable Whitelisting/Blacklisting of providers**: Provides a mechanism to whitelist/blacklist providers and determine if components and their constituents meet your requirements 
+
+  By adopting this schema, organisations can standardise a method of communicating who provided components, which can be used to determine all identities who contributed to an AI system and it's constituent components (data, weights, code etc.)
+
+  ---

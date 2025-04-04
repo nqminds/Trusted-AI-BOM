@@ -1,0 +1,26 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "issuer": "https://nqminds.example.com/issuer/ash",
+  "validFrom": "2024-11-05T17:41:33+00:00",
+  "credentialSchema": {
+    "id": "https://json-schema.org/draft/2020-12/schema",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Core and Validation specifications meta-schema",
+    "type": ["object", "boolean"],
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "uniqueKeys": {
+        "type": "array",
+        "description": "This custom field may be used to set which properties in the schema should be enforced as unique in the prolog fact base"
+      }
+    }
+  }
+}

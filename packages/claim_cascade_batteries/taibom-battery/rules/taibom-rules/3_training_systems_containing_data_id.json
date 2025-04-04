@@ -1,0 +1,28 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:00000000-0000-0000-0000-00000000003",
+  "type": [
+    "VerifiableCredential",
+    "UserCredential"
+  ],
+  "issuer": "https://nqminds.example.com/issuer/1",
+  "validFrom": "2024-08-22T13:53:32.295644150+00:00",
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/rule.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "type": "rule",
+    "rule": [
+      "training_systems_containing_data_id(DataVcId, TrainingSystems) :-",
+      "db:datapacks_containing_data_id(DataVcId, DatapackVcIds),",
+      "findall(TrainingSystemVcId, (",
+          "member(DatapackVcId, DatapackVcIds),",
+          "db:training_systems_containing_datapack_id(DatapackVcId, TrainingSystemVcIds),",
+          "member(TrainingSystemVcId, TrainingSystemVcIds)",
+      "), TrainingSystems)."
+    ]
+  }
+}
