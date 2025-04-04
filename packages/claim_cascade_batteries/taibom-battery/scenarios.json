@@ -193,7 +193,7 @@
       ],
       "inference_rules": [
         {
-          "path": "tonys-rules",
+          "path": "taibom-rules",
           "signing_key": "keys/admin.priv"
         }
       ]
