@@ -5,13 +5,10 @@ import path from "path";
 import fs from "fs";
 import { exec } from "child_process";
 import { v4 as uuidv4 } from "uuid";
-import { CookieJar } from 'tough-cookie';
 import got from 'got';
-import os from "os";
 import {voltUtils} from '@tdxvolt/volt-client-web/js';
-import forge from 'node-forge';
 import readline from 'readline';
-
+import { cookieJar, URI, BASE_PATH, ENDPOINTS, saveCookies } from "../src/api-tools.mjs";
 
 import {
   generateAndSignVC,
@@ -30,59 +27,11 @@ import {
   getAndVerifyClaim,
   getHash,
 } from "./file-utils.mjs";
-import { get } from "https";
-
-// Create cookie jar with file persistence
-let cookieString = '';
-
-const cookiePath = path.join(os.homedir(), '.taibom-cookies.json');
-let jar;
-
-try {
-  const cookieData = fs.existsSync(cookiePath) ? 
-    JSON.parse(fs.readFileSync(cookiePath, 'utf8')) : {};
-  jar = CookieJar.fromJSON(cookieData);
-  
-  // Initialize the reference cookie string after loading
-  cookieString = JSON.stringify(jar.toJSON());
-} catch (error) {
-  console.log("Creating new cookie jar");
-  jar = new CookieJar();
-  
-  // Initialize with empty cookie jar string
-  cookieString = JSON.stringify(jar.toJSON());
-}
-
-const saveCookies = () => {
-  // Serialize current cookie jar state
-  const newCookieString = JSON.stringify(jar.toJSON());
-  
-  // Only write to disk if cookies have actually changed
-  if (newCookieString !== cookieString) {
-    // Log when changes occur (optional, can be removed in production)
-    // console.log("Cookie changes detected, saving to disk");
-    
-    // Write updated cookies to disk
-    fs.writeFileSync(cookiePath, newCookieString, 'utf8');
-    
-    // Update the reference cookie string
-    cookieString = newCookieString;
-  }
-};
-
-
-// Define API endpoints
-export const URI = "http://localhost:3001"; // Replace with your actual base URL 
-export const BASE_PATH = "/api/auth";
-export const ENDPOINTS = {
-  CHALLENGE: "challenge",
-  AUTHENTICATE: "authenticate"
-};
 
 // Create API client with cookie support
 const apiClient = got.extend({
   prefixUrl: URI.replace(/\/$/, '')+BASE_PATH, // Remove trailing slash if present
-  cookieJar: jar,
+  cookieJar: cookieJar,
   responseType: 'json',
   hooks: {
     afterResponse: [
@@ -139,7 +88,21 @@ async function getChallenge() {
 }
 
 
+async function verifyWithChallenge(idVC,priv) {//keys is from useKeys
+  const nonce = getChallenge();
+  const hashedNonce = await hashNonce(nonce);
+  const { signature, data } = await signNonce(hashedNonce, priv);
+  const response = await authenticate(signature, idVC, data);
+
+  return response;
+}
+
+
+
+
 async function authenticate(signature, idVC, signedData) {
+  //TODO: implement cookie functionality into this 
+
   try {
     const response = await apiClient.post(ENDPOINTS.AUTHENTICATE, {
       json: { signature, idVC, signedData },
@@ -329,7 +292,6 @@ async function verify_email(email, pub, priv) {
       console.error('Error fetching auth status:', authStatusResponse.statusText);
       break;
     }
-    console.log("Auth Status Response:", authStatusResponse);
     const authStatusData = await authStatusResponse.json();
     console.log("Auth Status Data:", authStatusData);
     if (authStatusData.status === "pending") {
@@ -347,16 +309,20 @@ async function verify_email(email, pub, priv) {
     console.log("Verification aborted");
     return;
   }
-  // TODO: do my authentication for an auth cookie or leave it or update the auth library to allocate cookies on pass through binding calls.
-  
+  const localToken = await verifyWithChallenge(idVC,priv)
+  console.log("Local Token:", localToken);
   // return the idVC or an error if escaped using endpoint /identity + ?email=<email>
-  const idVCresponse = await apiClient.get(`${ENDPOINTS.IDENTITY}?email=${email}`, {
+  const idVCresponse = await fetch(`${URI}${BASE_PATH}/${ENDPOINTS.IDENTITY}?email=${email}`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     }
   });
-  console.log("ID VC response:", idVCresponse.body);
-  return idVCresponse.body;
+  
+  // Parse the JSON response
+  const idVCBody = await idVCresponse.json();
+  console.log("ID VC response:",idVCBody);
+  return idVCBody;
 
 
 }
@@ -895,5 +861,7 @@ program
       );
     }
   });
+
+
 
 program.parse(process.argv);
