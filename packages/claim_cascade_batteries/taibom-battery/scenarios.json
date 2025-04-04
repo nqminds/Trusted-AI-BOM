@@ -1,0 +1,232 @@
+{
+  "scenarios": [
+    {
+      "name": "ETS2SignDetection Release 4",
+      "queries": [
+        {
+          "name": "Get all taibom data statements",
+          "query": "db:get_all_taibom_data( _, _, _, _, _, _, _, MatchingData)"
+        },
+        {
+          "name": "Get all training data",
+          "query": "db:get_all_taibom_data(_, _, _, \"Training\", _, _, _, MatchingData)"
+        },
+        {
+          "name": "Get all weights data",
+          "query": "db:get_all_taibom_data(_, _, _, \"Weights\", _, _, _, MatchingData)"
+        },
+        {
+          "name": "Get all datapacks containing data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:get_taibom_data(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", _, _, _, _, _, _),  db:get_taibom_datapack(VcId, _Datasets, DatasetName), member(dataset(_, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"), _Datasets)"
+        },
+        {
+          "name": "Get all ai systems which rely on data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:get_taibom_data(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", _, _, _, _, _, _), db:get_taibom_datapack(_DatapackVcId_, _Datasets, _), member(dataset(_, \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"), _Datasets), get_ai_system(_, _, data(_, _DatapackVcId), Label, Name)"
+        },
+        {
+          "name": "Use rule to get all ai systems which rely on data with id \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:ai_systems_containing_data(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", AISystemName)"
+        }
+      ],
+      "policy_packs": [
+        {
+          "path": "group_membership/pack1",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "identity_bindings/pack1",
+          "signing_key": "keys/admin.priv"
+        }
+      ],
+      "inference_packs": [
+        {
+          "path": "ai_system/ETS2SignDetection-release-4-pack",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "code/ETS2SignDetection-release-4-pack",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "config/ETS2SignDetection-release-4-pack",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "data/ETS2SignDetection-release-4-pack",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "datapack/ETS2SignDetection-release-4-pack",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "identity/ETS2SignDetection-release-4-pack",
+          "signing_key": "keys/admin.priv"
+        }
+      ],
+      "inference_rules": [
+        {
+          "path": "ETS2SignDetection-release-4-pack",
+          "signing_key": "keys/admin.priv"
+        }
+      ]
+    },
+    {
+      "reset": false,
+      "name": "Tonys",
+      "queries": [
+        {
+          "name": "What training system belongs to the config with id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:training_system_in_config(SystemVcId, \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\")"
+        },
+        {
+          "name": "What datapack belongs to the config with id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:datapack_in_config(DatapackVcId, \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\")"
+        },
+        {
+          "name": "What datapack belongs to the ai_system with id: \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\"",
+          "query": "db:datapack_in_training_system(DatapackVcId, \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\")"
+        },
+        {
+          "name": "What data belongs to the config with id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:data_in_config(VcIds, \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\")"
+        },
+        {
+          "name": "What data belongs to the datapack with id: \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\"",
+          "query": "db:data_in_datapack(VcIds, \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\")"
+        },
+        {
+          "name": "What data belongs to the ai_system with id: \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\"",
+          "query": "db:data_in_training_system(VcIds, \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\")"
+        },
+        {
+          "name": "Which Datapacks contain data with id: \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:datapacks_containing_data_id(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", VcIds)"
+        },
+        {
+          "name": "Which training sytems contain datapack with id: \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\"",
+          "query": "db:training_systems_containing_datapack_id(\"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\", VcIds)"
+        },
+        {
+          "name": "Which training systems have used the data with id: \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:training_systems_containing_data_id(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", TrainingSystems)"
+        },
+        {
+          "name": "Which System configs have been generated using training system with id: \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\"",
+          "query": "db:config_from_training_systems_id(\"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\", VcId)"
+        },
+        {
+          "name": "Which System configs have been generated using a datapack with id: \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\"",
+          "query": "db:configs_from_datapack_id(\"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\", VcId)"
+        },
+        {
+          "name": "Which System configs have been generated using data with id: \"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\"",
+          "query": "db:configs_from_data_id(\"urn:uuid:447d1ddd-edf2-4ac8-b0c2-0a14a86541ad\", VcId)"
+        },
+        {
+          "name": "Which weights data has been used in config with id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:weights_from_config_id(\"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\", VcIds)"
+        },
+        {
+          "name": "Which weights data has been used in training system with id: \"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\"",
+          "query": "db:weights_from_training_system_id(\"urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e\", VcId)"
+        },
+        {
+          "name": "Which weights data has been used by datapack id: \"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\"",
+          "query": "db:weights_from_datapack_id(\"urn:uuid:e7331e94-faac-457d-b842-322e064a42c6\", WeightsVcIds)"
+        },
+        {
+          "name": "Which weights data has been used by data id: \"urn:uuid:5f6dc5e9-002e-4ec9-80c4-cae7e1940c6c\"",
+          "query": "db:weights_from_data_id(\"urn:uuid:5f6dc5e9-002e-4ec9-80c4-cae7e1940c6c\", WeightsVcIds)"
+        },
+        {
+          "name": "Which Inferencing Systems has been used by config id: \"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\"",
+          "query": "db:inferencing_system_using_config_id(\"urn:uuid:0f73da00-7672-420c-ac22-fc4c2bf6c790\", InferencingSystemVcIds)"
+        },
+        {
+          "name": "Get all data in weight urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01",
+          "query": "db:data_in_weight(DataVcIds, \"urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01\")"
+        },
+        {
+          "name": "Get all data in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:data_in_inferencing_system(DataVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
+        },
+        {
+          "name": "Get all datapacks in weight urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01",
+          "query": "db:datapacks_in_weight(DatapackVcIds, \"urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01\")"
+        },
+        {
+          "name": "Get all datapacks in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:datapacks_in_inferencing_system(DatapackVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
+        },
+        {
+          "name": "Get all training systems in weight urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01",
+          "query": "db:training_systems_in_weights(TrainingSystemVcIds, \"urn:uuid:9dc8a381-9a7d-4a2f-aa68-5a804e7a5d01\")"
+        },
+        {
+          "name": "Get all training systems in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:training_system_in_inferencing_system(TrainingSystemVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
+        },
+        {
+          "name": "Get providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "providers_of_data_in_ai_system(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Providers)"
+        }
+      ],
+      "policy_packs": [],
+      "inference_packs": [
+        {
+          "path": "provided_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "bias_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "poisoning_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "pollution_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
+        }
+      ],
+      "inference_rules": [
+        {
+          "path": "taibom-rules",
+          "signing_key": "keys/admin.priv"
+        }
+      ]
+    },
+    {
+      "reset": false,
+      "name": "Use Cases",
+      "queries": [
+        {
+          "name": "Get all data in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:data_in_inferencing_system(DataVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
+        },
+        {
+          "name": "Using whitelist, ['tony@nqminds.com'], do we trust the providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:ai_system_providers_trusted_with_whitelist(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"tony@nqminds.com\"])"
+        },
+        {
+          "name": "Using blacklist, ['tony@nqminds.com'], do we trust the providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:ai_system_providers_trusted_with_blacklist(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"tony@nqminds.com\"])"
+        },
+        {
+          "name": "Get any attestations of data poisoning in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
+          "query": "ai_system_has_data_poisoning(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
+        },
+        {
+          "name": "Get any attestations of data pollution in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
+          "query": "ai_system_has_data_pollution(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
+        },
+        {
+          "name": "Get any attestations of data bias in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
+          "query": "ai_system_has_data_bias(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
+        }
+      ]
+    }
+  ]
+}
