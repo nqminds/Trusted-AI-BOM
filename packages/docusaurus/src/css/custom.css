@@ -9,7 +9,7 @@
   --ifm-color-text-header: #011c40;
   --ifm-color-text: #353535;
   --ifm-color-accent: #ff9900;
-  --ifm-color-background: rgba(0, 32, 96, 0.6);
+  --ifm-color-background: rgba(255, 255, 255, 0.6);
   --ifm-color-seondary-background: rgba(2, 22, 50, 0.3);
 
   --ifm-color-011c40: #011c40;
@@ -22,8 +22,8 @@
   --ifm-typography-primary-text-transform: capitalize;
   --ifm-typography-primary-line-height: 1.2em;
 
-  --ifm-typography-text-font-family: "Lato";
-  --ifm-typography-text-font-size: 20px;
+  --ifm-typography-text-font-family: "Open Sans";
+  --ifm-typography-text-font-size: 14px;
   --ifm-typography-text-font-weight: 375;
   --ifm-typography-text-line-height: 1.4em;
 

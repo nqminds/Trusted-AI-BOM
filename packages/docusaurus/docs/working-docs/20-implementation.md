@@ -13,7 +13,7 @@ TAIBOM allows us to describe three things
   * aggregation: for example multiple individual (verifiable) data sets can eb combined into a larger training data set.
   * composition: we may describe a high level AI components from individual building blocks. For example  a local AI inference system is described as a combination of the software (hash) and the trained weights 
   * dependency: AI system can describe there logical and conceptual dependency on other components. For example trained weights are dependent on the SBOM of the training software and also the training data. 
-* **AI attestations**: finally when we have a robust description of an AI system and its dependencies we can start to annotate the full systems or the components with critical attributes. TAIBOM attestation are designed to be infinitely extensible, but some common examples are 
+* **AI annotations**: finally when we have a robust description of an AI system and its dependencies we can start to annotate the full systems or the components with critical attributes. TAIBOM annotations are designed to be infinitely extensible, but some common examples are 
   * SBOM: the software dependency description can be added to inference or training code 
   * CVE analysis: and analysis of vulnerabilities can also be tied to the code
   * Software license: the software can be annotated with the software license under which it was published.

@@ -2,13 +2,13 @@
 
 ### Download the TAIBOM SDK
 
-  <a href="/nqminds-taibom-sdk-0.0.1.tgz">
+  <a href="/nqminds-taibom-sdk-0.0.2.tgz">
     Download the SDK here!
   </a>
 
 ### Prerequisites
 
-[Docker](https://www.docker.com/) is required to generate SBOMS & Vulnerability reports!!
+[Docker](https://www.docker.com/) is required to generate SBOMS & Vulnerability reports
 
 ---
 

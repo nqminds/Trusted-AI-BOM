@@ -366,6 +366,11 @@ module.exports.__wbg_getRandomValues_bcb4912f16000dc4 = function() { return hand
     arg0.getRandomValues(arg1);
 }, arguments) };
 
+module.exports.__wbg_getTime_46267b1c24877e30 = function(arg0) {
+    const ret = arg0.getTime();
+    return ret;
+};
+
 module.exports.__wbg_get_67b2ba62fc30de12 = function() { return handleError(function (arg0, arg1) {
     const ret = Reflect.get(arg0, arg1);
     return ret;
@@ -446,6 +451,11 @@ module.exports.__wbg_length_e2d2a49132c1b256 = function(arg0) {
 
 module.exports.__wbg_msCrypto_0a36e2ec3a343d26 = function(arg0) {
     const ret = arg0.msCrypto;
+    return ret;
+};
+
+module.exports.__wbg_new0_f788a2397c7ca929 = function() {
+    const ret = new Date();
     return ret;
 };
 
