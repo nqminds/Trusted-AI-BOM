@@ -166,14 +166,65 @@
         {
           "name": "Get all training systems in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
           "query": "db:training_system_in_inferencing_system(TrainingSystemVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
+        },
+        {
+          "name": "Get providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "providers_of_data_in_ai_system(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Providers)"
         }
       ],
       "policy_packs": [],
-      "inference_packs": [],
+      "inference_packs": [
+        {
+          "path": "provided_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "bias_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "poisoning_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "pollution_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
+        }
+      ],
       "inference_rules": [
         {
           "path": "tonys-rules",
           "signing_key": "keys/admin.priv"
+        }
+      ]
+    },
+    {
+      "reset": false,
+      "name": "Use Cases",
+      "queries": [
+        {
+          "name": "Get all data in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:data_in_inferencing_system(DataVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
+        },
+        {
+          "name": "Using whitelist, ['tony@nqminds.com'], do we trust the providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:ai_system_providers_trusted_with_whitelist(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"tony@nqminds.com\"])"
+        },
+        {
+          "name": "Using blacklist, ['tony@nqminds.com'], do we trust the providers of all training data used in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "query": "db:ai_system_providers_trusted_with_blacklist(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"tony@nqminds.com\"])"
+        },
+        {
+          "name": "Get any attestations of data poisoning in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
+          "query": "ai_system_has_data_poisoning(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
+        },
+        {
+          "name": "Get any attestations of data pollution in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
+          "query": "ai_system_has_data_pollution(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
+        },
+        {
+          "name": "Get any attestations of data bias in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
+          "query": "ai_system_has_data_bias(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
         }
       ]
     }

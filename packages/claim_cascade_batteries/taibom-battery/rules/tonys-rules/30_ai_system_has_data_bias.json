@@ -1,0 +1,25 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "id": "urn:uuid:00000000-0000-0000-0000-00000000030",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "issuer": "https://nqminds.example.com/issuer/1",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/rule.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "type": "rule",
+    "rule": [
+      "% Retrieve all bias attestations for an AI system",
+      "ai_system_has_data_bias(AISystemId, Attestations) :-",
+      "    findall(",
+      "        (component(ComponentHash, DataVcId), BiasDetails),",
+      "        (data_in_inferencing_system(DataVcIds, AISystemId),",
+      "         member(DataVcId, DataVcIds),",
+      "         bias_attestation(_, attestation(BiasDetails, \"bias\"), component(ComponentHash, DataVcId))),",
+      "        Attestations",
+      "    )."
+    ]
+  }
+}

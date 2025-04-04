@@ -3,9 +3,9 @@ slug: /
 title: TAIBOM
 ---
 
-# Trusted AI Bill of Materials
+# Trustable AI Bill of Materials
 
-TAIBOM (Trusted AI Bill of Materials) (formally T-CHAIN) addresses two fundamental challenges that impact the development and deployment of trustworthy AI systems.
+TAIBOM (Trustable AI Bill of Materials) addresses two fundamental challenges that impact the development and deployment of trustworthy AI systems.
 - Versioning: How do we refer to an AI system in a stable way? How do we produce an AI inventory of dependent components? How can we use these references to make statements about a system’s trustworthiness or its legal standing; and
 - Attestations: How do we make attestations of trustworthiness about an AI. Whether these claims are about bias, security, right through to the strong legal contractual assertions: how do we make these claims in an interoperable way? How can we assemble the claims from the dependent parts (compositionality)? How do we reason about or validate these claims, factoring in context of use and subjectivity?
 
@@ -25,7 +25,7 @@ To describe and manage the trustworthiness attributes of the system, we first ne
 AI Adoption: AI component developers, AI system assemblers, AI training data providers, AI system integrators and AI system users will have the tools to deterministically describe the AI component and assembled AI. Without this innovation, it is almost impossible to make any stable, reliable claim about any facet of an AI system.
 
 ## Attestation
-Many organisations (e.g. Turing Institute, NIST, EU, Microsoft and Google) are defining process or metrics to define trustworthiness and the distinct parameters envisioned (e.g. Microsoft's version: fairness, reliability/safety, privacy/security, inclusiveness, transparency and accountability). Most of these approaches neglect two important facts: a) the statements are inherently biased by the organisation making the statement; and b) the interpretation of the claim is inherently subjective.
+Many organisations (e.g. Turing Institute, NIST, EU, Microsoft and Google) are defining process or metrics to define trustworthiness and the distinct parameters envisioned (e.g. Microsoft's version: fairness, reliability/safety, privacy/security, inclusiveness, transparency and accountability). Most of these approaches neglect two important facts: a) the statements are inherently bias by the organisation making the statement; and b) the interpretation of the claim is inherently subjective.
 
 Even when we consider basic system (non-AI) trustworthiness, it is clear that subjectivity is an integral part of the evaluation. Take a telecom system example: Does "China Mobile" trust Huawei telecommunication software? Does Vodafone trust Cisco telecommunication software? But does Vodafone trust Huawei kit and does China mobile trust Cisco kit?
 
