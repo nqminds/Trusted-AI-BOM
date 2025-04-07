@@ -12,7 +12,7 @@
     "type": "rule",
     "rule": [
       "% Rule to check if a given hash matches the stored hash of the weights for a config",
-      "weights_hash_matches(ConfigId, SubmittedHash) :-",
+      "weights_hash_matches_for_config(ConfigId, SubmittedHash) :-",
       "    weights_from_config_id(ConfigId, VcId),",
       "    db:taibom_data(VcId, StoredHash, _, _, _, _, _),",
       "    StoredHash = SubmittedHash."

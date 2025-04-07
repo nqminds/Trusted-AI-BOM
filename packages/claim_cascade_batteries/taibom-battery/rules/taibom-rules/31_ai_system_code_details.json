@@ -12,9 +12,9 @@
     "type": "rule",
     "rule": [
       "% Rule to retrieve the code details for an AI system ID",
-      "ai_system_code_details(AISystemId, CodeId, Hash, Location, Version, SBOMId) :-",
+      "ai_system_code_details(AISystemId, CodeId, Hash, Location, Name, Version, SBOMId) :-",
       "    ai_system(AISystemId, code(HashOfVC, CodeId), _, _, _),",
-      "    code(CodeId, hash(Hash), location(Location, _), _, sbom(SBOMHash, SBOMId), Version)."
+      "    code(CodeId, hash(Hash), location(Location, _), Name, sbom(SBOMHash, SBOMId), Version)."
     ]
   }
 }
