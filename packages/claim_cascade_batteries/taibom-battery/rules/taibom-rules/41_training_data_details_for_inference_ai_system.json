@@ -1,0 +1,29 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "id": "urn:uuid:00000000-0000-0000-0000-00000000041",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "issuer": "https://nqminds.example.com/issuer/1",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "credentialSchema": {
+      "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/rule.json",
+      "type": "JsonSchema"
+  },
+  "credentialSubject": {
+      "type": "rule",
+      "rule": [
+        "training_data_details_for_inference_system(InferenceId, DataDetailsList) :-",
+        "db:ai_system(InferenceId, _, data(_, ConfigId), _, _),",
+        "db:trained_system_configs(ConfigId, aiSystem(_, TrainingSystemId), _, _),",
+        "db:ai_system(TrainingSystemId, code(_, _), data(_, DatapackId), _, _),",
+        "db:taibom_datapack(DatapackId, DatasetList, _),",
+        "findall(",
+        "    data(Hash, Location, Name, Version, DataId),",
+        "    (",
+        "        member(dataset(_, DataId), DatasetList),",
+        "        db:taibom_data(DataId, Hash, Version, _, _, Location, Name)",
+        "    ),",
+        "    DataDetailsList",
+        ")."
+      ]
+  }
+}
