@@ -1,0 +1,21 @@
+{
+    "@context": ["https://www.w3.org/ns/credentials/v2"],
+    "id": "urn:uuid:00000000-0000-0000-0000-00000000035",
+    "type": ["VerifiableCredential", "UserCredential"],
+    "issuer": "https://nqminds.example.com/issuer/1",
+    "validFrom": "2025-03-26T12:50:00+00:00",
+    "credentialSchema": {
+        "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/rule.json",
+        "type": "JsonSchema"
+    },
+    "credentialSubject": {
+        "type": "rule",
+        "rule": [
+            "% Rule to check if a given hash matches the stored hash of the SBOM of the code",
+            "ai_system_sbom_hash_matches(AISystemId, SubmittedHash) :-",
+            "    ai_system(AISystemId, code(_, CodeId), _, _, _),",
+            "    code(CodeId, _, _, _, sbom(StoredHash, _), _),",
+            "    StoredHash = SubmittedHash."
+        ]
+    }
+}

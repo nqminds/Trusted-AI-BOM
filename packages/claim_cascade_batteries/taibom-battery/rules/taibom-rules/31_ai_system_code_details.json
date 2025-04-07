@@ -1,0 +1,20 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "id": "urn:uuid:00000000-0000-0000-0000-00000000031",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "issuer": "https://nqminds.example.com/issuer/1",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/rule.json",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "type": "rule",
+    "rule": [
+      "% Rule to retrieve the code details for an AI system ID",
+      "ai_system_code_details(AISystemId, CodeId, Hash, Location, Name, Version, SBOMId) :-",
+      "    ai_system(AISystemId, code(HashOfVC, CodeId), _, _, _),",
+      "    code(CodeId, hash(Hash), location(Location, _), Name, sbom(SBOMHash, SBOMId), Version)."
+    ]
+  }
+}

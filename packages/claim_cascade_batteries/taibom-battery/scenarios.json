@@ -225,6 +225,46 @@
         {
           "name": "Get any attestations of data bias in datasets inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c was trained on",
           "query": "ai_system_has_data_bias(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Attestations)"
+        },
+        {
+          "name": "Get code details for AI system",
+          "query": "db:ai_system_code_details(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", CodeId, Hash, Location, Name, Version, SBOMId)"
+        },
+        {
+          "name": "Check hash of code matches for AI system",
+          "query": "db:ai_system_code_hash_matches(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", \"f06e854d370cd7e6f5a29055db996c0fef5fbcfb3a21e115bdccd6c04207c378\")"
+        },
+        {
+          "name": "Get weight details for AI system",
+          "query": "db:weights_details_from_ai_system(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\",Hash,HashLocation,Label,LastAccessed,Location,Name)"
+        },
+        {
+          "name": "Check weight hash matches for AI system",
+          "query": "db:weights_hash_matches_for_ai_system(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", \"8024d0b6f45b7547e1aae4511887520594c6038bf7d89bc44f154f2002a75b04\")"
+        },
+        {
+          "name": "Check hash of SBOM for code matches for AI system",
+          "query": "db:ai_system_sbom_hash_matches(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", \"rVCChE3ghDusO6RXpvHxhsndYyH00Gt1U80fSJVOTpIKQhspkj6OsV8UV55a4re9PfpoMB7QIJrSLD1KphsyAw==\")"
+        },
+        {
+          "name": "Get training code details for AI system",
+          "query": "db:training_code_details_from_inference_system(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", CodeId, Hash, Location, Name, Version, SBOMId)"
+        },
+        {
+          "name": "Check hash of training code matches",
+          "query": "db:training_code_hash_matches(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", \"bcfcd1956d8df27d65f4bfeae5e2cc517fbf7b373e87d525c91a1ec1d6591760\")"
+        },
+        {
+          "name": "Check hash of SBOM for training code matches",
+          "query": "db:training_code_sbom_hash_matches(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", \"Jz/k5QoduUDEpCDaKYxvu9UsajqcLVtwxrdcQLxDlp2OmJ1GjmuuUUt2g0mCRKCUsjd+GQ0MJM3wRzoItW3lAA==\")"
+        },
+        {
+          "name": "Get all training data details for data used to train AI system",
+          "query": "db:training_data_details_for_inference_system(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", DataDetailsList)"
+        },
+        {
+          "name": "Check hashes of all training data used to train AI system",
+          "query": "db:submitted_training_data_matches(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"0ea4133d796cf4c6c444d7ca1a94343798fc974c1fcca9cf168345b02a526a51\", \"9cb2cfd169166958a6f036eeb554fc72c4df43417b4d7a84e2a06a80eb4e0f97\", \"2fe24dae2b47899e5b33922702b3eb30e8c217d61b64128b7094f6485a1cce3d\", \"156a17c84d424c0649d574e60ef8106b06761da44efbfb918e08e5336cc98ee0\", \"a335083401e68ae86ef8c7382d6bb82ee143eb9b239b6994299e596cb2543539\"])"
         }
       ]
     }

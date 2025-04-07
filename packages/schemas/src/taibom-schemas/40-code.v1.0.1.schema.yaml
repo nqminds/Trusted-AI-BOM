@@ -32,7 +32,7 @@ properties:
 
   hash:
     type: object
-    description: Cryptographic hash details for verifying the integrity of the code.
+    description: The cryptographic hash (e.g., SHA-256) of the directory containing the code.
     properties:
       value:
         type: string
