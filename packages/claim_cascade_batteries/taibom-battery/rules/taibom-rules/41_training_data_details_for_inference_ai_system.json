@@ -12,18 +12,18 @@
       "type": "rule",
       "rule": [
         "training_data_details_for_inference_system(InferenceId, DataDetailsList) :-",
-        "db:ai_system(InferenceId, _, data(_, ConfigId), _, _),",
-        "db:trained_system_configs(ConfigId, aiSystem(_, TrainingSystemId), _, _),",
-        "db:ai_system(TrainingSystemId, code(_, _), data(_, DatapackId), _, _),",
-        "db:taibom_datapack(DatapackId, DatasetList, _),",
-        "findall(",
-        "    data(Hash, Location, Name, Version, DataId),",
-        "    (",
-        "        member(dataset(_, DataId), DatasetList),",
-        "        db:taibom_data(DataId, Hash, Version, _, _, Location, Name)",
-        "    ),",
-        "    DataDetailsList",
-        ")."
+        "    db:ai_system(InferenceId, _, data(_, ConfigId), _, _),",
+        "    db:trained_system_configs(ConfigId, aiSystem(_, TrainingSystemId), _, _),",
+        "    db:ai_system(TrainingSystemId, code(_, _), data(_, DatapackId), _, _),",
+        "    db:taibom_datapack(DatapackId, DatasetList, _),",
+        "    findall(",
+        "        data(Hash, Location, Name, Version, DataId),",
+        "        (",
+        "            member(dataset(_, DataId), DatasetList),",
+        "            db:taibom_data(DataId, Hash, Version, _, _, Location, Name)",
+        "        ),",
+        "        DataDetailsList",
+        "    )."
       ]
   }
 }

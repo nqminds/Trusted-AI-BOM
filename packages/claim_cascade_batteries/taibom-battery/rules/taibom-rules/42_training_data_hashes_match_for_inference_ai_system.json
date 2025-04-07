@@ -12,15 +12,15 @@
       "type": "rule",
       "rule": [
         "submitted_training_data_matches(InferenceId, SubmittedHashes) :-",
-        "training_data_details_for_inference_system(InferenceId, DataDetails),",
-        "findall(",
-          "  Hash,",
-          "  member(data(Hash, _, _, _, _), DataDetails),",
-          "  ExpectedHashes",
-        "),",
-        "sort(ExpectedHashes, SortedExpected),",
-        "sort(SubmittedHashes, SortedSubmitted),",
-        "SortedExpected == SortedSubmitted."
+        "    training_data_details_for_inference_system(InferenceId, DataDetails),",
+        "    findall(",
+        "        Hash,",
+        "        member(data(Hash, _, _, _, _), DataDetails),",
+        "        ExpectedHashes",
+        "    ),",
+        "    sort(ExpectedHashes, SortedExpected),",
+        "    sort(SubmittedHashes, SortedSubmitted),",
+        "    SortedExpected == SortedSubmitted."
       ]
   }
 }
