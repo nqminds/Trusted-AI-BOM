@@ -1,0 +1,26 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "id": "urn:uuid:00000000-0000-0000-0000-00000000044",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "issuer": "https://nqminds.example.com/issuer/1",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "credentialSchema": {
+      "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/rule.json",
+      "type": "JsonSchema"
+  },
+  "credentialSubject": {
+      "type": "rule",
+      "rule": [
+        "ai_system_training_software_vulnerabilities(AISystemId, Vulnerabilities) :-",
+        "    ai_system(AISystemId, _, data(_, ConfigId), _, _),",
+        "    trained_system_configs(ConfigId, aiSystem(_, TrainingSystemId), _, _),",
+        "    ai_system(TrainingSystemId, code(_, CodeId), _, _, _),",
+        "    code(CodeId, _, _, _, sbom(_, SbomId), _),",
+        "    findall(",
+        "        Attestation,",
+        "        vulnerability_attestation(_, Attestation, component(_, SbomId)),",
+        "        Vulnerabilities",
+        "    )."
+      ]
+  }
+}

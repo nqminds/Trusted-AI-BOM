@@ -189,6 +189,10 @@
         {
           "path": "pollution_attestation/additions_to_implement_use_cases",
           "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "vulnerability_attestation/additiions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
         }
       ],
       "inference_rules": [
@@ -265,6 +269,14 @@
         {
           "name": "Check hashes of all training data used to train AI system",
           "query": "db:submitted_training_data_matches(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", [\"0ea4133d796cf4c6c444d7ca1a94343798fc974c1fcca9cf168345b02a526a51\", \"9cb2cfd169166958a6f036eeb554fc72c4df43417b4d7a84e2a06a80eb4e0f97\", \"2fe24dae2b47899e5b33922702b3eb30e8c217d61b64128b7094f6485a1cce3d\", \"156a17c84d424c0649d574e60ef8106b06761da44efbfb918e08e5336cc98ee0\", \"a335083401e68ae86ef8c7382d6bb82ee143eb9b239b6994299e596cb2543539\"])"
+        },
+        {
+          "name": "Get vulnerabilities disclosed against SBOM of inference code for AI system",
+          "query": "db:ai_system_inference_software_vulnerabilities(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Vulnerabilities)"
+        },
+        {
+          "name": "Get vulnerabilities disclosed against SBOM of training code for AI system",
+          "query": "db:ai_system_training_software_vulnerabilities(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Vulnerabilities)"
         }
       ]
     }
