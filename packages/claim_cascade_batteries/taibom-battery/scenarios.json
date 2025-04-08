@@ -193,6 +193,10 @@
         {
           "path": "vulnerability_attestation/additiions_to_implement_use_cases",
           "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "best_practice_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
         }
       ],
       "inference_rules": [

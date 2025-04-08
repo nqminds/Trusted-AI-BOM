@@ -1,0 +1,81 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:63700d68-f685-4eaf-a9b1-e175c331691f",
+  "type": [
+    "VerifiableCredential",
+    "UserCredential"
+  ],
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/68-best-practice-attestation.v1.0.0.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "title": "Best Practice Attestation",
+    "description": "This schema extends the generic Attestation Schema to define an attestation that best practice has been followed was used in producing component\n",
+    "type": "object",
+    "properties": {
+      "component": {
+        "type": "object",
+        "description": "Component reference, including an ID and hash for the VC claim.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The component ID (unique identifier) of the VC claim."
+          },
+          "hash": {
+            "type": "string",
+            "description": "Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim."
+          }
+        },
+        "required": [
+          "id",
+          "hash"
+        ]
+      },
+      "attestation": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "best practice"
+            ],
+            "description": "Type of attestation, set to \"best practice\" for this schema."
+          },
+          "best_practice": {
+            "type": "object",
+            "description": "Details of best practise followed",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "The type of best practice followed (e.g. data curation, model selection, AI governance, cross-validation, QA before release)"
+              },
+              "description": {
+                "type": "string",
+                "description": "How was best practise followed?"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "best_practice"
+        ]
+      }
+    },
+    "required": [
+      "component",
+      "attestation"
+    ],
+    "context": "## Introduction\n\nThe **Best Practice Attestation Schema** extends the generic Attestation Schema to enable attestations related to best practice. By referencing best practice details such as the types of best practice followed and has the flexibility for other details about the best practice measures taken to be recorded.\n\n### Description\nThis schema includes:\n- **Type**: The attestation type, set to \"Best_Practice\".\n- **Best Practice Details**: Provides details of the types of best practice followed, with free form option to include relevant details.\n\n## Use Case\n\nThe **Best practice Attestation Schema** is used to:\n1. **Document Best practice**: Attach details of how best practice was followed to produce TAIBOM components, such as production of data, training of models and validation of trained models.\n2. **Track Adherence to Best Practice Recommendations**: Keep track of components which have been reported to have been produced following best practice and trace whether best practice recommendations have been followed through the supply chain of producing an AI system.\n\nThis schema promotes transparency and accountability, ensuring that best practice has been followed through the supply chain.\n"
+  },
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+    "type": "JsonSchema"
+  },
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
+  "validFrom": "2025-04-08T16:16:22.632Z"
+}
