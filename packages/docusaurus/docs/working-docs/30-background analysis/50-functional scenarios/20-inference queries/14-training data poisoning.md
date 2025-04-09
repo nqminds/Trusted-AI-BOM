@@ -11,7 +11,7 @@ Is there evidence that any of the training data on which this system has been tr
 * [config](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/25-config.v1.0.0.schema.yaml) 
 * [identity](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml)
 * [ai system](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml)
-* [poisoning attestation](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/65-poisoning_attestation.v1.0.0.schema.yaml)
+* [poisoning attestation](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/65-poisoning-attestation.v1.0.0.schema.yaml)
 
 
 ## Pseudo code 
