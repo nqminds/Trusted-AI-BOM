@@ -1,0 +1,43 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "id": "urn:uuid:00000000-0000-0000-0000-00000000045",
+  "type": ["VerifiableCredential", "UserCredential"],
+  "issuer": "https://nqminds.example.com/issuer/1",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "credentialSchema": {
+      "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/rule.json",
+      "type": "JsonSchema"
+  },
+  "credentialSubject": {
+      "type": "rule",
+      "rule": [
+        "ai_system_best_practice_attestations(InferenceAISystemId, InferenceAtts, TrainingAtts, DataAtts) :-",
+        "    % Get the training system and datapack",
+        "    ai_system(InferenceAISystemId, _, data(_, ConfigId), _, _),",
+        "    trained_system_configs(ConfigId, aiSystem(_, TrainingSystemId), _, _),",
+        "    ai_system(TrainingSystemId, _, data(_, DatapackId), _, _),",
+        "",
+        "    % Get all data IDs from the datapack",
+        "    taibom_datapack(DatapackId, Datasets, _),",
+        "    findall(DataId, member(dataset(_, DataId), Datasets), DataIds),",
+        "",
+        "    % Collect attestations against inference system",
+        "    findall((Attestation, InferenceAISystemId),",
+        "        best_practice_attestation(_, Attestation, component(_, InferenceAISystemId)),",
+        "        InferenceAtts),",
+        "",
+        "    % Collect attestations against training system",
+        "    findall((Attestation, TrainingAISystemId),",
+        "        best_practice_attestation(_, Attestation, component(_, TrainingAISystemId)),",
+        "        TrainingAtts),",
+        "",
+        "    % Collect attestations against training data",
+        "    findall((Attestation, DataId),",
+        "        (",
+        "            member(DataId, DataIds),",
+        "            best_practice_attestation(_, Attestation, component(_, DataId))",
+        "        ),",
+        "        DataAtts)."
+    ]
+  }
+}
