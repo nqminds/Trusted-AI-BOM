@@ -1,0 +1,294 @@
+$id: https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/69-functional-performance-attestation.v1.0.0.schema.yaml
+$schema: https://json-schema.org/draft/2019-09/schema
+title: Functional Performance Attestation
+description: |
+  This schema extends the generic Attestation Schema to define an attestation that best practice has been followed was used in producing component
+type: object
+properties:
+  component:
+    type: object
+    description: Component reference, including an ID and hash for the VC claim.
+    properties:
+      id:
+        type: string
+        description: The component ID (unique identifier) of the VC claim.
+      hash:
+        type: string
+        description: Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim.
+    required:
+      - id
+      - hash
+
+  attestation:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+          - functional performance
+      task_type:
+        type: string
+        enum:
+          - classification
+          - regression
+          - generation
+          - ranking
+          - segmentation
+      primary_metric:
+        type: object
+        properties:
+          name:
+            type: string
+          value:
+            type: number
+          confidence_interval:
+            type: string
+        required:
+          - name
+          - value
+      additional_metrics:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: number
+            confidence_interval:
+              type: string
+          required:
+            - name
+            - value
+      confusion_matrix:
+        type: object
+        properties:
+          true_positive:
+            type: integer
+          false_positive:
+            type: integer
+          true_negative:
+            type: integer
+          false_negative:
+            type: integer
+        required:
+          - true_positive
+          - false_positive
+          - true_negative
+          - false_negative
+      regression_metrics:
+        type: object
+        properties:
+          R_squared:
+            type:
+              - number
+              - 'null'
+          RMSE:
+            type:
+              - number
+              - 'null'
+          MAE:
+            type:
+              - number
+              - 'null'
+      cross_validation:
+        type: object
+        properties:
+          used:
+            type: boolean
+          method:
+            type: string
+          folds:
+            type: integer
+          mean_score:
+            type: number
+          std_dev:
+            type: number
+        required:
+          - used
+      test_set_evaluation:
+        type: object
+        properties:
+          dataset_name:
+            type: string
+          metric_results:
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                value:
+                  type: number
+                confidence_interval:
+                  type: string
+              required:
+                - name
+                - value
+      subgroup_performance:
+        type: object
+        properties:
+          evaluated:
+            type: boolean
+          groups:
+            type: array
+            items:
+              type: object
+              properties:
+                group:
+                  type: string
+                F1_score:
+                  type: number
+                accuracy:
+                  type: number
+              required:
+                - group
+        required:
+          - evaluated
+      out_of_distribution:
+        type: object
+        properties:
+          evaluated:
+            type: boolean
+          description:
+            type: string
+          performance_drop:
+            type: object
+            properties:
+              metric:
+                type: string
+              baseline:
+                type: number
+              ood_value:
+                type: number
+            required:
+              - metric
+              - baseline
+              - ood_value
+        required:
+          - evaluated
+      adversarial_robustness:
+        type: object
+        properties:
+          tested:
+            type: boolean
+          notes:
+            type: string
+        required:
+          - tested
+      calibration:
+        type: object
+        properties:
+          evaluated:
+            type: boolean
+          method:
+            type: string
+          ECE:
+            type: number
+          notes:
+            type: string
+        required:
+          - evaluated
+    required:
+      - type
+      - task_type
+      - primary_metric
+
+
+examples:
+  - component:
+      id: urn:uuid:222e3337-e89b-12d3-a456-426614174004
+      hash: a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0
+    attestation:
+      type: functional performance
+      task_type: classification
+      primary_metric:
+        name: F1_score
+        value: 0.92
+        confidence_interval: ±0.03
+      additional_metrics:
+        - name: accuracy
+          value: 0.95
+          confidence_interval: ±0.02
+        - name: precision
+          value: 0.93
+          confidence_interval: ±0.04
+        - name: recall
+          value: 0.91
+          confidence_interval: ±0.05
+        - name: ROC_AUC
+          value: 0.97
+        - name: log_loss
+          value: 0.12
+      confusion_matrix:
+        true_positive: 180
+        false_positive: 20
+        true_negative: 190
+        false_negative: 10
+      regression_metrics:
+        R_squared: null
+        RMSE: null
+        MAE: null
+      cross_validation:
+        used: true
+        method: k-fold
+        folds: 5
+        mean_score: 0.915
+        std_dev: 0.012
+      test_set_evaluation:
+        dataset_name: Holdout Set v1
+        metric_results:
+          - name: F1_score
+            value: 0.91
+            confidence_interval: ±0.01
+          - name: accuracy
+            value: 0.94
+            confidence_interval: ±0.015
+      subgroup_performance:
+        evaluated: true
+        groups:
+          - group: age_18_25
+            F1_score: 0.88
+            accuracy: 0.91
+          - group: age_65_plus
+            F1_score: 0.79
+            accuracy: 0.84
+      out_of_distribution:
+        evaluated: true
+        description: Evaluated on different product categories
+        performance_drop:
+          metric: F1_score
+          baseline: 0.92
+          ood_value: 0.75
+      adversarial_robustness:
+        tested: false
+        notes: ''
+      calibration:
+        evaluated: true
+        method: reliability_diagram
+        ECE: 0.04
+        notes: Model is slightly overconfident in certain ranges
+
+context: |
+  ## Introduction
+
+  The **Performance Metrics Schema** extends the generic Attestation Schema to provide a structured and standardized way of reporting the functional performance of AI models. It enables the clear articulation of key evaluation metrics, performance characteristics, and comparative insights across different datasets and conditions.
+
+  ### Description
+  This schema includes:
+  - **Task Type**: The type of ML task (e.g., classification, regression).
+  - **Primary Metric**: The main metric used to evaluate the model’s performance.
+  - **Additional Metrics**: A suite of supporting metrics that offer further insight.
+  - **Cross-validation & Test Set Evaluation**: Captures how performance was evaluated across different datasets or folds.
+  - **Fairness & Robustness Fields**: Includes subgroup performance, calibration, and adversarial robustness data.
+  - **Contextual Factors**: Such as performance on out-of-distribution data or environmental variation.
+
+  ## Use Case
+
+  The **Performance Metrics Schema** is used to:
+  1. **Document Model Performance**: Provide transparent and reproducible reporting of an AI model’s functional performance.
+  2. **Compare Across Implementations**: Enable comparisons between models trained on different data, using different techniques, or under different operating conditions.
+  3. **Support Audits and Assurance**: Supply standardized performance evidence to downstream stakeholders in the AI lifecycle, including auditors, regulators, and integrators.
+  4. **Ensure Downstream Trust**: Give consumers of AI systems visibility into model capabilities and limitations.
+
+  This schema promotes clarity, accountability, and interoperability by offering a consistent way to communicate model performance and evaluation practices.

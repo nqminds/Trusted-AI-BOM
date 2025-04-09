@@ -1,0 +1,298 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:3dc59ca0-709d-4824-b9da-14fcfdc2c0c3",
+  "type": [
+    "VerifiableCredential",
+    "UserCredential"
+  ],
+  "credentialSubject": {
+    "$id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/69-functional-performance-attestation.v1.0.0.schema.yaml",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "title": "Functional Performance Attestation",
+    "description": "This schema extends the generic Attestation Schema to define an attestation that best practice has been followed was used in producing component\n",
+    "type": "object",
+    "properties": {
+      "component": {
+        "type": "object",
+        "description": "Component reference, including an ID and hash for the VC claim.",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The component ID (unique identifier) of the VC claim."
+          },
+          "hash": {
+            "type": "string",
+            "description": "Cryptographic hash (e.g., SHA-256) for verifying the integrity of the VC claim."
+          }
+        },
+        "required": [
+          "id",
+          "hash"
+        ]
+      },
+      "attestation": {
+        "type": "object",
+        "properties": {
+          "task_type": {
+            "type": "string",
+            "enum": [
+              "classification",
+              "regression",
+              "generation",
+              "ranking",
+              "segmentation"
+            ]
+          },
+          "primary_metric": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              },
+              "confidence_interval": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "value"
+            ]
+          },
+          "additional_metrics": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                },
+                "confidence_interval": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ]
+            }
+          },
+          "confusion_matrix": {
+            "type": "object",
+            "properties": {
+              "true_positive": {
+                "type": "integer"
+              },
+              "false_positive": {
+                "type": "integer"
+              },
+              "true_negative": {
+                "type": "integer"
+              },
+              "false_negative": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "true_positive",
+              "false_positive",
+              "true_negative",
+              "false_negative"
+            ]
+          },
+          "regression_metrics": {
+            "type": "object",
+            "properties": {
+              "R_squared": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "RMSE": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "MAE": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          },
+          "cross_validation": {
+            "type": "object",
+            "properties": {
+              "used": {
+                "type": "boolean"
+              },
+              "method": {
+                "type": "string"
+              },
+              "folds": {
+                "type": "integer"
+              },
+              "mean_score": {
+                "type": "number"
+              },
+              "std_dev": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "used"
+            ]
+          },
+          "test_set_evaluation": {
+            "type": "object",
+            "properties": {
+              "dataset_name": {
+                "type": "string"
+              },
+              "metric_results": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "number"
+                    },
+                    "confidence_interval": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "value"
+                  ]
+                }
+              }
+            }
+          },
+          "subgroup_performance": {
+            "type": "object",
+            "properties": {
+              "evaluated": {
+                "type": "boolean"
+              },
+              "groups": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "group": {
+                      "type": "string"
+                    },
+                    "F1_score": {
+                      "type": "number"
+                    },
+                    "accuracy": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "group"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "evaluated"
+            ]
+          },
+          "out_of_distribution": {
+            "type": "object",
+            "properties": {
+              "evaluated": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": "string"
+              },
+              "performance_drop": {
+                "type": "object",
+                "properties": {
+                  "metric": {
+                    "type": "string"
+                  },
+                  "baseline": {
+                    "type": "number"
+                  },
+                  "ood_value": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "metric",
+                  "baseline",
+                  "ood_value"
+                ]
+              }
+            },
+            "required": [
+              "evaluated"
+            ]
+          },
+          "adversarial_robustness": {
+            "type": "object",
+            "properties": {
+              "tested": {
+                "type": "boolean"
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "tested"
+            ]
+          },
+          "calibration": {
+            "type": "object",
+            "properties": {
+              "evaluated": {
+                "type": "boolean"
+              },
+              "method": {
+                "type": "string"
+              },
+              "ECE": {
+                "type": "number"
+              },
+              "notes": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "evaluated"
+            ]
+          }
+        },
+        "required": [
+          "task_type",
+          "primary_metric"
+        ]
+      }
+    },
+    "context": "## Introduction\n\nThe **Performance Metrics Schema** extends the generic Attestation Schema to provide a structured and standardized way of reporting the functional performance of AI models. It enables the clear articulation of key evaluation metrics, performance characteristics, and comparative insights across different datasets and conditions.\n\n### Description\nThis schema includes:\n- **Task Type**: The type of ML task (e.g., classification, regression).\n- **Primary Metric**: The main metric used to evaluate the model’s performance.\n- **Additional Metrics**: A suite of supporting metrics that offer further insight.\n- **Cross-validation & Test Set Evaluation**: Captures how performance was evaluated across different datasets or folds.\n- **Fairness & Robustness Fields**: Includes subgroup performance, calibration, and adversarial robustness data.\n- **Contextual Factors**: Such as performance on out-of-distribution data or environmental variation.\n\n## Use Case\n\nThe **Performance Metrics Schema** is used to:\n1. **Document Model Performance**: Provide transparent and reproducible reporting of an AI model’s functional performance.\n2. **Compare Across Implementations**: Enable comparisons between models trained on different data, using different techniques, or under different operating conditions.\n3. **Support Audits and Assurance**: Supply standardized performance evidence to downstream stakeholders in the AI lifecycle, including auditors, regulators, and integrators.\n4. **Ensure Downstream Trust**: Give consumers of AI systems visibility into model capabilities and limitations.\n\nThis schema promotes clarity, accountability, and interoperability by offering a consistent way to communicate model performance and evaluation practices.\n"
+  },
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/ClaimCascade/tree/main/packages/schemas/src/schema.json",
+    "type": "JsonSchema"
+  },
+  "issuer": "did:volt:bed919ab-6081-40e7-9677-88d1cd37a0c0",
+  "validFrom": "2025-04-09T10:34:09.801Z"
+}
