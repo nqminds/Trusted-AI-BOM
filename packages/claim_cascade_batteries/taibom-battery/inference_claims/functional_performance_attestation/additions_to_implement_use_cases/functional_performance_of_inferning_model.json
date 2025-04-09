@@ -1,0 +1,90 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:0a7e3cca-1532-11f0-a84e-0f449aa14760",
+  "type": "VerifiableCredential",
+  "description": null,
+  "issuer": "urn:uuid:11edd022-0e3b-11f0-bfbd-6baffcee8fdb",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/69-functional-performance-attestation.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "component": {
+      "hash": "placeholder_hash",
+      "id": "urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c"
+    },
+    "attestation": {
+      "type": "best practice",
+      "task_type": "classification",
+      "primary_metric": {
+        "name": "F1_score",
+        "value": 0.943,
+        "confidence_interval": "±0.017"
+      },
+      "additional_metrics": [
+        { "name": "accuracy", "value": 0.956, "confidence_interval": "±0.012" },
+        { "name": "precision", "value": 0.932 },
+        { "name": "recall", "value": 0.955 },
+        { "name": "log_loss", "value": 0.214 }
+      ],
+      "confusion_matrix": {
+        "true_positive": 920,
+        "false_positive": 30,
+        "true_negative": 890,
+        "false_negative": 40
+      },
+      "regression_metrics": {
+        "R_squared": null,
+        "RMSE": null,
+        "MAE": null
+      },
+      "cross_validation": {
+        "used": true,
+        "method": "stratified_k_fold",
+        "folds": 5,
+        "mean_score": 0.942,
+        "std_dev": 0.014
+      },
+      "test_set_evaluation": {
+        "dataset_name": "UK Road Signs Test Set v1.2",
+        "metric_results": [
+          { "name": "F1_score", "value": 0.939, "confidence_interval": "±0.019" },
+          { "name": "accuracy", "value": 0.951 }
+        ]
+      },
+      "subgroup_performance": {
+        "evaluated": true,
+        "groups": [
+          { "group": "sunny_weather", "F1_score": 0.962, "accuracy": 0.973 },
+          { "group": "rainy_weather", "F1_score": 0.915, "accuracy": 0.928 },
+          { "group": "low_light", "F1_score": 0.891, "accuracy": 0.902 }
+        ]
+      },
+      "out_of_distribution": {
+        "evaluated": true,
+        "description": "Evaluation on German and French speed sign datasets",
+        "performance_drop": {
+          "metric": "F1_score",
+          "baseline": 0.943,
+          "ood_value": 0.811
+        }
+      },
+      "adversarial_robustness": {
+        "tested": true,
+        "notes": "Model tested using FGSM perturbations. Small degradation noted: F1 dropped to 0.897 under attack."
+      },
+      "calibration": {
+        "evaluated": true,
+        "method": "reliability_diagram",
+        "ECE": 0.031,
+        "notes": "Model is well-calibrated across confidence ranges, slight overconfidence at 80–90% confidence."
+      }
+    }
+  }
+}
+
