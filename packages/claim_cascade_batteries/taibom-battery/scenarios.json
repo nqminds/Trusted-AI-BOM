@@ -215,7 +215,7 @@
       "name": "Use Cases",
       "queries": [
         {
-          "name": "Get all data in inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
+          "name": "Get all training data used in training of inferencing system urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c",
           "query": "db:data_in_inferencing_system(DataVcIds, \"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\")"
         },
         {

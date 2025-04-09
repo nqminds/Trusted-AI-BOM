@@ -37,7 +37,7 @@ END FUNCTION
 
 ---
 
-### 📘 **Explanation**
+### **Explanation**
 
 1. **Retrieve AI System Code Details:**  
    - The function begins by extracting the code information for the AI system using its identifier. This gives us the unique Code ID.

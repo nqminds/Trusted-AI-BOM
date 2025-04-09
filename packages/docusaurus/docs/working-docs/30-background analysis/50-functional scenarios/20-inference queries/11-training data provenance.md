@@ -31,7 +31,7 @@ FUNCTION ai_system_providers_trusted_with_whitelist(AI_System_ID, Whitelist_Emai
 END FUNCTION
 ```
 
-### **Explanation of the Full Functionality**
+### **Explanation**
 1. **Find relevant data sources**:  
    - Retrieve the **configuration verification credential** (`ConfigVcId`) for the AI system.  
    - Extract the **weights verification credential** (`WeightsVcId`) used in training.  
