@@ -193,6 +193,10 @@
         {
           "path": "vulnerability_attestation/additiions_to_implement_use_cases",
           "signing_key": "keys/admin.priv"
+        },
+        {
+          "path": "best_practice_attestation/additions_to_implement_use_cases",
+          "signing_key": "keys/admin.priv"
         }
       ],
       "inference_rules": [
@@ -277,6 +281,10 @@
         {
           "name": "Get vulnerabilities disclosed against SBOM of training code for AI system",
           "query": "db:ai_system_training_software_vulnerabilities(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", Vulnerabilities)"
+        },
+        {
+          "name": "Get vulnerabilities disclosed against SBOM of training code for AI system",
+          "query": "db:ai_system_best_practice_attestations(\"urn:uuid:3a02992b-7a5b-4184-ba1e-358850e5344c\", InferenceAttestations, TrainingAttestations, DataAttestations)"
         }
       ]
     }

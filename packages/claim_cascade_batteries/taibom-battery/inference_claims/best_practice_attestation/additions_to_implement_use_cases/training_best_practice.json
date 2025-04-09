@@ -1,0 +1,29 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/credentials/v2"
+  ],
+  "id": "urn:uuid:a970a706-148c-11f0-85ff-0f3cf0e84a19",
+  "type": "VerifiableCredential",
+  "description": null,
+  "issuer": "urn:uuid:11edd022-0e3b-11f0-bfbd-6baffcee8fdb",
+  "validFrom": "2025-03-26T12:50:00+00:00",
+  "validUntil": null,
+  "credentialStatus": null,
+  "credentialSchema": {
+    "id": "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/68-best-practice-attestation.v1.0.0.schema.yaml",
+    "type": "JsonSchema"
+  },
+  "credentialSubject": {
+    "component": {
+      "hash": "placeholder_hash",
+      "id": "urn:uuid:cb7d02f7-c7cb-46d0-868b-f9bfedaa8a2e"
+    },
+    "attestation": {
+      "type": "best practice",
+      "best_practice": {
+        "type": "Reproducibility",
+        "description": "Environment has been containerized in docker and published online, a random seed is used as specified in the guidelines and all configurations have been published"
+      }
+    }
+  }
+}
