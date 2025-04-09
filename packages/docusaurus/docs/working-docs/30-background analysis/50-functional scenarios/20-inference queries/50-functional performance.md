@@ -1,6 +1,6 @@
 ## Query use case
 
-Has the system passed a functional test to the desired threshold level?
+For this inference AI system provide me a list of all functional performance results.
 
 
 ## Schemas used
@@ -29,7 +29,7 @@ END FUNCTION
 
 ---
 
-### 📘 **Explanation**
+### **Explanation**
 
 1. **Search for Functional Performance Attestations:**  
    - The function queries the knowledge base for all `functional_performance_attestation` facts where the attested component corresponds to the specified `AI_System_ID`.

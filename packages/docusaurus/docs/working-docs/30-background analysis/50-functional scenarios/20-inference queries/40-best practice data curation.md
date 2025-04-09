@@ -59,7 +59,7 @@ END FUNCTION
 
 ---
 
-### 📘 **Explanation**
+### **Explanation**
 
 1. **Extract Configuration for Inference System:**  
    - The function begins by retrieving the `Config_ID` associated with the inference AI system. This configuration is needed to trace the training process.

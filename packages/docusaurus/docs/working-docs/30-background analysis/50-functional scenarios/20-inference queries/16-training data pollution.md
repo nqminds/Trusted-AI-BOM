@@ -56,7 +56,7 @@ END FUNCTION
 
 ---
 
-### **Explanation of the Full Functionality**
+### **Explanation**
 This function detects whether **pollution data** exists within an AI system by tracing the **data sources** used in training and verifying if any have a `"pollution"` attestation.
 
 1. **Find the data sources used in the AI system**:  

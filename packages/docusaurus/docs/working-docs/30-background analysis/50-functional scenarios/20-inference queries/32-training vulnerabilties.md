@@ -45,7 +45,7 @@ END FUNCTION
 
 ---
 
-### 📘 **Explanation**
+### **Explanation**
 
 1. **Extract Configuration from AI System:**  
    - The function begins by retrieving the configuration identifier (`Config_ID`) from the specified AI system's training data.
