@@ -58,25 +58,7 @@ const program = new Command();
 program
   .name("SDK for creating & verifying TAIBOMS")
   .description("CLI to create / document / sign & verify TAIBOM VC's")
-  .version("0.0.1");
-
-// program
-//   .command("register-identity")
-//   .description("Register identity keypair with DID registry")
-//   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-//   .option(
-//     "--registry <registry>",
-//     "Address of the did registry",
-//     "http://localhost:3001/api/auth/authenticate"
-//   )
-//   .action(async (identityEmail, options) => {
-//     const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
-//       identityEmail
-//     );
-//     const publicKey = loadKey(publicKeyPath);
-//     const privateKey = loadKey(privateKeyPath);
-//     await issueRequest(identityEmail, );
-//   });
+  .version("0.0.3");
 
 program
   .command("generate-identity")
@@ -192,7 +174,6 @@ program
   .description("Generate and sign an SBOM of code")
   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
   .argument("<code_directory>", "The directory of the code")
-  .option("--cpp", "[OPTIONAL] Generate a SBOM for C/C++ code", false)
   .option("--out <output_dir>", "Output directory")
   .action(async (identityEmail, codeDirectory, options) => {
     const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
@@ -242,7 +223,7 @@ program
   .command("code-taibom")
   .description("Generate and sign a TAIBOM of code")
   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-  .argument("<code_directory>", "The directory of the data")
+  .argument("<code_directory>", "The directory of the code / package")
   .argument("<version>", "Code version number")
   .option("--sbomTaibom <path>", "[OPTIONAL] SBOM TAIBOM claim", false)
   .option("--name <code_name>", "[OPTIONAL] Name of code or package", false)
@@ -259,14 +240,13 @@ program
       console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
       process.exit(1);
     }
-    console.log(`Code directory '${codeDirectory}' verified.`);
 
     const bashCommand = getHash(codeDirectory);
 
     let sbom = null;
 
     if (options.sbomTaibom) {
-      const sbomVc = await getAndVerifyClaim(options.sbomTaibom);
+      const sbomVc = await getAndVerifyClaim(options.sbomTaibom, "sbom");
       sbom = { id: sbomVc.id, hash: sbomVc.proof.proofValue };
     }
 
@@ -322,8 +302,8 @@ program
     );
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    const codeTaibom = await getAndVerifyClaim(codeTaibomPath);
-    const dataTaibom = await getAndVerifyClaim(dataTaibomPath);
+    const codeTaibom = await getAndVerifyClaim(codeTaibomPath, "code");
+    const dataTaibom = await getAndVerifyClaim(dataTaibomPath, ["data", "data-pack"]);
 
     const label = options.inferencing ? "Inferencing" : "Training";
 
@@ -361,7 +341,7 @@ program
 
     const datasets = await Promise.all(
       dataTaibomPaths.map(async (p) => {
-        const dataTaibom = await getAndVerifyClaim(p);
+        const dataTaibom = await getAndVerifyClaim(p, "data");
         return { id: dataTaibom.id, hash: dataTaibom.proof.proofValue };
       })
     );
@@ -395,8 +375,8 @@ program
         await retrieveIdentity(identityEmail);
       let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-      const aiSystem = await getAndVerifyClaim(aiSystemTaibomPath);
-      const data = await getAndVerifyClaim(dataTaibomPath);
+      const aiSystem = await getAndVerifyClaim(aiSystemTaibomPath, "ai-system");
+      const data = await getAndVerifyClaim(dataTaibomPath, ["data", "data-pack"]);
 
       const credentialSubject = {
         aiSystem: { id: aiSystem.id, hash: aiSystem.proof.proofValue },
@@ -440,8 +420,8 @@ function validateLocationHash(claim) {
 
 program
   .command("validate")
-  .description("Validate a TAIBOM claim")
-  .argument("<taibom>", "Path to TAIBOM data claim")
+  .description("Validate a TAIBOM claim has been signed by the issuer and has not been tampered with")
+  .argument("<taibom>", "Path to TAIBOM claim")
   .action(async (taibom) => {
     const dataClaim = await getAndVerifyClaim(taibom);
     if (dataClaim) {
@@ -454,12 +434,12 @@ program
 // Validation functions
 program
   .command("validate-data")
-  .description("Validate a TAIBOM data claim")
+  .description("Validate a TAIBOM data claim, and its hash")
   .argument("<data_taibom>", "Path to TAIBOM data claim")
   .option("--out <output_dir>", "Output directory")
   .action(async (taibom, options) => {
     try {
-      const dataClaim = await getAndVerifyClaim(taibom);
+      const dataClaim = await getAndVerifyClaim(taibom, "data");
 
       // Verify it is a data vc
       if (
@@ -477,12 +457,12 @@ program
 
 program
   .command("validate-code")
-  .description("Validate a TAIBOM code claim")
+  .description("Validate a TAIBOM code claim, and its hash")
   .argument("<code_taibom>", "Path to TAIBOM code claim")
   .option("--out <output_dir>", "Output directory")
   .action(async (taibom, options) => {
     try {
-      const codeClaim = await getAndVerifyClaim(taibom);
+      const codeClaim = await getAndVerifyClaim(taibom, "code");
       if (!codeClaim) {
         throw new Error("Claim cannot be retrieved or verified");
       }
@@ -500,21 +480,6 @@ program
       throw new Error(`Validation failed for claim at ${taibom}`);
     }
   });
-
-// program
-//   .command("generate-vc")
-//   .description("Generate and sign a TAIBOM VC")
-//   .argument("<json_data_file>", "Path to Json data to be signed")
-//   .argument("<schema_name>", "Name of the TAIBOM schema (include .json extension)")
-//   .argument("<signing_key_path>", "Signing Key")
-//   .option("--uuid <issuer_uuid>", "Issuer UUID", null)
-//   .option("--out <output_dir>", "Output directory")
-//   .action((dataFile, schemaName, signingKeyPath, options) => {
-//     const credentialSubject = getAndVerifyClaim(dataFile, false);
-//     let uuid = options.uuid ?? `urn:uuid:${uuidv4()}`;
-//     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
-//     generateAndSignVC(credentialSubject, uuid, schemaName, signingKeyPath, outputDir)
-//   })
 
 function createAttestation(
   attestation,
@@ -570,7 +535,8 @@ program
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     const taibom = await getAndVerifyClaim(taibomVc);
-    const attestation = await getAndVerifyClaim(attestationPath, false);
+    const jsonFile = fs.readFileSync(attestationPath, "utf8");
+    const attestation = JSON.parse(jsonFile);
 
     if (options.type) {
       let val =

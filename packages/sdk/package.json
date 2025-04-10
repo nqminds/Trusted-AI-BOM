@@ -4,7 +4,7 @@
   "description": "SDK for creating & verifying TAIBOMS",
   "main": "src/index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.mjs"
   },
   "bin": {
     "taibom": "./bin/cli.mjs"
@@ -15,7 +15,10 @@
   "dependencies": {
     "@nqminds/verifiable-schemas-toolchain": "2.1.0-alpha.2",
     "base58": "^2.0.1",
+    "better-sqlite3": "^11.9.1",
     "commander": "^12.1.0",
+    "crypto": "^1.0.1",
+    "express": "^5.1.0",
     "flatted": "^3.3.3",
     "fs": "^0.0.1-security",
     "jsonify": "^0.0.1",
