@@ -1,7 +1,26 @@
 import { v4 as uuidv4 } from "uuid";
 import fetch from "node-fetch";
 import { sign, verify } from "./pkg/verifiable_credential_toolkit.js";
-import {convertToUint8} from "./keys.mjs"
+import { convertToUint8 } from "./keys.mjs"
+import { cookieJar, URI, BASE_PATH, ENDPOINTS, saveCookies} from "../src/api-tools.mjs";
+import got from "got";
+
+const apiClient = got.extend({
+  prefixUrl: URI.replace(/\/$/, '') + BASE_PATH, // Use the same base URL
+  cookieJar, // Use the shared cookie jar
+  responseType: 'json',
+  hooks: {
+    afterResponse: [
+      (response) => {
+        saveCookies();
+        return response;
+      },
+    ],
+  }
+});
+
+
+const checkExpiration = true;
 
 const staticVC = {
   "@context": ["https://www.w3.org/ns/credentials/v2"],
@@ -20,6 +39,82 @@ const staticVC = {
 };
 
 /**
+ * Fetches the keys from the server, requires an authenticated session.
+ * @returns {Promise<Object>} A promise that resolves to the keys object.
+ */
+async function getKeys() {
+  //const response = await fetch(URI + BASE_PATH + ENDPOINTS.GET_KEYS, { "credentials": "include" });// TODO: make this a got request to leverage the cookies, is this possible accross files?
+  const response = await apiClient.get(ENDPOINTS.GET_KEYS, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.statusCode !== 200) {
+    throw new Error(response.statusMessage);
+  }
+  const keys = await response.body;
+  return keys;
+}
+
+async function verifyVerifiableCredential(vc, key) {
+  await init();
+  const valid = verify(vc, key);
+  return valid;
+}
+
+
+async function verifyHasValidExpiration(vc) {
+  if (!vc.validUntil) {
+    // log that there is no expiration date
+    //TODO: make the inlcusion of expiration a configurable option
+    return false;
+  }
+  const expirationDate = new Date(vc.validUntil);
+  const currentDate = new Date();
+  if (expirationDate < currentDate) {
+    console.error("VC has expired");
+    return false;
+  }
+  return true;
+}
+
+
+
+
+/**
+ * 
+ * @param {Object} VC
+ * @param {string} email
+ * @returns {boolean}
+ */
+async function verifyAgainstEmail(vc, email) {
+  const keys = (await getKeys(email)).keys;
+  const keysArray = keys.map(key => key.key);
+
+  if (keys.length === 0) {
+    return false;
+  }
+  const convertedKeys = await Promise.all(keysArray.map(async (key) => {
+    return processEd25519PublicKey(key);
+  }));
+
+
+  for (let keyIndex = 0; keyIndex < convertedKeys.length; keyIndex++) {
+    const key = keys[keyIndex];
+    valid = await verifyVerifiableCredential(vc, key);
+    if (valid && checkExpiration && await verifyHasValidExpiration(vc)) {
+      return true;
+      
+    } else if (valid && !checkExpiration) {
+      return true;
+    }
+  }
+  return false;
+
+
+}
+
+/**
  * Verifies the claim in a Verifiable Credential (VC).
  * @param {Object} vc - The Verifiable Credential object.
  * @param {string} didRegistryUrl - The URL of the DID registry (e.g., did:example registry endpoint).
@@ -27,34 +122,15 @@ const staticVC = {
  */
 export async function verifyClaim(vc) {
   try {
-    let didDocument;
-    const didUrl = vc.issuer;
 
-    try {
+      const isValid = verifyAgainstEmail(vc, vc.issuer);
+      console.log("isValid", isValid);
       const response = await fetch(didUrl);
       if (!response.ok) {
         throw new Error(`DID registry lookup failed for ${didUrl}`);
       }
-      didDocument = await response.json();
-    } catch (error) {
-      console.warn(
-        `Warning: Unable to fetch DID document from registry. Falling back to proof.verificationMethod. Error: ${error.message}`
-      );
-    }
 
-    let publicKey;
-    if (vc.proof && vc.proof.verificationMethod) {
-      // Use the public key from `proof.verificationMethod`
-      publicKey = vc.proof.verificationMethod;
-    } else {
-      console.error("No verification method found in the VC or DID document.");
-      return false;
-    }
 
-    const decodedPublicKey = convertToUint8(publicKey);
-
-    const isVerified = verify(vc, decodedPublicKey);
-    return isVerified;
   } catch (error) {
     console.error("Error during claim verification:", error);
     throw new Error(error);
@@ -144,3 +220,4 @@ export function generateAndSignVC(
 
   return jsonContent;
 }
+
