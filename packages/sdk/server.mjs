@@ -2,18 +2,16 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import Database from "better-sqlite3";
-import crypto from "crypto";
 import { getHash } from "./bin/file-utils.mjs";
 import { exec } from "child_process";
 import { extractSchemaName } from "./src/vc-tools.mjs";
 
 const app = express();
-app.use(express.json());  // ✅ Enable JSON body parsing
+app.use(express.json()); // ✅ Enable JSON body parsing
 
 const PORT = 3000;
 const dbPath = path.join(process.env.HOME, ".taibom/guid_hash.db");
 const db = new Database(dbPath);
-const activeChallenges = new Map(); // Store nonces temporarily
 
 function runBashCommand(bashCommand, callback) {
   exec(bashCommand, (error, stdout, stderr) => {
@@ -56,8 +54,14 @@ function getVCJson({ guid, vc_hash }) {
   const vcFilePath = result.vc_filepath.trim();
 
   if (!fs.existsSync(vcFilePath)) {
-    console.error(`❌ VC File not found on disk: ${vcFilePath}, reverting to stored VC in guid_hash_table`);
-    return { vc: JSON.parse(result.vc), dbEntry: result };
+    console.error(
+      `❌ VC File not found on disk: ${vcFilePath}, reverting to stored VC in guid_hash_table`
+    );
+    return {
+      vc: JSON.parse(result.vc),
+      dbEntry: result,
+      message: `TAIBOM File not found on disk: ${vcFilePath}, reverting to stored TAIBOM in guid_hash_table`,
+    };
   }
 
   try {
@@ -75,7 +79,7 @@ function getVCJson({ guid, vc_hash }) {
 app.get("/get-vc", (req, res) => {
   const { guid, vc_hash } = req.query;
 
-  const vcJson = getVCJson({ guid, vc_hash });
+  const { vc: vcJson, dbEntry } = getVCJson({ guid, vc_hash });
   if (!vcJson) {
     return res.status(404).json({ error: "VC not found" });
   }
@@ -87,14 +91,19 @@ app.get("/get-vc", (req, res) => {
 app.get("/get-hash", (req, res) => {
   const { guid, vc_hash } = req.query;
 
-  const { vc: vcJson, dbEntry } = getVCJson({ guid, vc_hash });
+  const { vc: vcJson, dbEntry, message } = getVCJson({ guid, vc_hash });
   if (!vcJson) {
     return res.status(404).json({ error: "VC not found" });
   }
 
   const taibomType = extractSchemaName(vcJson);
-  if(!taibomType.includes(["code", "data", "data-pack"])) {
-    return res.status(404).json({ error: "VC not found" });
+  if (!["code", "data", "data-pack"].find((d) => d === taibomType)) {
+    return res
+      .status(404)
+      .json({
+        error:
+          "VC is not of type `code`, `data`, or `data-pack`, and does not include a file location hash",
+      });
   }
 
   const dataDir = vcJson.credentialSubject.location;
@@ -110,37 +119,14 @@ app.get("/get-hash", (req, res) => {
     runBashCommand(bashCommand, (error, hash) => {
       if (error) {
         console.error(`Error generating hash: ${error.message}`);
-        process.exit(1);
+        res.status(404).json({ error: error.message , message: "The file may have been deleted / removed, unable to provide a hash for this TABIOM"});
+      } else {
+        res.json({ file_hash: hash, message });
       }
-      res.json({ data_hash: hash });
     });
   }
 });
 
-// app.post("/handshake", (req, res) => {
-//   console.log(req.body)
-//   const { email, nonce } = req.body;
-
-//   if (!email || !nonce) {
-//     return res.status(400).json({ error: "Missing 'email' or 'nonce'" });
-//   }
-
-//   const privateKeyPath = path.join(process.env.HOME, ".taibom", email, "private.key");
-
-//   if (!fs.existsSync(privateKeyPath)) {
-//     return res.status(404).json({ error: "Private key not found for this identity" });
-//   }
-
-//   const privateKey = fs.readFileSync(privateKeyPath, "utf-8").trim();
-
-//   // Sign the nonce using the server’s private key
-//   const signer = crypto.createSign("SHA256");
-//   signer.update(nonce);
-//   signer.end();
-//   const signedNonce = signer.sign(privateKey, "base64");
-
-//   res.json({ signedNonce });
-// });
 // Start the server
 app.listen(PORT, () => {
   console.log(`✅ TAIBOM API Server running at http://localhost:${PORT}`);
