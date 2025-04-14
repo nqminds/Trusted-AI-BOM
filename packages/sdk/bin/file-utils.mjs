@@ -1,7 +1,6 @@
 import os from "os";
 import path from "path";
 import fs from "fs";
-import { exec } from "child_process";
 import { fileURLToPath } from "url";
 import { extractSchemaName, verifyClaim } from "../src/vc-tools.mjs";
 import {
@@ -161,6 +160,47 @@ function getHash(dataDir) {
   return `find "${dataDir}" -type f -exec sha256sum {} + | sort | sha256sum | awk '{print $1}'`;
 }
 
+function getMetadataHash(dataDir) {
+  if (dataDir.startsWith("file://")) {
+    dataDir = dataDir.replace("file://", "");
+  }
+
+  // Convert relative path to absolute
+  if (!path.isAbsolute(dataDir)) {
+    dataDir = path.resolve(process.cwd(), dataDir);
+  }
+
+  return `find "${dataDir}" -type f -exec stat --format="%s-%a-%Y-%n" {} + | sort | sha256sum | awk '{print $1}'`;
+}
+
+function getStatsAsJson(targetPath) {
+  if (targetPath.startsWith("file://")) {
+    targetPath = targetPath.replace("file://", "");
+  }
+
+  // Convert relative path to absolute
+  if (!path.isAbsolute(targetPath)) {
+    targetPath = path.resolve(process.cwd(), targetPath);
+  }
+
+  const stats = fs.lstatSync(targetPath);
+
+  return {
+    path: targetPath,
+    size: stats.size,
+    type: stats.isDirectory() ? 'directory' : stats.isFile() ? 'file' : 'other',
+    mode: stats.mode,
+    permissions: (stats.mode & 0o777).toString(8), // octal format
+    mtime: stats.mtime.toISOString(),
+    ctime: stats.ctime.toISOString(),
+    birthtime: stats.birthtime.toISOString(),
+    uid: stats.uid,
+    gid: stats.gid
+  };
+}
+
+
+
 // Export functions for use in other ES modules
 export {
   writeKeysToFile,
@@ -173,4 +213,6 @@ export {
   getAndVerifyClaim,
   getHash,
   ensureFilesExist,
+  getMetadataHash,
+  getStatsAsJson,
 };

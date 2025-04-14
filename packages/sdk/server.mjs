@@ -5,6 +5,7 @@ import Database from "better-sqlite3";
 import { getHash } from "./bin/file-utils.mjs";
 import { exec } from "child_process";
 import { extractSchemaName } from "./src/vc-tools.mjs";
+import { getMetadataHash, getStatsAsJson } from "./bin/file-utils.mjs";
 
 const app = express();
 app.use(express.json()); // ✅ Enable JSON body parsing
@@ -13,18 +14,25 @@ const PORT = 3000;
 const dbPath = path.join(process.env.HOME, ".taibom/guid_hash.db");
 const db = new Database(dbPath);
 
-function runBashCommand(bashCommand, callback) {
-  exec(bashCommand, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Command failed: ${error.message}`);
-      return callback ? callback(error) : process.exit(1);
+import { promisify } from "util";
+const execAsync = promisify(exec);
+
+async function runBashCommand(bashCommand) {
+  try {
+    const { stdout, stderr } = await execAsync(bashCommand);
+    if (stderr) throw new Error(`stderr: ${stderr}`);
+
+    const output = stdout.trim();
+    const sha256Regex = /^[a-f0-9]{64}$/;
+    if (!sha256Regex.test(output)) {
+      throw new Error(`Invalid hash format: "${output}"`);
     }
-    if (stderr) {
-      console.error(`Command error: ${stderr}`);
-      return callback ? callback(new Error(stderr)) : process.exit(1);
-    }
-    if (callback) callback(null, stdout.trim());
-  });
+
+    return output;
+  } catch (err) {
+    console.error(`Failed to run bash command: ${err.message}`);
+    throw err;
+  }
 }
 
 // Helper function: Retrieve the Verifiable Credential (VC) JSON
@@ -88,7 +96,7 @@ app.get("/get-vc", (req, res) => {
 });
 
 // ✅ API Endpoint: Get the data hash
-app.get("/get-hash", (req, res) => {
+app.get("/get-hash", async (req, res) => {
   const { guid, vc_hash } = req.query;
 
   const { vc: vcJson, dbEntry, message } = getVCJson({ guid, vc_hash });
@@ -98,34 +106,76 @@ app.get("/get-hash", (req, res) => {
 
   const taibomType = extractSchemaName(vcJson);
   if (!["code", "data", "data-pack"].find((d) => d === taibomType)) {
-    return res
-      .status(404)
-      .json({
-        error:
-          "VC is not of type `code`, `data`, or `data-pack`, and does not include a file location hash",
-      });
-  }
-
-  const dataDir = vcJson.credentialSubject.location;
-
-  if (dataDir.type === "local") {
-    const cleanedRelativePath = dataDir.path.replace("file://", "");
-    const resolvedPath = path.resolve(
-      path.dirname(dbEntry.vc_filepath),
-      cleanedRelativePath
-    );
-    const bashCommand = getHash(resolvedPath);
-
-    runBashCommand(bashCommand, (error, hash) => {
-      if (error) {
-        console.error(`Error generating hash: ${error.message}`);
-        res.status(404).json({ error: error.message , message: "The file may have been deleted / removed, unable to provide a hash for this TABIOM"});
-      } else {
-        res.json({ file_hash: hash, message });
-      }
+    return res.status(404).json({
+      error:
+        "VC is not of type `code`, `data`, or `data-pack`, and does not include a file location hash",
     });
   }
+  if (taibomType === "data-pack") {
+    const datasets = vcJson.credentialSubject.datasets;
+
+    const result = await Promise.all(
+      datasets.map(({ id }) => {
+        const {
+          vc: data,
+          dbEntry: dataDbEntry,
+          message: dataMessage,
+        } = getVCJson({ guid: id.replace("urn:uuid:", "") });
+        if (!vcJson) {
+          return {vcId: id, error: "VC not found" };
+        }
+
+        return getFileHashJSON(
+          data,
+          dataDbEntry,
+          [message, dataMessage].filter(Boolean).join("\n")
+        );
+      })
+    );
+    if (result.error) {
+      return res.status(404).json(result);
+    }
+    return res.json(result);
+  } else {
+    const result = await getFileHashJSON(vcJson, dbEntry, message);
+    if (result.error) {
+      return res.status(404).json(result);
+    }
+    return res.json(result);
+  }
 });
+
+async function getFileHashJSON(vcJson, dbEntry, message = "") {
+  const dataDir = vcJson.credentialSubject.location;
+
+  if (dataDir.type !== "local") {
+    return {
+      error: "Only local file paths are supported for hashing.",
+      message: "VC does not use a local file reference.",
+    };
+  }
+
+  const cleanedRelativePath = dataDir.path.replace("file://", "");
+  const resolvedPath = path.resolve(
+    path.dirname(dbEntry.vc_filepath),
+    cleanedRelativePath
+  );
+
+  const bashCommand = getHash(resolvedPath);
+
+  try {
+    const fileHash = await runBashCommand(bashCommand); // assumed to return a SHA-256 hash
+    const metadataHash = await runBashCommand(getMetadataHash(resolvedPath))
+    return { fileHash, metadataHash, message , vcId: vcJson.id, rootMetadata: getStatsAsJson(resolvedPath)};
+  } catch (err) {
+    return {
+      vcId: vcJson.id,
+      error: err.message,
+      message:
+        "The file may have been deleted, moved, or is not accessible. Could not generate hash.",
+    };
+  }
+}
 
 // Start the server
 app.listen(PORT, () => {
