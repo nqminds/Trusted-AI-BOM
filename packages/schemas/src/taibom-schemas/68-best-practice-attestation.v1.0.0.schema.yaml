@@ -55,7 +55,7 @@ examples:
     attestation:
       type: best practice
       best_practice:
-        types: data curation
+        type: data curation
         description: Data has been curated following best practice procedures as specified by Joe Blogs et al. in Data Curation Practises for Machine Learning
 
 
