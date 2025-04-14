@@ -5,8 +5,8 @@ For this inference AI system provide me a list of all functional performance res
 
 ## Schemas used
 
-* [ai system](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml)
-* [functional performance attestation](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/69-functional-performance-attestation.v1.0.0.schema.yaml)
+* [ai system](https://taibom.org/schemas/ai-system/v1.0.0/AI%20System/)
+* [functional performance attestation](https://taibom.org/schemas/functional-performance-attestation/v1.0.0/Functional%20Performance%20Attestation/)
 
 
 ## Pseudo code 
