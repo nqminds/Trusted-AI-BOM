@@ -6,9 +6,9 @@ Have the inference weights used for my AI system been tampered with?
 
 ## Schemas used
 
-* [ai system](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml)
-* [config](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/25-config.v1.0.0.schema.yaml) 
-* [data](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml)
+* [ai system](https://taibom.org/schemas/ai-system/v1.0.0/AI%20System/)
+* [config](https://taibom.org/schemas/config/v1.0.0/Trained%20System%20Configs/) 
+* [data](https://taibom.org/schemas/data/v1.0.0/TAIBOM%20Data/)
 
 
 ## Pseudo code 

@@ -5,12 +5,12 @@ Do we trust the providers/origin of all training data used - using exception lis
 
 ## Schemas used
 
-* [data](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml)
-* [data pack](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/20-data-pack.v1.0.0.schema.yaml)
-* [config](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/25-config.v1.0.0.schema.yaml) 
-* [identity](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/5-identity.v1.0.0.schema.yaml)
-* [ai system](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml)
-* [provided attestation](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/64-provided-attestation.v1.0.0.schema.yaml)
+* [data](https://taibom.org/schemas/data/v1.0.0/TAIBOM%20Data/)
+* [data pack](https://taibom.org/schemas/data-pack/v1.0.0/TAIBOM%20Datapack/)
+* [config](https://taibom.org/schemas/config/v1.0.0/Trained%20System%20Configs/) 
+* [identity](https://taibom.org/schemas/identity/v1.0.0/Identity%20schema/)
+* [ai system](https://taibom.org/schemas/ai-system/v1.0.0/AI%20System/)
+* [provided attestation](https://taibom.org/schemas/provided-attestation/v1.0.0/Provided%20Attestation/)
 
 
 ## Pseudo code 
