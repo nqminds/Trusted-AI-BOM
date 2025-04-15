@@ -6,11 +6,11 @@ Are their any known vulnerabilities on the training code software that was used?
 
 ## Schemas used
 
-* [ai system](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/50-ai-system.v1.0.0.schema.yaml)
-* [config](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/25-config.v1.0.0.schema.yaml)
-* [code](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.1.schema.yaml)
-* [sbom](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/30-sbom.v1.0.0.schema.yaml)
-* [vulnerability attestation](https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/63-vulnerability-attestation.v1.0.0.schema.yaml)
+* [ai system](https://taibom.org/schemas/ai-system/v1.0.0/AI%20System/)
+* [config](https://taibom.org/schemas/config/v1.0.0/Trained%20System%20Configs/)
+* [code](https://taibom.org/schemas/code/v1.0.1/Code/)
+* [sbom](https://taibom.org/schemas/sbom/v1.0.0/SBOM/)
+* [vulnerability attestation](https://taibom.org/schemas/vulnerability-attestation/v1.0.0/Vulnerability%20Attestation/)
 
 
 
