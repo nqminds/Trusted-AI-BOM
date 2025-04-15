@@ -21,21 +21,10 @@ import {
   getIdentityJson,
   getAndVerifyClaim,
   getHash,
+  getMetadataHash,
+  getStatsAsJson,
+  runBashCommand
 } from "./file-utils.mjs";
-
-function runBashCommand(bashCommand, callback) {
-  exec(bashCommand, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Command failed: ${error.message}`);
-      return callback ? callback(error) : process.exit(1);
-    }
-    if (stderr) {
-      console.error(`Command error: ${stderr}`);
-      return callback ? callback(new Error(stderr)) : process.exit(1);
-    }
-    if (callback) callback(null, stdout.trim());
-  });
-}
 
 async function retrieveIdentity(identityEmail) {
   const privateKeyPath = path.join(keypairDir, identityEmail, "private.key");
@@ -58,25 +47,7 @@ const program = new Command();
 program
   .name("SDK for creating & verifying TAIBOMS")
   .description("CLI to create / document / sign & verify TAIBOM VC's")
-  .version("0.0.1");
-
-// program
-//   .command("register-identity")
-//   .description("Register identity keypair with DID registry")
-//   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-//   .option(
-//     "--registry <registry>",
-//     "Address of the did registry",
-//     "http://localhost:3001/api/auth/authenticate"
-//   )
-//   .action(async (identityEmail, options) => {
-//     const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
-//       identityEmail
-//     );
-//     const publicKey = loadKey(publicKeyPath);
-//     const privateKey = loadKey(privateKeyPath);
-//     await issueRequest(identityEmail, );
-//   });
+  .version("0.0.3");
 
 program
   .command("generate-identity")
@@ -154,19 +125,17 @@ program
     console.log(`Data directory '${dataDir}' verified.`);
 
     // Generate the hash of the directory contents
-    const bashCommand = getHash(dataDir);
+    const fileHashBashCommand = getHash(dataDir);
 
-    runBashCommand(bashCommand, (error, hash) => {
-      if (error) {
-        console.error(`Error generating hash: ${error.message}`);
-        process.exit(1);
-      }
+    try {
+      const fileHash = await runBashCommand(fileHashBashCommand);
+      const metadataHash = await runBashCommand(getMetadataHash(dataDir));
 
       const now = new Date();
       const lastAccessed = now.toISOString();
 
       const credentialSubject = {
-        hash,
+        hash: fileHash,
         label: options.weights ? "Weights" : "Training",
         lastAccessed,
         location: {
@@ -174,17 +143,23 @@ program
           type: "local",
         },
         name: path.parse(dataDir).name,
+        metadata: {
+          hash: metadataHash,
+          rootMetadata: getStatsAsJson(dataDir),
+        },
       };
 
       const vc = generateAndSignVC(
         credentialSubject,
         identity.credentialSubject.email,
-        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml",
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.1.schema.yaml",
         loadKey(privateKeyPath, "uint8"),
         loadKey(publicKeyPath)
       );
       vcToFile(vc, outputDir, "data.json");
-    });
+    } catch (err) {
+      console.log(err);
+    }
   });
 
 program
@@ -192,7 +167,6 @@ program
   .description("Generate and sign an SBOM of code")
   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
   .argument("<code_directory>", "The directory of the code")
-  .option("--cpp", "[OPTIONAL] Generate a SBOM for C/C++ code", false)
   .option("--out <output_dir>", "Output directory")
   .action(async (identityEmail, codeDirectory, options) => {
     const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
@@ -242,7 +216,7 @@ program
   .command("code-taibom")
   .description("Generate and sign a TAIBOM of code")
   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-  .argument("<code_directory>", "The directory of the data")
+  .argument("<code_directory>", "The directory of the code / package")
   .argument("<version>", "Code version number")
   .option("--sbomTaibom <path>", "[OPTIONAL] SBOM TAIBOM claim", false)
   .option("--name <code_name>", "[OPTIONAL] Name of code or package", false)
@@ -259,26 +233,27 @@ program
       console.error(`Error: Code directory '${codeDirectory}' does not exist.`);
       process.exit(1);
     }
-    console.log(`Code directory '${codeDirectory}' verified.`);
 
     const bashCommand = getHash(codeDirectory);
 
     let sbom = null;
 
     if (options.sbomTaibom) {
-      const sbomVc = await getAndVerifyClaim(options.sbomTaibom);
+      const sbomVc = await getAndVerifyClaim(options.sbomTaibom, "sbom");
       sbom = { id: sbomVc.id, hash: sbomVc.proof.proofValue };
     }
+    try {
+      const fileHash = await runBashCommand(bashCommand);
+      const metadataHash = await runBashCommand(getMetadataHash(codeDirectory));
+      const rootMetadata  = getStatsAsJson(codeDirectory);
 
-    runBashCommand(bashCommand, (error, hash) => {
-      if (error) {
-        console.error(`Error generating hash: ${error.message}`);
-        process.exit(1);
+      const metadata = {
+        hash: metadataHash,
+        rootMetadata
       }
-
       const credentialSubject = !!sbom
         ? {
-            hash: { value: hash },
+            hash: { value: fileHash },
             location: {
               path: `file://${codeDirectory}`,
               type: "local",
@@ -286,25 +261,30 @@ program
             name: options.name ? options.name : codeName,
             version,
             sbom: sbom,
+            metadata
           }
         : {
-            hash: { value: hash },
+            hash: { value: fileHash },
             location: {
               path: `file://${codeDirectory}`,
               type: "local",
             },
             name: options.name ? options.name : codeName,
             version,
+            metadata
           };
       const vc = generateAndSignVC(
         credentialSubject,
         identity.credentialSubject.email,
-        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml",
+        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.1.schema.yaml",
         loadKey(privateKeyPath, "uint8"),
         loadKey(publicKeyPath)
       );
       vcToFile(vc, outputDir, "code.json");
-    });
+    } catch (error) {
+      console.error(`Error generating hash: ${error.message}`);
+      process.exit(1);
+    }
   });
 
 program
@@ -322,8 +302,11 @@ program
     );
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-    const codeTaibom = await getAndVerifyClaim(codeTaibomPath);
-    const dataTaibom = await getAndVerifyClaim(dataTaibomPath);
+    const codeTaibom = await getAndVerifyClaim(codeTaibomPath, "code");
+    const dataTaibom = await getAndVerifyClaim(dataTaibomPath, [
+      "data",
+      "data-pack",
+    ]);
 
     const label = options.inferencing ? "Inferencing" : "Training";
 
@@ -361,7 +344,7 @@ program
 
     const datasets = await Promise.all(
       dataTaibomPaths.map(async (p) => {
-        const dataTaibom = await getAndVerifyClaim(p);
+        const dataTaibom = await getAndVerifyClaim(p, "data");
         return { id: dataTaibom.id, hash: dataTaibom.proof.proofValue };
       })
     );
@@ -395,8 +378,11 @@ program
         await retrieveIdentity(identityEmail);
       let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
-      const aiSystem = await getAndVerifyClaim(aiSystemTaibomPath);
-      const data = await getAndVerifyClaim(dataTaibomPath);
+      const aiSystem = await getAndVerifyClaim(aiSystemTaibomPath, "ai-system");
+      const data = await getAndVerifyClaim(dataTaibomPath, [
+        "data",
+        "data-pack",
+      ]);
 
       const credentialSubject = {
         aiSystem: { id: aiSystem.id, hash: aiSystem.proof.proofValue },
@@ -415,16 +401,14 @@ program
     }
   );
 
-function validateLocationHash(claim) {
+async function validateLocationHash(claim) {
   const file_location = claim.credentialSubject.location.path;
   const bashCommand = getHash(`${file_location}`);
 
   console.log("Rehashing file location & Verifying");
-  runBashCommand(bashCommand, (error, hash) => {
-    if (error) {
-      console.error(`Error generating hash: ${error.message}`);
-      process.exit(1);
-    }
+  try {
+    const hash = await runBashCommand(bashCommand);
+
     if (
       (!!claim.credentialSubject.hash.value &&
         claim.credentialSubject.hash.value !== hash) ||
@@ -432,16 +416,43 @@ function validateLocationHash(claim) {
         claim.credentialSubject.hash !== hash)
     )
       throw new Error(
-        `Hash is not validated, ${claim.credentialSubject.hash} does not equal ${hash}! have you changed anything?`
+        `File hash is not validated, ${claim.credentialSubject.hash} does not equal ${hash}! have you changed anything?`
       );
-    else console.log("TAIBOM claim", claim.id, "VALIDATED");
-  });
+    else console.log("TAIBOM claim", claim.id, "hash VALIDATED");
+  } catch (error) {
+    console.error(`Error generating hash: ${error.message}`);
+    process.exit(1);
+  }
+}
+
+async function validateMetadataHash(claim) {
+  const file_location = claim.credentialSubject.location.path;
+  const bashCommand = getMetadataHash(`${file_location}`);
+
+  console.log("Rehashing file location & Verifying");
+  try {
+    const hash = await runBashCommand(bashCommand);
+
+    if (
+      !!claim.credentialSubject.metadata.hash &&
+      claim.credentialSubject.metadata.hash !== hash
+    )
+      console.warn(
+        `metadata is not validated, ${claim.credentialSubject.metadata.hash} does not equal ${hash}!`
+      );
+    else console.log("TAIBOM claim", claim.id, "metadata VALIDATED");
+  } catch (error) {
+    console.error(`Error generating hash: ${error.message}`);
+    process.exit(1);
+  }
 }
 
 program
   .command("validate")
-  .description("Validate a TAIBOM claim")
-  .argument("<taibom>", "Path to TAIBOM data claim")
+  .description(
+    "Validate a TAIBOM claim has been signed by the issuer and has not been tampered with"
+  )
+  .argument("<taibom>", "Path to TAIBOM claim")
   .action(async (taibom) => {
     const dataClaim = await getAndVerifyClaim(taibom);
     if (dataClaim) {
@@ -454,21 +465,24 @@ program
 // Validation functions
 program
   .command("validate-data")
-  .description("Validate a TAIBOM data claim")
+  .description("Validate a TAIBOM data claim, and its hash")
   .argument("<data_taibom>", "Path to TAIBOM data claim")
   .option("--out <output_dir>", "Output directory")
   .action(async (taibom, options) => {
     try {
-      const dataClaim = await getAndVerifyClaim(taibom);
+      const dataClaim = await getAndVerifyClaim(taibom, "data");
 
       // Verify it is a data vc
       if (
-        dataClaim.credentialSchema.id !==
-        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data.v1.0.0.schema.yaml"
-      )
+        !dataClaim.credentialSchema.id.includes(
+          "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/10-data"
+        )
+      ) {
         throw new Error("This is not a TAIBOM data claim");
+      }
 
-      validateLocationHash(dataClaim);
+      await validateLocationHash(dataClaim);
+      await validateMetadataHash(dataClaim);
     } catch (err) {
       console.log(err);
       throw new Error(`Validation failed for claim at ${taibom}`);
@@ -477,44 +491,30 @@ program
 
 program
   .command("validate-code")
-  .description("Validate a TAIBOM code claim")
+  .description("Validate a TAIBOM code claim, and its hash")
   .argument("<code_taibom>", "Path to TAIBOM code claim")
   .option("--out <output_dir>", "Output directory")
   .action(async (taibom, options) => {
     try {
-      const codeClaim = await getAndVerifyClaim(taibom);
+      const codeClaim = await getAndVerifyClaim(taibom, "code");
       if (!codeClaim) {
         throw new Error("Claim cannot be retrieved or verified");
       }
 
-      // Verify it is a data vc
       if (
-        codeClaim.credentialSchema.id !==
-        "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code.v1.0.0.schema.yaml"
+        !codeClaim.credentialSchema.id.includes(
+          "https://github.com/nqminds/Trusted-AI-BOM/blob/main/packages/schemas/src/taibom-schemas/40-code"
+        )
       )
         throw new Error("This is not a TAIBOM code claim");
 
-      validateLocationHash(codeClaim);
+      await validateLocationHash(codeClaim);
+      await validateMetadataHash(codeClaim);
     } catch (err) {
       console.log(err);
       throw new Error(`Validation failed for claim at ${taibom}`);
     }
   });
-
-// program
-//   .command("generate-vc")
-//   .description("Generate and sign a TAIBOM VC")
-//   .argument("<json_data_file>", "Path to Json data to be signed")
-//   .argument("<schema_name>", "Name of the TAIBOM schema (include .json extension)")
-//   .argument("<signing_key_path>", "Signing Key")
-//   .option("--uuid <issuer_uuid>", "Issuer UUID", null)
-//   .option("--out <output_dir>", "Output directory")
-//   .action((dataFile, schemaName, signingKeyPath, options) => {
-//     const credentialSubject = getAndVerifyClaim(dataFile, false);
-//     let uuid = options.uuid ?? `urn:uuid:${uuidv4()}`;
-//     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
-//     generateAndSignVC(credentialSubject, uuid, schemaName, signingKeyPath, outputDir)
-//   })
 
 function createAttestation(
   attestation,
@@ -570,7 +570,8 @@ program
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     const taibom = await getAndVerifyClaim(taibomVc);
-    const attestation = await getAndVerifyClaim(attestationPath, false);
+    const jsonFile = fs.readFileSync(attestationPath, "utf8");
+    const attestation = JSON.parse(jsonFile);
 
     if (options.type) {
       let val =

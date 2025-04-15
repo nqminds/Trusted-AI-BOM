@@ -247,6 +247,22 @@ module.exports.verify = function(signed_vc, public_key) {
     return ret[0] !== 0;
 };
 
+/**
+ * @param {any} signed_vc
+ * @param {Uint8Array} public_key
+ * @param {any} schema
+ * @returns {boolean}
+ */
+module.exports.verify_with_schema_check = function(signed_vc, public_key, schema) {
+    const ptr0 = passArray8ToWasm0(public_key, wasm.__wbindgen_malloc);
+    const len0 = WASM_VECTOR_LEN;
+    const ret = wasm.verify_with_schema_check(signed_vc, ptr0, len0, schema);
+    if (ret[2]) {
+        throw takeFromExternrefTable0(ret[1]);
+    }
+    return ret[0] !== 0;
+};
+
 function getArrayU8FromWasm0(ptr, len) {
     ptr = ptr >>> 0;
     return getUint8ArrayMemory0().subarray(ptr / 1, ptr / 1 + len);
