@@ -7,6 +7,10 @@ import {
   initializeGuidHashDatabase,
   insertGuidHash,
 } from "./guidHashDatabase.mjs";
+import { exec } from "child_process";
+import { promisify } from "util";
+const execAsync = promisify(exec);
+
 
 // Handle __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -16,6 +20,23 @@ const __dirname = path.dirname(__filename);
 const homeDir = os.homedir();
 const keypairDir = path.join(homeDir, ".taibom");
 
+async function runBashCommand(bashCommand) {
+  try {
+    const { stdout, stderr } = await execAsync(bashCommand);
+    if (stderr) throw new Error(`stderr: ${stderr}`);
+
+    const output = stdout.trim();
+    const sha256Regex = /^[a-f0-9]{64}$/;
+    if (!sha256Regex.test(output)) {
+      throw new Error(`Invalid hash format: "${output}"`);
+    }
+
+    return output;
+  } catch (err) {
+    console.error(`Failed to run bash command: ${err.message}`);
+    throw err;
+  }
+}
 function directoryExists(dirPath) {
   return (
     (fs.existsSync(dirPath) && fs.statSync(dirPath).isDirectory()) ||
@@ -215,4 +236,5 @@ export {
   ensureFilesExist,
   getMetadataHash,
   getStatsAsJson,
+  runBashCommand
 };

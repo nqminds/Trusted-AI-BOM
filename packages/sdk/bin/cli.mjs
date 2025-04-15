@@ -23,28 +23,8 @@ import {
   getHash,
   getMetadataHash,
   getStatsAsJson,
+  runBashCommand
 } from "./file-utils.mjs";
-
-import { promisify } from "util";
-const execAsync = promisify(exec);
-
-async function runBashCommand(bashCommand) {
-  try {
-    const { stdout, stderr } = await execAsync(bashCommand);
-    if (stderr) throw new Error(`stderr: ${stderr}`);
-
-    const output = stdout.trim();
-    const sha256Regex = /^[a-f0-9]{64}$/;
-    if (!sha256Regex.test(output)) {
-      throw new Error(`Invalid hash format: "${output}"`);
-    }
-
-    return output;
-  } catch (err) {
-    console.error(`Failed to run bash command: ${err.message}`);
-    throw err;
-  }
-}
 
 async function retrieveIdentity(identityEmail) {
   const privateKeyPath = path.join(keypairDir, identityEmail, "private.key");

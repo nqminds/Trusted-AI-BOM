@@ -3,9 +3,8 @@ import fs from "fs";
 import path from "path";
 import Database from "better-sqlite3";
 import { getHash } from "./bin/file-utils.mjs";
-import { exec } from "child_process";
 import { extractSchemaName } from "./src/vc-tools.mjs";
-import { getMetadataHash, getStatsAsJson } from "./bin/file-utils.mjs";
+import { getMetadataHash, getStatsAsJson, runBashCommand } from "./bin/file-utils.mjs";
 
 const app = express();
 app.use(express.json()); // ✅ Enable JSON body parsing
@@ -13,27 +12,6 @@ app.use(express.json()); // ✅ Enable JSON body parsing
 const PORT = 3000;
 const dbPath = path.join(process.env.HOME, ".taibom/guid_hash.db");
 const db = new Database(dbPath);
-
-import { promisify } from "util";
-const execAsync = promisify(exec);
-
-async function runBashCommand(bashCommand) {
-  try {
-    const { stdout, stderr } = await execAsync(bashCommand);
-    if (stderr) throw new Error(`stderr: ${stderr}`);
-
-    const output = stdout.trim();
-    const sha256Regex = /^[a-f0-9]{64}$/;
-    if (!sha256Regex.test(output)) {
-      throw new Error(`Invalid hash format: "${output}"`);
-    }
-
-    return output;
-  } catch (err) {
-    console.error(`Failed to run bash command: ${err.message}`);
-    throw err;
-  }
-}
 
 // Helper function: Retrieve the Verifiable Credential (VC) JSON
 function getVCJson({ guid, vc_hash }) {
