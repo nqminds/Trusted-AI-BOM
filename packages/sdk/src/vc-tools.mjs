@@ -1,8 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import fetch from "node-fetch";
 import { sign, verify } from "./pkg/verifiable_credential_toolkit.js";
-import { convertToUint8 } from "./keys.mjs"
-import { cookieJar, URI, BASE_PATH, ENDPOINTS, saveCookies} from "../src/api-tools.mjs";
+import { cookieJar, URI, BASE_PATH, ENDPOINTS, saveCookies } from "../src/api-tools.mjs";
 import got from "got";
 
 const apiClient = got.extend({
@@ -20,7 +18,7 @@ const apiClient = got.extend({
 });
 
 
-const checkExpiration = true;
+const checkExpiration = false;
 
 const staticVC = {
   "@context": ["https://www.w3.org/ns/credentials/v2"],
@@ -42,11 +40,13 @@ const staticVC = {
  * Fetches the keys from the server, requires an authenticated session.
  * @returns {Promise<Object>} A promise that resolves to the keys object.
  */
-async function getKeys() {
-  //const response = await fetch(URI + BASE_PATH + ENDPOINTS.GET_KEYS, { "credentials": "include" });// TODO: make this a got request to leverage the cookies, is this possible accross files?
+async function getKeys(email) {
   const response = await apiClient.get(ENDPOINTS.GET_KEYS, {
     headers: {
       "Content-Type": "application/json",
+    },
+    searchParams: {
+      email: email,
     },
   });
   if (response.statusCode !== 200) {
@@ -57,7 +57,6 @@ async function getKeys() {
 }
 
 async function verifyVerifiableCredential(vc, key) {
-  await init();
   const valid = verify(vc, key);
   return valid;
 }
@@ -65,8 +64,7 @@ async function verifyVerifiableCredential(vc, key) {
 
 async function verifyHasValidExpiration(vc) {
   if (!vc.validUntil) {
-    // log that there is no expiration date
-    //TODO: make the inlcusion of expiration a configurable option
+    //TODO: make the inclusion of expiration a configurable option
     return false;
   }
   const expirationDate = new Date(vc.validUntil);
@@ -85,13 +83,14 @@ async function verifyHasValidExpiration(vc) {
  * 
  * @param {Object} VC
  * @param {string} email
- * @returns {boolean}
+ * @returns {Promise<boolean>}
  */
 async function verifyAgainstEmail(vc, email) {
   const keys = (await getKeys(email)).keys;
   const keysArray = keys.map(key => key.key);
 
   if (keys.length === 0) {
+    console.error("No keys found for this identity");
     return false;
   }
   const convertedKeys = await Promise.all(keysArray.map(async (key) => {
@@ -100,11 +99,11 @@ async function verifyAgainstEmail(vc, email) {
 
 
   for (let keyIndex = 0; keyIndex < convertedKeys.length; keyIndex++) {
-    const key = keys[keyIndex];
-    valid = await verifyVerifiableCredential(vc, key);
+    const convertedKey = convertedKeys[keyIndex];
+    const valid = await verifyVerifiableCredential(vc, convertedKey);
     if (valid && checkExpiration && await verifyHasValidExpiration(vc)) {
       return true;
-      
+
     } else if (valid && !checkExpiration) {
       return true;
     }
@@ -114,6 +113,18 @@ async function verifyAgainstEmail(vc, email) {
 
 }
 
+
+function processEd25519PublicKey(publicKeyPem) {
+  const pemContents = publicKeyPem
+    .replace(/-----BEGIN PUBLIC KEY-----/, "")
+    .replace(/-----END PUBLIC KEY-----/, "")
+    .replace(/\s+/g, "");
+  const der = Buffer.from(pemContents, "base64");
+  const rawKey = der.subarray(der.length - 32);
+  return rawKey;
+}
+
+
 /**
  * Verifies the claim in a Verifiable Credential (VC).
  * @param {Object} vc - The Verifiable Credential object.
@@ -122,14 +133,9 @@ async function verifyAgainstEmail(vc, email) {
  */
 export async function verifyClaim(vc) {
   try {
-
-      const isValid = verifyAgainstEmail(vc, vc.issuer);
-      console.log("isValid", isValid);
-      const response = await fetch(didUrl);
-      if (!response.ok) {
-        throw new Error(`DID registry lookup failed for ${didUrl}`);
-      }
-
+    const email = vc.issuer.split("?email=")[1];
+    const isValid = await verifyAgainstEmail(vc, email);
+    return isValid;
 
   } catch (error) {
     console.error("Error during claim verification:", error);

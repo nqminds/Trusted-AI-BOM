@@ -6,7 +6,7 @@ import fs from "fs";
 import { exec } from "child_process";
 import { v4 as uuidv4 } from "uuid";
 import got from 'got';
-import {voltUtils} from '@tdxvolt/volt-client-web/js';
+import { voltUtils } from '@tdxvolt/volt-client-web/js';
 import readline from 'readline';
 import { cookieJar, URI, BASE_PATH, ENDPOINTS, saveCookies, verifyAndFetchIdentity, getPemFromKey } from "../src/api-tools.mjs";
 
@@ -30,7 +30,7 @@ import {
 
 // Create API client with cookie support
 const apiClient = got.extend({
-  prefixUrl: URI.replace(/\/$/, '')+BASE_PATH, // Remove trailing slash if present
+  prefixUrl: URI.replace(/\/$/, '') + BASE_PATH, // Remove trailing slash if present
   cookieJar: cookieJar,
   responseType: 'json',
   hooks: {
@@ -113,7 +113,7 @@ async function verify_email(email, pub, priv) {
     "nonce": nonce,
     "returnUrl": "https://taibom.org/"
   };
-  
+
   const authUrlCheckResponse = await apiClient.post("generateBinding", {
     json: postData,
     headers: {
@@ -144,7 +144,7 @@ async function verify_email(email, pub, priv) {
     if (authStatusData.status === "pending") {
       console.log("Auth Status: pending");
       text_input = await getUserInput("Press enter when verified, type back to abort verification");
-    } else{
+    } else {
       console.log("Auth Status: verified");
       idVC = authStatusData;
       break;
@@ -219,7 +219,7 @@ program
     vcToFile(vc, outputDir, "identity.json");
     const key_email_binding = await verify_email(email, pub, priv);
     console.log("Key email binding:", key_email_binding);
-    
+
   });
 
 program
@@ -368,24 +368,24 @@ program
 
       const credentialSubject = !!sbom
         ? {
-            hash: { value: hash },
-            location: {
-              path: `file://${codeDirectory}`,
-              type: "local",
-            },
-            name: options.name ? options.name : codeName,
-            version,
-            sbom: sbom,
-          }
+          hash: { value: hash },
+          location: {
+            path: `file://${codeDirectory}`,
+            type: "local",
+          },
+          name: options.name ? options.name : codeName,
+          version,
+          sbom: sbom,
+        }
         : {
-            hash: { value: hash },
-            location: {
-              path: `file://${codeDirectory}`,
-              type: "local",
-            },
-            name: options.name ? options.name : codeName,
-            version,
-          };
+          hash: { value: hash },
+          location: {
+            path: `file://${codeDirectory}`,
+            type: "local",
+          },
+          name: options.name ? options.name : codeName,
+          version,
+        };
       const vc = generateAndSignVC(
         credentialSubject,
         identity.credentialSubject.email,
