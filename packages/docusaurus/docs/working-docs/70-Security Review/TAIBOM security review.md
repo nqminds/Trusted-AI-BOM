@@ -22,10 +22,22 @@ The reports cover independent penetration testing of the TAIBOM code base (doc D
 
 
 
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
-
-- D5.6 TAIBOM Evaluation Report Overview [D5.6-TAIBOM-ERO.pdf](./D5.6-TAIBOM-ERO.pdf)  
-- D5.6A TAIBOM Security Testing Report and Remediation Plan  [D5.6A-TAIBOM-STR.pdf](./D5.6A-TAIBOM-STR.pdf)   
-- D5.6B TAIBOM Threats and Attacks Security Scenario Testing Against Selected Use Cases [D5.6B-TAIBOM-TASS.pdf](./D5.6B-TAIBOM-TASS.pdf)  
-- D5.6C TAIBOM Functional Testing [D5.6C-TAIBOM-FT.pdf](./D5.6C-TAIBOM-FT.pdf)  
-- D5.7 TAIBOM Industry Recommendations [D57-TAIBOM-IR.pdf](./D57-TAIBOM-IR.pdf) 
+<ul>
+  <li>
+    D5.6 TAIBOM Evaluation Report Overview <a href={useBaseUrl('assets/files/D5.6-TAIBOM-ERO.pdf')}>Download PDF</a>
+  </li>
+  <li>
+    D5.6A TAIBOM Security Testing Report and Remediation Plan <a href={useBaseUrl('assets/files/D5.6A-TAIBOM-STR.pdf')}>Download PDF</a>
+  </li>
+  <li>
+    D5.6B TAIBOM Threats and Attacks Security Scenario Testing Against Selected Use Cases <a href={useBaseUrl('assets/files/D5.6B-TAIBOM-TASS.pdf')}>Download PDF</a>
+  </li>
+  <li>
+    D5.6C TAIBOM Functional Testing <a href={useBaseUrl('assets/files/D5.6C-TAIBOM-FT.pdf')}>Download PDF</a>
+  </li>
+  <li>
+    D5.7 TAIBOM Industry Recommendations <a href={useBaseUrl('assets/files/D57-TAIBOM-IR.pdf')}>Download PDF</a>
+  </li>
+</ul>
