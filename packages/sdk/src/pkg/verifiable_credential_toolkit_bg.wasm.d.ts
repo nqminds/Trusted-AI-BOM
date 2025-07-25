@@ -5,6 +5,7 @@ export const normalize_object: (a: any) => [number, number, number];
 export const normalize_and_stringify: (a: any) => [number, number, number, number];
 export const sign: (a: any, b: number, c: number) => [number, number, number];
 export const verify: (a: any, b: number, c: number) => [number, number, number];
+export const verify_with_schema_check: (a: any, b: number, c: number, d: any) => [number, number, number];
 export const __wbg_keypair_free: (a: number, b: number) => void;
 export const keypair_new: (a: number, b: number, c: number, d: number) => number;
 export const keypair_signing_key: (a: number) => [number, number];

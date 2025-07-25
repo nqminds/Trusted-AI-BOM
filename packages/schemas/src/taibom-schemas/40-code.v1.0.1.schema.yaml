@@ -25,7 +25,8 @@ properties:
         description: Indicates whether the code is stored locally or remotely.
       path:
         type: string
-        description: The path or URL to the code location.
+        description: "The URL or relative file path to the code location (can be a directory)."
+        pattern: '^(file://|https?://|[^/\\][^:]*)$'
     required:
       - type
       - path
@@ -61,11 +62,23 @@ properties:
       - id
       - hash
 
+  metadata:
+    type: object
+    description: Encapsulating file metadata used for data integrity verification against tampering.
+    properties: 
+      hash:
+        type: string
+        description: The cryptographic hash (e.g., SHA256) of the metadata of all files within the data directory.
+      rootMetadata: 
+        type: object
+        desctiption: Human readable metadata of the root file or folder.
+
 required:
   - name
   - version
   - location
   - hash
+  - metadata
 
 examples:
   - name: MyLocalAIModel
@@ -79,6 +92,34 @@ examples:
     sbom:
       id: urn:uuid:65672143-7261-48f2-b991-651a89a38c6b
       hash: sha256:abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
+    metadata:
+      hash: a78c3ddc8a170a7375e73120d3ca7f86680d7ec94aa3d87bc5c2e8f8318a2413
+      rootMetadata:
+        file: ./Projects/
+        size: 4096
+        blocks: 8
+        io_block: 4096
+        type: directory
+        device: "259,2"
+        inode: 35393197
+        links: 16
+        permissions:
+          octal: "0775"
+          symbolic: "drwxrwxr-x"
+        owner:
+          uid: 1000
+          user: tony
+          gid: 1000
+          group: tony
+        timestamps:
+          access:
+            time: 2025-04-14 09:57:14.469050171 +0100
+          modify:
+            time: 2025-04-14 09:57:11.068051081 +0100
+          change:
+            time: 2025-04-14 09:57:11.068051081 +0100
+          birth:
+            time: 2024-09-24 14:09:15.871165316 +0100
   - name: RemoteDataAnalyser
     version: 1.0.1
     location:
@@ -90,7 +131,34 @@ examples:
     sbom:
       id: urn:uuid:65672143-7261-48f2-b991-651a89a38c6b
       hash: sha256:9876543210abcdef9876543210abcdef9876543210abcdef9876543210abcdef
-
+    metadata:
+      hash: a78c3ddc8a170a7375e73120d3ca7f86680d7ec94aa3d87bc5c2e8f8318a2413
+      rootMetadata:
+        file: ./Projects/
+        size: 4096
+        blocks: 8
+        io_block: 4096
+        type: directory
+        device: "259,2"
+        inode: 35393197
+        links: 16
+        permissions:
+          octal: "0775"
+          symbolic: "drwxrwxr-x"
+        owner:
+          uid: 1000
+          user: tony
+          gid: 1000
+          group: tony
+        timestamps:
+          access:
+            time: 2025-04-14 09:57:14.469050171 +0100
+          modify:
+            time: 2025-04-14 09:57:11.068051081 +0100
+          change:
+            time: 2025-04-14 09:57:11.068051081 +0100
+          birth:
+            time: 2024-09-24 14:09:15.871165316 +0100
 context: |
   ## Introduction
 
@@ -107,6 +175,7 @@ context: |
   - **SBOM**: An object containing:
     - `id`: The unique identifier of the SBOM (e.g., a VC ID or DID).
     - `hash`: The cryptographic hash of the SBOM for verification.
+  - **Metadata**: Includes the accumulated and nested hash of file metadata within this dataset, including human readable metadata for the root directory  
 
   ## Use Case
 
