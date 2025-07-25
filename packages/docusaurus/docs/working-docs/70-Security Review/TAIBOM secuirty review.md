@@ -24,8 +24,8 @@ The reports cover independent penetration testing of the TAIBOM code base (doc D
 
 
 
-- D5.6 TAIBOM Evaluation Report Overview [D5.6-TAIBOM-ERO.pdf](D5.6-TAIBOM-ERO.pdf)  
-- D5.6A TAIBOM Security Testing Report and Remediation Plan  [D5.6A-TAIBOM-STR.pdf](D5.6A-TAIBOM-STR.pdf)   
-- D5.6B TAIBOM Threats and Attacks Security Scenario Testing Against Selected Use Cases [D5.6B-TAIBOM-TASS.pdf](D5.6B-TAIBOM-TASS.pdf)  
-- D5.6C TAIBOM Functional Testing [D5.6C-TAIBOM-FT.pdf](D5.6C-TAIBOM-FT.pdf)  
-- D5.7 TAIBOM Industry Recommendations [D57-TAIBOM-IR.pdf](D57-TAIBOM-IR.pdf) 
+- D5.6 TAIBOM Evaluation Report Overv./iew [D5.6-TAIBOM-ERO.pdf](D5.6-TAIBOM-ERO.pdf)  
+- D5.6A TAIBOM Security Testing Report and Remediation Pl./an  [D5.6A-TAIBOM-STR.pdf](D5.6A-TAIBOM-STR.pdf)   
+- D5.6B TAIBOM Threats and Attacks Security Scenario Testing Against Selected Use Ca./ses [D5.6B-TAIBOM-TASS.pdf](D5.6B-TAIBOM-TASS.pdf)  
+- D5.6C TAIBOM Functional T./esting [D5.6C-TAIBOM-FT.pdf](D5.6C-TAIBOM-FT.pdf)  
+- D5.7 TAIBOM Industry Recomm./endations [D57-TAIB
