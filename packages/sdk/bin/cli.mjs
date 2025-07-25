@@ -5,6 +5,11 @@ import path from "path";
 import fs from "fs";
 import { exec } from "child_process";
 import { v4 as uuidv4 } from "uuid";
+import got from 'got';
+import { voltUtils } from '@tdxvolt/volt-client-web/js';
+import readline from 'readline';
+import { cookieJar, URI, BASE_PATH, ENDPOINTS, saveCookies, verifyAndFetchIdentity, getPemFromKey } from "../src/api-tools.mjs";
+
 import {
   generateAndSignVC,
   processVulnerabilityReport,
@@ -22,6 +27,21 @@ import {
   getAndVerifyClaim,
   getHash,
 } from "./file-utils.mjs";
+
+// Create API client with cookie support
+const apiClient = got.extend({
+  prefixUrl: URI.replace(/\/$/, '') + BASE_PATH, // Remove trailing slash if present
+  cookieJar: cookieJar,
+  responseType: 'json',
+  hooks: {
+    afterResponse: [
+      (response) => {
+        saveCookies(); // Save cookies after each request
+        return response;
+      }
+    ]
+  }
+});
 
 function runBashCommand(bashCommand, callback) {
   exec(bashCommand, (error, stdout, stderr) => {
@@ -53,30 +73,97 @@ async function retrieveIdentity(identityEmail) {
   return { identity, privateKeyPath, publicKeyPath };
 }
 
+
+
+
+/**
+ * Function to get user input (equivalent to Python's input())
+ * @param {string} prompt - The message to display to the user
+ * @returns {Promise<string>} - The user's input
+ */
+function getUserInput(prompt) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) => {
+    rl.question(prompt, (answer) => {
+      rl.close();
+      resolve(answer);
+    });
+  });
+}
+
+async function verify_email(email, pub, priv) {
+  const {
+    signBase64, stripPemHeaders, toBase64Url, randomBytes
+
+  } = voltUtils;
+  const pub_pem = getPemFromKey(pub, "PUBLIC KEY");
+  const priv_pem = getPemFromKey(priv, "PRIVATE KEY");
+  const nonce = toBase64Url(randomBytes(16));
+  const signature = signBase64(priv_pem, email + nonce);
+  const send_key = stripPemHeaders(pub_pem);
+
+  const postData = {
+    "email": email,
+    "key": send_key,
+    "signature": signature,
+    "nonce": nonce,
+    "returnUrl": "https://taibom.org/"
+  };
+
+  const authUrlCheckResponse = await apiClient.post("generateBinding", {
+    json: postData,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  const authStatusUrl = authUrlCheckResponse.body.authStatusUrl;
+  var idVC;
+  let text_input = await getUserInput("Press enter when verified, type back to postpone verification: ");
+
+
+  while (text_input !== "back") {
+    // check the idVC is verified
+    // get request to authStatusUrl, if pending then next loop else return the json body, this is an absolute new url not part of the api so shouldnt use apiclient
+
+    const authStatusResponse = await fetch(authStatusUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!authStatusResponse.ok) {
+      console.error('Error fetching auth status:', authStatusResponse.statusText);
+      break;
+    }
+    const authStatusData = await authStatusResponse.json();
+    if (authStatusData.status === "pending") {
+      console.log("Auth Status: pending");
+      text_input = await getUserInput("Press enter when verified, type back to abort verification");
+    } else {
+      console.log("Auth Status: verified");
+      idVC = authStatusData;
+      break;
+    }
+  }
+
+  if (text_input === "back") {
+    console.log("Verification postponed");
+    return;
+  }
+  return await verifyAndFetchIdentity(idVC, priv_pem, apiClient, email);
+}
+
 const program = new Command();
 
 program
   .name("SDK for creating & verifying TAIBOMS")
   .description("CLI to create / document / sign & verify TAIBOM VC's")
-  .version("0.0.1");
-
-// program
-//   .command("register-identity")
-//   .description("Register identity keypair with DID registry")
-//   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-//   .option(
-//     "--registry <registry>",
-//     "Address of the did registry",
-//     "http://localhost:3001/api/auth/authenticate"
-//   )
-//   .action(async (identityEmail, options) => {
-//     const { identity, privateKeyPath, publicKeyPath } = await retrieveIdentity(
-//       identityEmail
-//     );
-//     const publicKey = loadKey(publicKeyPath);
-//     const privateKey = loadKey(privateKeyPath);
-//     await issueRequest(identityEmail, );
-//   });
+  .version("0.0.3");
 
 program
   .command("generate-identity")
@@ -86,7 +173,7 @@ program
   .argument("<role>", "The role of the person")
   .option("--uuid <uuid>", "UUID")
   .option("--out <output_dir>", "Output directory")
-  .action((name, email, role, options) => {
+  .action(async (name, email, role, options) => {
     let outputDir = options.out ? path.resolve(options.out) : process.cwd();
 
     // Validate email format (basic check)
@@ -130,6 +217,9 @@ program
     );
     vcToFile(vc, `${keypairPath}-identity.json`, "identity.json", false);
     vcToFile(vc, outputDir, "identity.json");
+    const key_email_binding = await verify_email(email, pub, priv);
+    console.log("Key email binding:", key_email_binding);
+
   });
 
 program
@@ -278,24 +368,24 @@ program
 
       const credentialSubject = !!sbom
         ? {
-            hash: { value: hash },
-            location: {
-              path: `file://${codeDirectory}`,
-              type: "local",
-            },
-            name: options.name ? options.name : codeName,
-            version,
-            sbom: sbom,
-          }
+          hash: { value: hash },
+          location: {
+            path: `file://${codeDirectory}`,
+            type: "local",
+          },
+          name: options.name ? options.name : codeName,
+          version,
+          sbom: sbom,
+        }
         : {
-            hash: { value: hash },
-            location: {
-              path: `file://${codeDirectory}`,
-              type: "local",
-            },
-            name: options.name ? options.name : codeName,
-            version,
-          };
+          hash: { value: hash },
+          location: {
+            path: `file://${codeDirectory}`,
+            type: "local",
+          },
+          name: options.name ? options.name : codeName,
+          version,
+        };
       const vc = generateAndSignVC(
         credentialSubject,
         identity.credentialSubject.email,
@@ -385,7 +475,7 @@ program
   .command("config-taibom")
   .description("Generate and sign a TAIBOM of an AI systems config")
   .argument("<identity_email>", "The email of the identity to sign this TAIBOM")
-  .argument("<ai_system_taibom>", "AI system TAIOBOM path")
+  .argument("<ai_system_taibom>", "AI system TAIBOM path")
   .argument("<data_taibom>", "Path to data configs")
   .option("--name <config_name>", "[OPTIONAL] Name of configs", false)
   .option("--out <output_dir>", "Output directory")
@@ -601,5 +691,7 @@ program
       );
     }
   });
+
+
 
 program.parse(process.argv);
