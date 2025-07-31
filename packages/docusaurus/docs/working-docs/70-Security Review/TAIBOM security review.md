@@ -38,6 +38,6 @@ The reports cover independent penetration testing of the TAIBOM code base (doc D
   </li>
   <li>
     D5.7 TAIBOM Industry Recommendations — 
-    <a href='/pdfs/D5.7-TAIBOM-IR.pdf'>Download PDF</a>
+    <a href='/D5.7-TAIBOM-IR.pdf'>Download PDF</a>
   </li>
 </ul>
